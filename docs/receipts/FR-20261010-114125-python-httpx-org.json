@@ -1,0 +1,87 @@
+{
+ "receipt_id": "FR-20261010-114125-python-httpx-org",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://www.python-httpx.org/quickstart/",
+  "run_id": "20261010-114125-python-httpx-org",
+  "started_at": "2026-10-10T11:42:03+00:00",
+  "finished_at": "2026-10-10T11:51:31+00:00",
+  "seconds": 296.2,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 1,
+    "was": "python quickstart_1.py",
+    "now": "pip install httpx && python quickstart_1.py",
+    "reason": "The error ModuleNotFoundError: No module named 'httpx' shows the httpx package is not installed in the clean python:3.11-slim container, so it is installed with pip before running the original command unchanged."
+   },
+   {
+    "step": 3,
+    "was": "python quickstart_3.py",
+    "now": "python -c \"import re;L=open('quickstart_3.py').read().splitlines(True);i=next(k for k,l in enumerate(L) if re.match(r'\\s*r\\.encoding\\s*=',l));e=L.pop(i);j=next(k for k,l in enumerate(L) if re.match(r'\\s*r\\s*=\\s*httpx\\.',l));L.insert(j+1,e);open('quickstart_3.py','w').write(''.join(L))\" && python quickstart_3.py",
+    "reason": "httpx now raises ValueError if Response.encoding is set after r.text has been read. The script reads r.text before line 5 sets r.encoding. The fix is to set r.encoding right after the response is created and before any r.text access. The command moves that line up and then runs the original script unchanged."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0776,
+  "input_tokens": 11586,
+  "output_tokens": 5342,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 572.7,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 165.2,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 51.2
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 278.4,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 20.1
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 10,
+  "steps_total": 10,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-114125-python-httpx-org",
+  "tags": [
+   "real2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:2600fa18ce7be66c227b4a95049bb4bca3a43eebd4dca81d030e284c00d3a04d",
+   "runbook.json": "sha256:ebcc3cc7bd4f8bb72cb01b3aefad5a2e28f10f5036059f5ac4366df72058b22d",
+   "report.md": "sha256:ba8d19c81a5660ce917e646bee4eea6d3fdfaaa97c6ff62b383041025290198a"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:05739cfc8bcb8df5a9461f9423cfef4c4e3ea85434d374a55213dd84bcba7eb1"
+}

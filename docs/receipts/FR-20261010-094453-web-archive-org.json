@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-094453-web-archive-org",
+ "issued_at": "2026-10-11T09:40:38Z",
+ "work": {
+  "source_url": "https://web.archive.org/web/20230802050711/https://github.com/openai/openai-python",
+  "run_id": "20261010-094453-web-archive-org",
+  "started_at": "2026-10-10T09:45:23+00:00",
+  "finished_at": "2026-10-10T09:46:17+00:00",
+  "seconds": 39.5,
+  "first_failed_step": 2,
+  "failure_class": "needs_secret",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 2,
+    "was": "python quickstart.py",
+    "now": "pip install \"openai==0.28.1\" && python quickstart.py",
+    "reason": "quickstart.py uses the legacy pre-1.0 interface (openai.Model.list() and presumably openai.ChatCompletion.create()). Both were removed in openai>=1.0, and pip installed the latest version. The error message itself suggests pinning to 0.28. That release still supports the old calls and reads OPENAI_API_KEY from the environment. I didn't search the web or look at the script."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0436,
+  "input_tokens": 24554,
+  "output_tokens": 3320,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 321.8,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 92.8,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 72.1
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 156.4,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 54.2
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 1,
+  "steps_total": 8,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-094453-web-archive-org",
+  "tags": [
+   "v2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:5db48ba011f234192a5b8386d2fd2ccd6809d227f40ae31cd3e948da34092ff9",
+   "runbook.json": "sha256:37d739d9ea8220e1ce59265d5ac55d6c5322028b8f29732b4bb77848037a967a",
+   "report.md": "sha256:6e8a31748cdb32dbccde20b0d717aaafae1caa07044d511f73831e8a48918fca"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:2094cc7766cb8fa3dfb212ecd415f090f982c341ac8697db676b5f67cc46c876"
+}

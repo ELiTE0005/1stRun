@@ -1,0 +1,74 @@
+{
+ "receipt_id": "FR-20261010-073522-docs-neatlogs-com",
+ "issued_at": "2026-10-11T09:40:39Z",
+ "work": {
+  "source_url": "https://docs.neatlogs.com/sdk/python",
+  "run_id": "20261010-073522-docs-neatlogs-com",
+  "started_at": "2026-10-10T07:35:22+00:00",
+  "finished_at": "2026-10-10T07:36:31+00:00",
+  "seconds": 69.9,
+  "first_failed_step": null,
+  "failure_class": null,
+  "classified_by": null,
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 98.8
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 98.0
+  }
+ ],
+ "proof": {
+  "status": "passed",
+  "verified": false,
+  "steps_passed": 4,
+  "steps_total": 4,
+  "claim": "Every step passed on the first run. No fix was needed, so no second run was made."
+ },
+ "audit": {
+  "run_id": "20261010-073522-docs-neatlogs-com",
+  "tags": [
+   "dev"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:cac944938b75e7e0f8c05089eeaf6a1426abb0264f9556570ab3858e63b87095",
+   "runbook.json": "sha256:7738c94896799f3840312faccfb3febb6e76a74011c4a146ff9583da733a55bc",
+   "report.md": "sha256:927ca89542d1f4674209b88ee6453e467ec4cea52370f76b7be398f67367d2c2"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:fe81faef1861ac4e013446c72ead1b1bf01151c2dc33191a270db98f73fa25f7"
+}

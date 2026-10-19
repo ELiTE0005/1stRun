@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Receipt FR-20261010-173419-beam-apache-org</title>
+<meta name="color-scheme" content="light"><meta name="robots" content="noindex">
+<style>
+:root{
+--desk:oklch(95.4% .006 255);--paper:oklch(99.5% .003 90);
+--ink:oklch(22% .012 255);--ink2:oklch(36% .012 255);--mut:oklch(50% .012 255);--faint:oklch(68% .01 255);
+--rule:oklch(88.5% .008 255);--rule2:oklch(93.5% .006 255);--sunk:oklch(97.4% .004 255);
+--acc:oklch(53% .19 256);--acc-bg:oklch(95.6% .026 256);
+--ok:oklch(47% .13 150);--ok-bg:oklch(96.2% .035 150);
+--warn:oklch(48% .12 66);--warn-bg:oklch(96.2% .05 85);--warn-bar:oklch(76% .14 72);--warn-bar2:oklch(88% .08 80);
+--mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,"Liberation Mono",monospace;
+--sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+--ease:cubic-bezier(.25,1,.5,1)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--desk);color:var(--ink);font:15px/1.5 var(--sans);-webkit-text-size-adjust:100%;-webkit-font-smoothing:antialiased}
+body{background:var(--desk);padding:24px 16px 64px;min-height:100vh;overflow-x:hidden}
+a{color:var(--acc);text-underline-offset:3px;text-decoration-thickness:1px}
+:focus-visible{outline:2px solid var(--acc);outline-offset:3px;border-radius:4px}
+.num,.amt,code,.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.top{max-width:600px;margin:0 auto 14px;display:flex;justify-content:space-between;align-items:center;gap:8px 16px;flex-wrap:wrap;font-size:14px}
+.top a{color:var(--ink2)}
+.top button{font:inherit;font-size:14px;color:var(--ink2);background:none;border:0;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;cursor:pointer}
+.sheet{max-width:600px;margin:0 auto;filter:drop-shadow(0 1px 1px oklch(30% .02 255/.07)) drop-shadow(0 16px 30px oklch(30% .03 255/.13))}
+.paper{--z:14px;position:relative;background:var(--paper);padding:40px 40px 34px;
+-webkit-mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/var(--z) 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/var(--z) 51% repeat-x;
+mask:conic-gradient(from -45deg at bottom,#0000,#000 1deg 89deg,#0000 90deg) bottom/var(--z) 51% repeat-x,conic-gradient(from 135deg at top,#0000,#000 1deg 89deg,#0000 90deg) top/var(--z) 51% repeat-x}
+.hd{display:flex;justify-content:space-between;align-items:flex-start;gap:16px}
+.brand{display:flex;align-items:center;gap:9px;font-weight:650;font-size:16px;letter-spacing:-.01em}
+.logo{width:30px;height:30px;flex:none}
+.doc{text-align:right}
+h1{font-size:30px;line-height:1;letter-spacing:-.03em;font-weight:700}
+.kind{display:block;margin-top:6px;font-size:13px;color:var(--mut)}
+.meta{display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 18px;margin-top:28px;font-size:13.5px}
+.meta dt{color:var(--mut)}
+.meta dd{color:var(--ink);overflow-wrap:anywhere}
+.for{margin-top:22px;padding:14px 16px;background:var(--sunk);border-radius:10px}
+.for small{display:block;font-size:12px;color:var(--mut);margin-bottom:2px}
+.for a,.for b{font-size:16px;font-weight:600;overflow-wrap:anywhere;color:var(--ink)}
+.for a{text-decoration-color:var(--faint)}
+.for a:hover{text-decoration-color:var(--ink)}
+.for span{display:block;font-size:13px;color:var(--mut);margin-top:2px}
+section{margin-top:30px}
+h2{font-size:11.5px;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);padding-bottom:8px;border-bottom:1px solid var(--rule)}
+.items{width:100%;border-collapse:collapse;font-size:14.5px}
+.items th,.items td{text-align:left;padding:12px 0;border-bottom:1px dashed var(--rule);vertical-align:top}
+.items thead th{font-size:11.5px;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);padding:0 0 8px;border-bottom:1px solid var(--rule)}
+.items td b{font-weight:600}
+.items td span{display:block;font-size:12.5px;color:var(--mut);margin-top:2px}
+.items .amt{text-align:right;white-space:nowrap;padding-left:16px}
+.items td.amt{font-size:14.5px}
+.items .nr{font-family:var(--sans);color:var(--mut);font-size:13px}
+.items tfoot th,.items tfoot td{border-bottom:0;border-top:2px solid var(--ink);padding-top:14px}
+.items tfoot th{font-size:16px;font-weight:700}
+.items tfoot td.amt{font-size:26px;font-weight:650;letter-spacing:-.02em;line-height:1.1}
+.items tfoot td.amt.nr{font-size:17px;font-weight:600;color:var(--ink2)}
+.basis{margin-top:8px;font-size:12.5px;color:var(--mut)}
+.facts{display:flex;flex-wrap:wrap;gap:1px;background:var(--rule2);border:1px solid var(--rule2);border-radius:10px;overflow:hidden;margin-top:14px}
+.facts div{flex:1 1 104px;background:var(--paper);padding:10px 12px}
+.facts dt{font-size:12px;color:var(--mut)}
+.facts dd{font-size:15px;font-weight:600;font-family:var(--mono);font-variant-numeric:tabular-nums}
+.line{margin-top:12px;font-size:14px;color:var(--ink2)}
+.fixes{list-style:none;margin-top:12px;display:grid;gap:10px}
+.fixes li{font-size:14px;color:var(--ink2)}
+.fixes b{color:var(--ink);font-weight:600;margin-right:4px}
+details{margin-top:4px}
+summary{cursor:pointer;color:var(--acc);font-size:13px;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px;width:max-content;max-width:100%}
+.cmd{margin-top:6px;display:grid;grid-template-columns:auto minmax(0,1fr);gap:4px 10px;font-size:12.5px;background:var(--sunk);border-radius:8px;padding:10px 12px}
+.cmd dt{color:var(--mut);font-family:var(--sans)}
+.cmd dd{font-family:var(--mono);overflow-wrap:anywhere;white-space:pre-wrap;color:var(--ink)}
+.caps{list-style:none;margin-top:14px;display:grid;gap:16px}
+.cap-h{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;font-size:14.5px}
+.cap-h b{font-weight:650}
+.cap-h .cv{margin-left:auto;font-size:13px;color:var(--mut)}
+.tag{font-size:11px;font-weight:650;letter-spacing:.05em;text-transform:uppercase;color:var(--acc);background:var(--acc-bg);border-radius:99px;padding:1px 8px}
+.meter{position:relative;height:10px;margin-top:7px;border-radius:99px;background:var(--rule2);overflow:hidden}
+.meter i{position:absolute;inset:0 auto 0 0;border-radius:99px;background:var(--acc);transform-origin:left center;animation:grow .9s var(--ease) both}
+.over .meter i{background:repeating-linear-gradient(-45deg,var(--warn-bar) 0 5px,var(--warn-bar2) 5px 10px)}
+.meter.lim i{background:var(--ink2)}
+.cap-s{display:flex;justify-content:space-between;gap:4px 14px;flex-wrap:wrap;margin-top:5px;font-size:12.5px;color:var(--mut)}
+.cap-s .st{color:var(--ink2);font-weight:500}
+.over .cap-s .st{color:var(--warn);font-weight:650}
+.over .cap-s .st::before{content:"\25B2";font-size:9px;margin-right:5px;vertical-align:1px}
+.note{margin-top:12px;font-size:12.5px;color:var(--mut)}
+.proof{display:flex;align-items:center;gap:22px;margin-top:16px}
+.proof p{flex:1;font-size:14.5px;color:var(--ink2)}
+.stamp{flex:none;display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border:2.5px solid currentColor;border-radius:10px;box-shadow:inset 0 0 0 2px var(--paper),inset 0 0 0 3.5px currentColor;font-weight:800;font-size:15px;letter-spacing:.12em;text-transform:uppercase;line-height:1.15;transform:rotate(-4deg);animation:stamp .5s var(--ease) .35s both;max-width:240px;text-align:center}
+.stamp svg{width:20px;height:20px;flex:none;fill:none;stroke:currentColor;stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
+.stamp.ok{color:var(--ok);background:var(--ok-bg)}
+.stamp.part{color:var(--warn);background:var(--warn-bg)}
+.stamp.no{color:var(--ink2);background:var(--sunk);border-style:dashed}
+.perf{position:relative;margin:34px -40px 0;border-top:2px dashed var(--rule)}
+.perf::before,.perf::after{content:"";position:absolute;top:-12px;width:22px;height:22px;border-radius:50%;background:var(--desk)}
+.perf::before{left:-11px}.perf::after{right:-11px}
+.stub{padding-top:24px;display:grid;gap:14px;font-size:12.5px;color:var(--mut)}
+.stub .k{display:block;font-size:11.5px;font-weight:650;letter-spacing:.09em;text-transform:uppercase;color:var(--mut);margin-bottom:3px}
+.stub code{font-size:12px;color:var(--ink2);overflow-wrap:anywhere;word-break:break-all}
+.ev{list-style:none;display:grid;gap:3px}
+.ev li{display:grid;grid-template-columns:96px minmax(0,1fr);gap:10px}
+.ev li span{color:var(--ink2)}
+.check{display:block;background:var(--sunk);border:1px solid var(--rule2);border-radius:8px;padding:9px 12px;color:var(--ink)!important;font-size:12.5px!important}
+.bc{display:block;width:100%;height:28px;fill:var(--ink)}
+.fine{text-align:center}
+.sr-h{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;padding:0}
+@keyframes grow{from{transform:scaleX(0)}}
+@keyframes stamp{from{opacity:0;transform:rotate(-4deg) scale(1.35)}}
+@media (max-width:560px){
+body{padding:16px 10px 48px}
+.paper{padding:32px 20px 28px}
+.perf{margin:30px -20px 0}
+h1{font-size:25px}
+.brand{font-size:15px}.logo{width:26px;height:26px}
+.meta{gap:6px 12px;font-size:13px}
+.proof{flex-direction:column;align-items:flex-start;gap:16px}
+.items tfoot td.amt{font-size:22px}
+.ev li{grid-template-columns:1fr;gap:0}
+}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media print{
+@page{margin:10mm}
+html,body,.paper{background:transparent}
+body{padding:0}
+.top,.perf,details{display:none}
+.sheet{filter:none;max-width:none}
+.paper{-webkit-mask:none;mask:none;padding:0;zoom:.8;column-count:2;column-gap:44px;column-rule:1px dashed var(--rule)}
+.hd,.meta,.for,.items,.caps li,.facts,.proof,.stub>div,.stub>svg,h2{break-inside:avoid}
+h2{break-after:avoid}
+section{margin-top:20px}
+.meta{margin-top:16px}.for{margin-top:14px;padding:10px 14px}
+.items th,.items td{padding:8px 0}
+.fixes{gap:6px}.fixes li{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.stub{padding-top:20px;gap:10px}
+.stamp{transform:none}
+*{animation:none!important;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style></head><body>
+<nav class="top" aria-label="Receipt"><a href="../doc-test/#ex=20261010-173419-beam-apache-org">Open the run</a><button type="button" onclick="window.print()">Print or save as PDF</button></nav>
+<main class="sheet"><article class="paper">
+<header class="hd"><div class="brand"><svg class="logo" viewBox="0 0 64 64" aria-hidden="true"><defs><linearGradient id="frg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#46A6FF"/><stop offset="1" stop-color="#0060DF"/></linearGradient></defs><rect x="2" y="2" width="60" height="60" rx="15" fill="url(#frg)"/><path d="M2 17C2 8.7 8.7 2 17 2h30c8.3 0 15 6.7 15 15v5C46 30 18 30 2 22z" fill="#fff" opacity=".24"/><path d="M21 22l13 10-13 10" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/><rect x="38" y="39" width="12" height="5.5" rx="2.75" fill="#fff"/></svg>FirstRun</div><div class="doc"><h1>Receipt</h1><span class="kind">Doc-test run</span></div></header><dl class="meta"><dt>Receipt no.</dt><dd class="mono">FR-20261010-173419-beam-apache-org</dd><dt>Date</dt><dd>Oct 10, 2026</dd><dt>Issued</dt><dd>Oct 11, 2026</dd></dl><div class="for"><small>For</small><a href="https://beam.apache.org/get-started/quickstart-py">beam.apache.org/get-started/quickstart-py</a></div><section aria-labelledby="h-items"><h2 id="h-items" class="sr-h">Charges</h2><table class="items"><thead><tr><th>Item</th><th class="amt">Amount</th></tr></thead><tbody><tr><td><b>Model usage</b><span>5,520 tokens in, 2,604 out</span></td><td class="amt">$0.0382</td></tr><tr><td><b>Compute</b><span>Clean containers for the run and the proof</span></td><td class="amt">$0.0020</td></tr></tbody><tfoot><tr><th>Total</th><td class="amt">$0.0402</td></tr></tfoot></table><p class="basis">List price, not billed.</p></section><section aria-labelledby="h-caps"><h2 id="h-caps">Tier Caps</h2><ul class="caps"><li class="over"><div class="cap-h"><b>Free</b><span class="cv num">$0.0135 cap</span></div><div class="meter" role="img" aria-label="Free: 281.9% of cap used, over cap"><i style="width:100.0%"></i></div><div class="cap-s"><span class="st">281.9% of cap used, over cap</span><span></span></div></li><li class="ok"><div class="cap-h"><b>Team</b><span class="cv num">$0.0470 cap</span></div><div class="meter" role="img" aria-label="Team: 81.3% of cap used, within cap"><i style="width:81.3%"></i></div><div class="cap-s"><span class="st">81.3% of cap used, within cap</span><span>Price $0.1633 per run, margin 75.4%</span></div></li><li class="over"><div class="cap-h"><b>Scale</b><span class="cv num">$0.0279 cap</span></div><div class="meter" role="img" aria-label="Scale: 137.1% of cap used, over cap"><i style="width:100.0%"></i></div><div class="cap-s"><span class="st">137.1% of cap used, over cap</span><span>Price $0.0997 per run, margin 59.6%</span></div></li></ul><p class="note">Model cost against the most each plan tier allows per run. Caps from <a href="https://cfo.ai/s/_u5lbrHIl9KX_JQE">the cfo.ai model</a>.</p></section><section aria-labelledby="h-work"><h2 id="h-work">Work</h2><dl class="facts"><div><dt>Steps passed</dt><dd>4 of 4</dd></div><div><dt>Time</dt><dd>155.5 s</dd></div><div><dt>Fixes</dt><dd>1</dd></div><div><dt>First break</dt><dd>Step 4</dd></div></dl><p class="line">Step 4 broke first. Jev classed the cause as environment.</p><ol class="fixes"><li><b>Step 4.</b>Beam started and ran with the DirectRunner. The failure is &#x27;No files found based on the file pattern /path/to/inputfile&#x27;, because the quickstart&#x27;s placeholder input file doesn&#x27;t exist in a clean cont...<details><summary>Show the command change</summary><dl class="cmd"><dt>Was</dt><dd>python -m apache_beam.examples.wordcount --input /path/to/inputfile --output /path/to/write/counts</dd><dt>Now</dt><dd>mkdir -p /path/to/write &amp;&amp; printf &#x27;hello world\nhello beam\n&#x27; &gt; /path/to/inputfile &amp;&amp; python -m apache_beam.examples.wordcount --input /path/to/inputfile --output /path/to/write/counts</dd></dl></details></li></ol></section><section aria-labelledby="h-proof"><h2 id="h-proof">Proof</h2><div class="proof"><p>A second clean container ran the patched steps with no model calls, and every step passed.</p><div class="stamp ok" role="img" aria-label="Verified"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg><span>Verified</span></div></div></section>
+<div class="perf" role="separator"></div>
+<footer class="stub">
+<div><span class="k">Receipt hash</span><code>sha256:2fbebbb603c3fee64dee099039d29ac8d41037a69589842fba59b05ec5fdb48a</code></div><div><span class="k">Evidence files</span><ul class="ev"><li><span>state.json</span><code>sha256:9943981e52295a659684cbaf1a2f5bd7bca05ca9197f5acc7cd16e4503c1bf43</code></li><li><span>runbook.json</span><code>sha256:ea86b7d26aea1e83130a25a29bb2bbba37e217fb5e8dd201f1a08f5ae09454e1</code></li><li><span>report.md</span><code>sha256:035cbd33973f44cf30d087562eb4bd1e2c812ad5c83a3bec3e413930cae24f7a</code></li></ul></div><div><span class="k">Caps and prices</span>business/unit_economics.json, generated 2026-10-11T05:12:57Z.</div><div><span class="k">Check it</span><code class="check">firstrun receipt --check docs/receipts/FR-20261010-173419-beam-apache-org.json</code></div><svg class="bc" viewBox="0 0 136 28" preserveAspectRatio="none" aria-hidden="true"><rect x="0" width="3" height="28"/><rect x="4" width="1" height="28"/><rect x="7" width="3" height="28"/><rect x="12" width="3" height="28"/><rect x="17" width="3" height="28"/><rect x="22" width="3" height="28"/><rect x="27" width="3" height="28"/><rect x="32" width="1" height="28"/><rect x="34" width="1" height="28"/><rect x="36" width="1" height="28"/><rect x="38" width="1" height="28"/><rect x="41" width="1" height="28"/><rect x="43" width="1" height="28"/><rect x="46" width="3" height="28"/><rect x="51" width="3" height="28"/><rect x="56" width="1" height="28"/><rect x="58" width="2" height="28"/><rect x="61" width="2" height="28"/><rect x="65" width="3" height="28"/><rect x="70" width="3" height="28"/><rect x="75" width="1" height="28"/><rect x="77" width="1" height="28"/><rect x="80" width="1" height="28"/><rect x="83" width="1" height="28"/><rect x="85" width="1" height="28"/><rect x="87" width="1" height="28"/><rect x="90" width="2" height="28"/><rect x="94" width="3" height="28"/><rect x="98" width="1" height="28"/><rect x="101" width="2" height="28"/><rect x="105" width="1" height="28"/><rect x="108" width="3" height="28"/><rect x="113" width="2" height="28"/><rect x="117" width="2" height="28"/><rect x="120" width="2" height="28"/><rect x="123" width="1" height="28"/><rect x="125" width="1" height="28"/><rect x="127" width="2" height="28"/><rect x="130" width="2" height="28"/><rect x="134" width="1" height="28"/></svg><p class="fine">Issued by FirstRun. List prices, not billed.</p>
+</footer>
+</article></main></body></html>

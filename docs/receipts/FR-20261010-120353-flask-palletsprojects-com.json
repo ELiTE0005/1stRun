@@ -1,0 +1,73 @@
+{
+ "receipt_id": "FR-20261010-120353-flask-palletsprojects-com",
+ "issued_at": "2026-10-11T09:41:08Z",
+ "work": {
+  "source_url": "https://flask.palletsprojects.com/en/stable/quickstart/",
+  "run_id": "20261010-120353-flask-palletsprojects-com",
+  "started_at": "2026-10-10T12:04:19+00:00",
+  "finished_at": "",
+  "seconds": 1.8,
+  "first_failed_step": 1,
+  "failure_class": null,
+  "classified_by": null,
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 98.8
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 98.0
+  }
+ ],
+ "proof": {
+  "status": "running",
+  "verified": false,
+  "steps_passed": 0,
+  "steps_total": 4,
+  "claim": "The run ended running. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-120353-flask-palletsprojects-com",
+  "tags": [
+   "real2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:41c45e45d37a8dd79995255dc3e69bb77104b5b8b6cc8bc649a4603da74884b7",
+   "runbook.json": "sha256:c8e3c9c6583ffcac405303cbec4cc25c908629c803b5a667191f0525ad5d1cd5"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:808cade9c1d8c5e17ff7cfe5367ae02c13139ea25225c4579f6b570ef35d62b7"
+}

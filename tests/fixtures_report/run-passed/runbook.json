@@ -1,0 +1,44 @@
+{
+  "source_url": "https://docs.acme.dev/quickstart",
+  "title": "Acme quickstart",
+  "image": "python:3.11-slim",
+  "docs_markdown": "",
+  "steps": [
+    {
+      "id": 1,
+      "intent": "step",
+      "command": "python -m venv .venv",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    },
+    {
+      "id": 2,
+      "intent": "step",
+      "command": "pip install acme-sdk",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    },
+    {
+      "id": 3,
+      "intent": "step",
+      "command": "python hello.py",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    }
+  ]
+}

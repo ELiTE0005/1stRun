@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-090116-docs-entire-io",
+ "issued_at": "2026-10-11T09:40:38Z",
+ "work": {
+  "source_url": "https://docs.entire.io/installation",
+  "run_id": "20261010-090116-docs-entire-io",
+  "started_at": "2026-10-10T09:01:38+00:00",
+  "finished_at": "2026-10-10T09:08:39+00:00",
+  "seconds": 293.2,
+  "first_failed_step": 2,
+  "failure_class": "docs_bug",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 2,
+    "was": "entire version",
+    "now": "apt-get update -qq && apt-get install -y -qq curl git ca-certificates >/dev/null && curl -fsSL https://entire.io/install.sh | bash && export PATH=\"$HOME/.local/bin:$PATH\" && entire version",
+    "reason": "`entire` was never installed in the clean container, so the shell couldn't find it. The install script puts `entire` in ~/.local/bin, and that directory isn't on PATH in a non-interactive step. The command now installs curl and git first, because python:3.11-slim doesn't include curl and the docs require Git 2.25 or later."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0311,
+  "input_tokens": 8181,
+  "output_tokens": 1528,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 229.5,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 66.2,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 79.7
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 111.6,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 66.8
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 4,
+  "steps_total": 4,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-090116-docs-entire-io",
+  "tags": [
+   "v2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:c174c463e3d804db5965d00a95f52efd4d62863df7e12c099a629a53e1c1f3b8",
+   "runbook.json": "sha256:72d302adc1793a912754860949838915806c135ff3214288725ab0542f0f8665",
+   "report.md": "sha256:deafc7336cef9c92f0bd1155fe3a56ebfcf7a5cf9165058a682ae5a93530d622"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:7526ee49417459c07347e61082688f488ed00e4f88800fcbad2873ad79e46b04"
+}

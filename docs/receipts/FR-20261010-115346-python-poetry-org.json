@@ -1,0 +1,93 @@
+{
+ "receipt_id": "FR-20261010-115346-python-poetry-org",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://python-poetry.org/docs/basic-usage/",
+  "run_id": "20261010-115346-python-poetry-org",
+  "started_at": "2026-10-10T11:54:04+00:00",
+  "finished_at": "2026-10-10T11:57:34+00:00",
+  "seconds": 104.3,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 1,
+    "was": "poetry new poetry-demo",
+    "now": "pip install --quiet poetry && poetry new poetry-demo",
+    "reason": "The python:3.11-slim image does not include Poetry, so 'poetry' is not found. Installing it with pip (which is available in the image) provides the missing prerequisite, and the original command runs unchanged afterward."
+   },
+   {
+    "step": 2,
+    "was": "poetry add pendulum",
+    "now": "poetry init --no-interaction && poetry add pendulum",
+    "reason": "Poetry is installed but /work has no pyproject.toml, so `poetry add` has no project to modify. Running `poetry init --no-interaction` first creates the file, and then the original `poetry add pendulum` runs unchanged."
+   },
+   {
+    "step": 3,
+    "was": "poetry install",
+    "now": "poetry install --no-root",
+    "reason": "The error shows Poetry can't find a package folder named 'work' to install as the current project. The project only needs its dependencies installed, so the error's own suggestion applies: --no-root skips installing the root project. I didn't run a search or fetch the docs; this comes from the error message."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0432,
+  "input_tokens": 12051,
+  "output_tokens": 1785,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 318.8,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 92.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 72.3
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 155.0,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 54.6
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 4,
+  "steps_total": 4,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-115346-python-poetry-org",
+  "tags": [
+   "real2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:b741c7db30bb30fff89382fe47e969e2b4991b3519d6820cddb49c852e1a61e5",
+   "runbook.json": "sha256:1e7192c5e0b0add63668cea1ecd2418cf9d23cad77ae30c7797a81ee8b04ecfe",
+   "report.md": "sha256:fdbd74f883950523e66025dbe524f73802decf50d80a9ef61de74658a8bff369"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:1c9e4443642f5c7e41204e87a776aca103ebe918fda97608135746b603ac1372"
+}

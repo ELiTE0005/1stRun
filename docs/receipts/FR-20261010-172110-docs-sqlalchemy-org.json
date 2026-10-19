@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-172110-docs-sqlalchemy-org",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://docs.sqlalchemy.org/en/21/orm/quickstart.html",
+  "run_id": "20261010-172110-docs-sqlalchemy-org",
+  "started_at": "2026-10-10T17:21:41+00:00",
+  "finished_at": "2026-10-10T17:23:06+00:00",
+  "seconds": 59.4,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 1,
+    "was": "python quickstart.py",
+    "now": "pip install sqlalchemy && python quickstart.py",
+    "reason": "The traceback shows ModuleNotFoundError for 'sqlalchemy', which is not included in the clean python:3.11-slim image. Installing it with pip before running the original command resolves the missing prerequisite."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0476,
+  "input_tokens": 9079,
+  "output_tokens": 2486,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 351.3,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 101.3,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 69.6
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 170.8,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 50.2
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 1,
+  "steps_total": 1,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-172110-docs-sqlalchemy-org",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:2ed6dc04e96c193e17d46cadae957597e291052460ed28a7ea53d3a979310077",
+   "runbook.json": "sha256:a111c2d4fe02ff39ea91fb45c8a3c673c81e9ee8abd10c8b334360c0e4653aed",
+   "report.md": "sha256:7d084d50c8123bc9f71028f16ccee41e598726a96d08ae2e78fa98e42dc721a5"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:03c49f898b04487db98b76a36b7a8519f1e54c6773c65e263d0bee2bd4fc3c3b"
+}

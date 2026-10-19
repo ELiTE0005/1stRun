@@ -1,0 +1,34 @@
+name: Doc-audit request
+description: Put a repo's docs audit on the public doc-audit board.
+title: "Audit request: "
+labels: ["audit-request"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        A public repo needs only its name. A GitHub Action clones it, runs `firstrun audit`, and posts the board link here in about 2 minutes.
+        A private repo is audited on your machine. Run `firstrun audit owner/repo`, then `firstrun audit-submit`. That command fills in the gist link below.
+  - type: input
+    id: repo
+    attributes:
+      label: GitHub repo
+      description: owner/repo or the full GitHub link.
+      placeholder: fastapi/typer
+    validations:
+      required: true
+  - type: input
+    id: gist
+    attributes:
+      label: Audit gist (private repos only)
+      description: Leave empty for a public repo. A maintainer reads a submitted gist before it goes on the board.
+      placeholder: https://gist.github.com/you/0123456789abcdef0123
+    validations:
+      required: false
+  - type: checkboxes
+    id: team
+    attributes:
+      label: Team map
+      description: The board shows who works on which part of the code, from public commits in the last 12 months. It never shows an email.
+      options:
+        - label: Leave out the team map (contributor names and avatars)
+          required: false

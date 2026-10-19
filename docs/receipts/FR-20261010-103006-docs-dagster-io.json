@@ -1,0 +1,93 @@
+{
+ "receipt_id": "FR-20261010-103006-docs-dagster-io",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://docs.dagster.io/getting-started/quickstart",
+  "run_id": "20261010-103006-docs-dagster-io",
+  "started_at": "2026-10-10T10:30:13+00:00",
+  "finished_at": "2026-10-10T10:33:44+00:00",
+  "seconds": 178.2,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "precedent",
+  "patches": [
+   {
+    "step": 1,
+    "was": "create-dagster project dagster-quickstart",
+    "now": "pip install dagster-dg-cli create-dagster && create-dagster project dagster-quickstart",
+    "reason": "create-dagster is not installed in the clean python:3.11-slim image. It is provided by the 'create-dagster' PyPI package, so installing it with pip before running the original command fixes the 'command not found' error. dagster-dg-cli is included so the generated project's dg tooling is available."
+   },
+   {
+    "step": 2,
+    "was": "cd dagster-quickstart && python -m venv .venv && source .venv/bin/activate && pip install pandas && pip install --editable . --group dev",
+    "now": "cd dagster-quickstart && python -m venv .venv && source .venv/bin/activate && pip install --upgrade pip && pip install pandas && pip install --editable . --group dev",
+    "reason": "The error 'no such option: --group' means the pip in the venv is too old. Dependency group support (--group) was added in pip 25.1, and the venv from python:3.11-slim bundles an older pip. Upgrading pip inside the venv before the install fixes it, and the rest of the command is unchanged. I did not run this or look up the docs, so the pip 25.1 version is from memory."
+   },
+   {
+    "step": 2,
+    "was": "cd dagster-quickstart && python -m venv .venv && source .venv/bin/activate && pip install --upgrade pip && pip install pandas && pip install --editable . --group dev",
+    "now": "apt-get update && apt-get install -y --no-install-recommends build-essential git && cd dagster-quickstart && python -m venv .venv && source .venv/bin/activate && pip install --upgrade pip && pip install pandas && pip install --editable . --group dev",
+    "reason": "The error tail shows no explicit error: the editable build succeeded, and the earlier retry of the unchanged command failed the same way. python:3.11-slim ships without gcc, make or git, so any dependency pulled in during the long gql[requests] backtracking that has no wheel or is a VCS requirement would fail to build. This is a best guess, not something the tail proves."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0239,
+  "input_tokens": 5880,
+  "output_tokens": 1418,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 176.4,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 50.9,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 84.1
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 85.8,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 74.0
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 1,
+  "steps_total": 8,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-103006-docs-dagster-io",
+  "tags": [
+   "real"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:7e9fe7b8834029b80c5d31b7aa7dad09c13e7031b29a4e43b445ddff311b5587",
+   "runbook.json": "sha256:9cd2e3678f79a50ec64f3906f1208e89ee61d1b8c56a0861f762e2f6e78d85da",
+   "report.md": "sha256:a525f0d09c279351b5fb1e50324a792384ff73a501bd1b288e294df95b13ae8f"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:3abe3a72c18bc7e7ac96f272607522ccd795a27927c30b954b81c494cce4a6c3"
+}

@@ -1,0 +1,4 @@
+# Every crawler and every agent may read every page.
+# Agents: start at https://firstrun.atharvashah.com/agent.md or https://firstrun.atharvashah.com/llms.txt
+User-agent: *
+Allow: /

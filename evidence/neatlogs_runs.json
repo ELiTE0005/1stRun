@@ -1,0 +1,316 @@
+{
+  "generated_at": "2026-10-10T10:15:21Z",
+  "from": "2026-10-01T00:00:00Z",
+  "groups": {
+    "real": {
+      "count": 8,
+      "avg_spans": 46.0,
+      "avg_tool_calls": 18.375,
+      "avg_cost_usd": 0.0322,
+      "avg_duration_s": 532.7,
+      "errors": 8,
+      "traces": [
+        {
+          "traceId": "37bbd616f2173760f9cb30f202757f61",
+          "startedAt": "2026-10-10T08:59:24.583Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "4e6bf0f2d8617effbe34b8e58b7b97b6",
+          "startedAt": "2026-10-10T09:17:40.527Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "9e30cd0f9cee66410c81fb3a34e03177",
+          "startedAt": "2026-10-10T09:22:28.259Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "a73e1c42548dae27e02f04e69048636c",
+          "startedAt": "2026-10-10T09:28:15.692Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "478cbef0f18c91c0386a5153861a3895",
+          "startedAt": "2026-10-10T09:32:51.828Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "5766a17e7ba5155c918856a79453ef8f",
+          "startedAt": "2026-10-10T09:51:05.597Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "ec246a27f83c9e11d682eb09a1818f58",
+          "startedAt": "2026-10-10T10:02:59.042Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "cef9cc00bcc5369d74ffc7fc5f525244",
+          "startedAt": "2026-10-10T10:10:37.735Z",
+          "status": "ERROR"
+        }
+      ]
+    },
+    "v2": {
+      "count": 8,
+      "avg_spans": 18.625,
+      "avg_tool_calls": 6.75,
+      "avg_cost_usd": 0.0333,
+      "avg_duration_s": 203.9,
+      "errors": 5,
+      "traces": [
+        {
+          "traceId": "8a46d0a60a9a4f9d5287eeff88a5379d",
+          "startedAt": "2026-10-10T08:59:24.573Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "a994d8bf646fa843d271835932ab9209",
+          "startedAt": "2026-10-10T09:01:23.041Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "3b9bf8c02d0a812900579fde243a415e",
+          "startedAt": "2026-10-10T09:08:46.157Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "a462576e751e91543b5623185331d603",
+          "startedAt": "2026-10-10T09:11:04.571Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "495d510fd6da5546dbc6ab6e52bcee68",
+          "startedAt": "2026-10-10T09:32:55.963Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "5520c5cff5e0ea61f130eced082b20c4",
+          "startedAt": "2026-10-10T09:34:41.718Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "f63d2b842c2257ae8c340f6ce44e3848",
+          "startedAt": "2026-10-10T09:41:31.979Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "78e538e63a65c5d00d0281effa119567",
+          "startedAt": "2026-10-10T09:44:53.207Z",
+          "status": "ERROR"
+        }
+      ]
+    },
+    "dev": {
+      "count": 28,
+      "avg_spans": 5.25,
+      "avg_tool_calls": 2.6786,
+      "avg_cost_usd": 0.0008,
+      "avg_duration_s": 19.6,
+      "errors": 16,
+      "traces": [
+        {
+          "traceId": "3e461c229adb64cde62f3638d2c8a07f",
+          "startedAt": "2026-10-10T07:35:32.886Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "fc424557b8a891570a93e75c0b9b143f",
+          "startedAt": "2026-10-10T07:38:01.603Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "3ffc3a02202edfa55fbad1bafc0aa155",
+          "startedAt": "2026-10-10T07:39:46.049Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "a8540df7ed6d5dcf1e06510945dca602",
+          "startedAt": "2026-10-10T08:14:09.202Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "9eb450c5204a39575c65e710c92cd955",
+          "startedAt": "2026-10-10T08:14:13.436Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "e06fe16f03e3aa4625265ca6d989eccb",
+          "startedAt": "2026-10-10T08:14:13.475Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "5cdc5aecdd0084205874717546f291a5",
+          "startedAt": "2026-10-10T08:14:13.513Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "0da143832e6a385a0dad2ed3e5f31beb",
+          "startedAt": "2026-10-10T08:14:13.563Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "5524e505edad300d48537c9146bba8db",
+          "startedAt": "2026-10-10T08:14:14.002Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "0f538d28836d1542ed2c331014c9b446",
+          "startedAt": "2026-10-10T08:14:14.034Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "c7d6cb07266523b0fc12e54c6ba90fca",
+          "startedAt": "2026-10-10T08:14:14.128Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "1fec194dc313a4c0071cfcdad3827a54",
+          "startedAt": "2026-10-10T08:14:14.187Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "cf71093de0a8a6678c6ca47b80739519",
+          "startedAt": "2026-10-10T08:14:14.299Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "9627df8fd9a33623ef8030c9605dd170",
+          "startedAt": "2026-10-10T08:14:14.347Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "ae679c7ffbf134f885710e137a999c6e",
+          "startedAt": "2026-10-10T08:14:14.398Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "394f583ce0a89d7bc4764e22a3b0fbfe",
+          "startedAt": "2026-10-10T08:14:14.444Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "fd34984e102c67efba6c0a82264ddb33",
+          "startedAt": "2026-10-10T08:14:14.486Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "86c5472a86a02c12463894bb60213615",
+          "startedAt": "2026-10-10T08:14:14.514Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "cf99107eb3564e36a09aa61a46e5fad7",
+          "startedAt": "2026-10-10T08:14:14.556Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "d8c8a1ac19b8c40467cb7aa06b67a47e",
+          "startedAt": "2026-10-10T08:14:14.594Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "08db03ca93018cee162e9ad78a54e3a7",
+          "startedAt": "2026-10-10T08:14:14.624Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "0ccde6019a2dec08c80d0cc6c99fbf25",
+          "startedAt": "2026-10-10T08:14:14.667Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "23df7cbb2e1191bdd2676744f942acb4",
+          "startedAt": "2026-10-10T08:14:14.688Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "c3ed1dd0208cb72c583dc3a30fe087e5",
+          "startedAt": "2026-10-10T08:14:14.714Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "6457e7d3008f616fd7ff9997e2e16d5f",
+          "startedAt": "2026-10-10T08:42:33.552Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "7d49f732bfd4a68caf40bb417d74cd9f",
+          "startedAt": "2026-10-10T08:43:17.115Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "2f6afb04646b8a672b746fc90469607e",
+          "startedAt": "2026-10-10T08:43:44.755Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "dc34ce669884cf503a8b0743d8cadb7a",
+          "startedAt": "2026-10-10T08:44:17.631Z",
+          "status": "ERROR"
+        }
+      ]
+    },
+    "check": {
+      "count": 4,
+      "avg_spans": 15.75,
+      "avg_tool_calls": 6.5,
+      "avg_cost_usd": 0.0065,
+      "avg_duration_s": 108.5,
+      "errors": 3,
+      "traces": [
+        {
+          "traceId": "452add41933c88edf12207f9ab89254f",
+          "startedAt": "2026-10-10T08:10:34.319Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "76f9f07ce0f45d9f1740444ac554b8a5",
+          "startedAt": "2026-10-10T08:14:34.355Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "1791e8263c8c06fc3ad5dcc56e26a18a",
+          "startedAt": "2026-10-10T08:17:48.914Z",
+          "status": "ERROR"
+        },
+        {
+          "traceId": "de25873fe939cef49ff9121974130c2d",
+          "startedAt": "2026-10-10T08:18:23.222Z",
+          "status": "ERROR"
+        }
+      ]
+    },
+    "v1": {
+      "count": 4,
+      "avg_spans": 9.25,
+      "avg_tool_calls": 4.25,
+      "avg_cost_usd": 0.0262,
+      "avg_duration_s": 128.4,
+      "errors": 0,
+      "traces": [
+        {
+          "traceId": "fccdbad9a9c6177b90112911fe485bd6",
+          "startedAt": "2026-10-10T07:40:01.463Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "10c44df9626c19f5ac801f1c6d84610e",
+          "startedAt": "2026-10-10T07:42:06.471Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "66ec093b00333fa221fade5d2fc5f55f",
+          "startedAt": "2026-10-10T07:42:34.872Z",
+          "status": "OK"
+        },
+        {
+          "traceId": "b98b419e286acf436083febdb5217cf9",
+          "startedAt": "2026-10-10T07:47:08.325Z",
+          "status": "OK"
+        }
+      ]
+    }
+  }
+}

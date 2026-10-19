@@ -1,0 +1,97 @@
+{
+ "generated_at": "2026-10-11T05:15:57Z",
+ "econ_generated_at": "2026-10-11T05:12:57Z",
+ "margin_floor": 0.7,
+ "drivers": {
+  "traces": 88,
+  "cost_mean": 0.01782,
+  "cost_p50": {
+   "usd": 0.01355,
+   "trace_id": "2120da35fc8a46c311f4da61c07cff0c"
+  },
+  "cost_p90": {
+   "usd": 0.04424,
+   "trace_id": "ec246a27f83c9e11d682eb09a1818f58"
+  },
+  "cost_p95": {
+   "usd": 0.05286,
+   "trace_id": "495d510fd6da5546dbc6ab6e52bcee68"
+  },
+  "cost_max": {
+   "usd": 0.10135,
+   "trace_id": "a462576e751e91543b5623185331d603"
+  },
+  "duration_mean_s": 175.7,
+  "compute_per_run": 0.00203,
+  "vm_price_per_hour": 0.0416
+ },
+ "tiers": {
+  "Free": {
+   "price_usd_month": 0.0,
+   "runs_per_month": 4,
+   "cap_usd_per_run": 0.01355,
+   "cap_rule": "no revenue, so the cap is the measured median run",
+   "measured_runs_over_cap_pct": 50.0
+  },
+  "Team": {
+   "price_usd_month": 49.0,
+   "runs_per_month": 300,
+   "cap_usd_per_run": 0.04697,
+   "cap_rule": "revenue per run x (1 - 0.70) - compute",
+   "measured_runs_over_cap_pct": 9.1,
+   "revenue_per_run": 0.16333,
+   "margin_at_mean_pct": 87.8,
+   "margin_at_p95_pct": 66.4,
+   "margin_at_old_cap_pct": -207.4,
+   "price_for_p95_at_floor": 54.89
+  },
+  "Scale": {
+   "price_usd_month": 299.0,
+   "runs_per_month": 3000,
+   "cap_usd_per_run": 0.02787,
+   "cap_rule": "revenue per run x (1 - 0.70) - compute",
+   "measured_runs_over_cap_pct": 26.1,
+   "revenue_per_run": 0.09967,
+   "margin_at_mean_pct": 80.1,
+   "margin_at_p95_pct": 44.9,
+   "margin_at_old_cap_pct": -403.7,
+   "price_for_p95_at_floor": 548.9
+  }
+ },
+ "cfo": {
+  "model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE",
+  "drivers": "https://app.cfo.ai/s/p_AQL4owYkMGMxN2NhMTMtOGRiNy00NDJjLWEwYzYtMTUwOGJkZDZkNTNlDWRlZmF1bHRfbGF5ZXI",
+  "assumptions": "https://app.cfo.ai/s/p_AQL4owYkYjAzNWE5ZmMtNDg2Yy00MzljLWIwNDMtMmUxMmJhMTE3MDM5DWRlZmF1bHRfbGF5ZXI",
+  "comparison": "https://app.cfo.ai/s/p_AQL4owYkYTM1ZDJjZmItYmZhMy00NjE5LWI5YTYtZmVmODE4MjMwZGMwDWRlZmF1bHRfbGF5ZXI",
+  "source": "cfo.ai workspace 102904, read 2026-10-11 after the drivers refresh to 88 neatlogs traces (change 279298)",
+  "last_month": "2028-04",
+  "cash_last_month": {
+   "Base": 16685,
+   "Growth": 44674,
+   "Tail month": 12503,
+   "Old cap": -12212,
+   "Scale at $529": 21146,
+   "Scale at 1,500 runs": 17280
+  }
+ },
+ "alerts": [
+  {
+   "rule": "firstrun p95 run cost above Scale cap",
+   "fired_at": "2026-10-11T01:31:19.857Z",
+   "trace_id": "",
+   "window_minutes": 1440
+  },
+  {
+   "rule": "firstrun budget guardrail tripped",
+   "fired_at": "2026-10-10T17:40:13.677Z",
+   "trace_id": "1b47ffa63caaa65954c3ea7a02bbf512",
+   "window_minutes": null
+  },
+  {
+   "rule": "firstrun p95 run cost above Scale cap",
+   "fired_at": "2026-10-10T13:31:19.828Z",
+   "trace_id": "",
+   "window_minutes": 1440
+  }
+ ]
+}

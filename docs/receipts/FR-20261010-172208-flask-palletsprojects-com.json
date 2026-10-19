@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-172208-flask-palletsprojects-com",
+ "issued_at": "2026-10-11T09:41:08Z",
+ "work": {
+  "source_url": "https://flask.palletsprojects.com/en/stable/quickstart",
+  "run_id": "20261010-172208-flask-palletsprojects-com",
+  "started_at": "2026-10-10T17:22:20+00:00",
+  "finished_at": "2026-10-10T17:27:42+00:00",
+  "seconds": 305.7,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "timeout",
+  "patches": [
+   {
+    "step": 1,
+    "was": "flask --app hello run",
+    "now": "pip install flask && flask --app hello run",
+    "reason": "flask is not installed in the clean python:3.11-slim image, so the flask executable is missing; installing the flask package provides it and then the original command runs unchanged."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0032,
+  "input_tokens": 797,
+  "output_tokens": 116,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 23.6,
+   "within_cap": true,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 6.8,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 96.8
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 11.5,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 94.8
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 0,
+  "steps_total": 4,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-172208-flask-palletsprojects-com",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:e0f8a4d7c4f82a5a2247a64c997b00e2c3c700f2f1a5987272342094f033a892",
+   "runbook.json": "sha256:c4eddd67fc78aa9916590e716a31edf4f9da2ec3ba98397903b88a7586d1c1ad",
+   "report.md": "sha256:f97eb1874037c261b581335ebffc34c4e4fbc982dfefab14c0a576bf7618e594"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:44128fa7d88060dd838cb6aeb8f8106dd9a6e4a3d70885dcfae3ae8ea720bd6a"
+}

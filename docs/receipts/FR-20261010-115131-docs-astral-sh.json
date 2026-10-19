@@ -1,0 +1,74 @@
+{
+ "receipt_id": "FR-20261010-115131-docs-astral-sh",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://docs.astral.sh/uv/getting-started/installation/",
+  "run_id": "20261010-115131-docs-astral-sh",
+  "started_at": "2026-10-10T11:52:00+00:00",
+  "finished_at": "2026-10-10T11:53:45+00:00",
+  "seconds": 78.3,
+  "first_failed_step": 3,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0312,
+  "input_tokens": 5208,
+  "output_tokens": 1982,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 230.3,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 66.4,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 79.7
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 111.9,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 66.7
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 2,
+  "steps_total": 5,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-115131-docs-astral-sh",
+  "tags": [
+   "real2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:9f1d6913c2d09d6e7c3f1189e66958c8517b11852656c2e2b135993684b082ea",
+   "runbook.json": "sha256:124faf4a0846483601705485336a9fc16570d6707e3d89ce61064988f78aa826",
+   "report.md": "sha256:85c47224c7123cde15a7c93d452183b7a87ccadab1d03879f26965bdc73e63de"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:b509ddfa6088f33f9c7dc3e73e1acc079811621dd5bad9d94ef2aa062e8696dd"
+}

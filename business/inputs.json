@@ -1,0 +1,119 @@
+{
+  "_note": "Inputs for cfo.ai (Ari). measured=true means read from neatlogs traces in evidence/. All else is an assumption with a reason.",
+  "cost_per_run_model": {
+    "value": 0.02623,
+    "unit": "USD per run",
+    "source": "neatlogs: evidence/neatlogs_analytics_v1.json, totalCostUsd 0.10491 over 4 v1 firstrun.run traces. Model cost at Sonnet 5.5 list price, not billed.",
+    "measured": true
+  },
+  "avg_run_duration": {
+    "value": 128.4,
+    "unit": "seconds",
+    "source": "neatlogs: evidence/neatlogs_runs.json, group v1, 4 traces",
+    "measured": true
+  },
+  "avg_tool_calls_per_run": {
+    "value": 4.25,
+    "unit": "tool calls",
+    "source": "neatlogs: evidence/neatlogs_runs.json, group v1, 4 traces",
+    "measured": true
+  },
+  "vm_price_per_hour": {
+    "value": 0.0416,
+    "unit": "USD per hour",
+    "source": "AWS t3.medium on-demand, https://instances.vantage.sh/aws/ec2/t3.medium (default region)",
+    "measured": false
+  },
+  "cost_per_run_compute": {
+    "value": 0.00148,
+    "unit": "USD per run",
+    "source": "Assumption. One t3.medium VM per run, billed for the measured duration only. Reason: a small VM runs the container. Formula 0.0416 x 128.449 / 3600.",
+    "measured": false
+  },
+  "recovery_multiplier": {
+    "value": 1.0,
+    "unit": "x model and compute cost",
+    "source": "Assumption. v1 has no recovery, so 1.0. Replace with v2 measured.",
+    "measured": false
+  },
+  "cost_per_run_total": {
+    "value": 0.02771,
+    "unit": "USD per run",
+    "source": "Derived: (model x multiplier) + compute",
+    "measured": false
+  },
+  "tiers": {
+    "Free": {
+      "price_usd_month": 0,
+      "runs_per_month": 4,
+      "measured": false,
+      "reason": "Assumption. 1 quickstart weekly is about 4 runs a month."
+    },
+    "Team": {
+      "price_usd_month": 49,
+      "runs_per_month": 300,
+      "measured": false,
+      "reason": "Assumption. 10 quickstarts nightly is 300 runs in a 30-day month."
+    },
+    "Scale": {
+      "price_usd_month": 299,
+      "runs_per_month": 3000,
+      "measured": false,
+      "reason": "Assumption. 100 quickstarts nightly is 3,000 runs in a 30-day month."
+    }
+  },
+  "payment_fee": {
+    "value": {
+      "percent": 2.9,
+      "fixed_usd": 0.3
+    },
+    "unit": "per paid invoice",
+    "source": "Assumption. Stripe standard card rate, https://stripe.com/pricing. Not re-checked today.",
+    "measured": false
+  },
+  "monthly_churn": {
+    "Free": {
+      "value": 0.1,
+      "unit": "fraction per month",
+      "source": "Assumption. Free users drift away fast.",
+      "measured": false
+    },
+    "Team": {
+      "value": 0.05,
+      "unit": "fraction per month",
+      "source": "Assumption. Small-team SaaS range.",
+      "measured": false
+    },
+    "Scale": {
+      "value": 0.03,
+      "unit": "fraction per month",
+      "source": "Assumption. Larger accounts switch tools less.",
+      "measured": false
+    }
+  },
+  "founder_salary": {
+    "value": 0,
+    "unit": "USD per month",
+    "source": "Assumption. Solo founder, no salary.",
+    "measured": false
+  },
+  "fixed_costs_per_month": {
+    "value": 25,
+    "unit": "USD per month",
+    "source": "Assumption. Domain about $1, static hosting on a free tier, $24 reserve for email and monitoring. neatlogs and Entire CLI use free tiers, no public price confirmed, so $0.",
+    "measured": false
+  },
+  "starting_cash": {
+    "value": 5000,
+    "unit": "USD on 2026-11-01",
+    "source": "Assumption. Founder savings put into the company.",
+    "measured": false
+  },
+  "new_customers_per_month": {
+    "Base": "Free 10 a month. Team 1 a month in months 2 to 6, then 2 a month. Scale 1 in months 9, 12, 15 and 18.",
+    "Growth": "Free 30 a month. Team 3 a month. Scale 1 a month from month 4.",
+    "measured": false,
+    "reason": "Assumption. No customers exist yet. Replace with real pipeline."
+  },
+  "scenario_months": 18
+}

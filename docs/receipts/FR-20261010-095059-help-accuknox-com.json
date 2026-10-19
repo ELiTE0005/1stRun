@@ -1,0 +1,105 @@
+{
+ "receipt_id": "FR-20261010-095059-help-accuknox-com",
+ "issued_at": "2026-10-11T09:40:38Z",
+ "work": {
+  "source_url": "https://help.accuknox.com/knoxctl/",
+  "run_id": "20261010-095059-help-accuknox-com",
+  "started_at": "2026-10-10T09:51:05+00:00",
+  "finished_at": "2026-10-10T10:02:49+00:00",
+  "seconds": 336.4,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "precedent",
+  "patches": [
+   {
+    "step": 1,
+    "was": "curl -sfL https://knoxctl.accuknox.com/install.sh | sh -",
+    "now": "apt-get update -qq && apt-get install -y -qq curl && curl -sfL https://knoxctl.accuknox.com/install.sh | sh -",
+    "reason": "the base image lacks curl; install it first"
+   },
+   {
+    "step": 2,
+    "was": "curl -fsSL https://nexus.accuknox.com/repository/knoxctl-keys/public.key | \\\ngpg --dearmor | sudo tee /usr/share/keyrings/knoxctl.gpg > /dev/null",
+    "now": "apt-get update && apt-get install -y --no-install-recommends curl ca-certificates gnupg && mkdir -p /usr/share/keyrings && curl -fsSL https://nexus.accuknox.com/repository/knoxctl-keys/public.key | gpg --dearmor | tee /usr/share/keyrings/knoxctl.gpg > /dev/null",
+    "reason": "The python:3.11-slim image lacks gpg and sudo. The container runs as root, so sudo isn't needed and is dropped. gnupg is installed, along with curl and ca-certificates for the HTTPS download, and the keyrings directory is created before writing the key."
+   },
+   {
+    "step": 3,
+    "was": "echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/knoxctl.gpg] https://nexus.accuknox.com/repository/knoxctl/ stable main\" | \\\nsudo tee /etc/apt/sources.list.d/knoxctl-nexus.list",
+    "now": "mkdir -p /etc/apt/sources.list.d && echo \"deb [arch=amd64 signed-by=/usr/share/keyrings/knoxctl.gpg] https://nexus.accuknox.com/repository/knoxctl/ stable main\" | tee /etc/apt/sources.list.d/knoxctl-nexus.list",
+    "reason": "The python:3.11-slim container has no sudo installed and runs as root, so sudo is unnecessary. Dropping it lets tee write the apt source list file directly; mkdir -p ensures the sources.list.d directory exists."
+   },
+   {
+    "step": 4,
+    "was": "sudo apt update",
+    "now": "apt-get update",
+    "reason": "The python:3.11-slim container has no sudo installed, but it runs as root already, so sudo is unnecessary. Running apt-get update directly performs the original command's intent (apt update is the interactive front-end of the same operation)."
+   },
+   {
+    "step": 5,
+    "was": "sudo apt install knoxctl",
+    "now": "apt-get update && apt-get install -y knoxctl",
+    "reason": "The python:3.11-slim container has no sudo and runs as root, so sudo is unnecessary. Dropping it and running apt-get directly works, and apt-get update is needed first because the slim image ships with empty package lists. The -y flag avoids the interactive prompt. If knoxctl is not in the default Debian repositories, the install will still fail and its vendor apt repo would need to be added."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0166,
+  "input_tokens": 3220,
+  "output_tokens": 852,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 122.5,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 35.3,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 88.6
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 59.6,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 81.3
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 5,
+  "steps_total": 5,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-095059-help-accuknox-com",
+  "tags": [
+   "real"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:db2576feefdbef95779a1168948c1b23f0f62aaf04c59b86fc1e117f31b4ffa8",
+   "runbook.json": "sha256:1e75bb10ec965e0b9d5c9b0137aa23f34f71deff6cc8773c6660c344ac7b87a2",
+   "report.md": "sha256:9b358fc1c7ca90fb375d938135ac2dc51b1c323b9f982d7eb83acca7cea11a11"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:d3210ae78a2a665c761d6d863b015765408e2d61ba6fa39b704f486b4ee0127e"
+}

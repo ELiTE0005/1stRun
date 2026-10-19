@@ -1,0 +1,87 @@
+{
+ "receipt_id": "FR-20261010-115735-fastapi-tiangolo-com",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://fastapi.tiangolo.com/tutorial/first-steps/",
+  "run_id": "20261010-115735-fastapi-tiangolo-com",
+  "started_at": "2026-10-10T11:57:53+00:00",
+  "finished_at": "2026-10-10T12:03:50+00:00",
+  "seconds": 334.3,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 1,
+    "was": "uv run fastapi dev",
+    "now": "pip install --quiet uv && uv run fastapi dev",
+    "reason": "The error 'uv: command not found' shows uv is not installed in the clean python:3.11-slim image. Installing uv via pip (available in the image) provides the missing prerequisite, then the original command runs unchanged."
+   },
+   {
+    "step": 1,
+    "was": "pip install --quiet uv && uv run fastapi dev",
+    "now": "pip install --quiet uv && uv run --with 'fastapi[standard]' fastapi dev",
+    "reason": "uv run could not find a 'fastapi' executable because fastapi is not installed in the clean container and there is no project declaring it. Adding --with 'fastapi[standard]' makes uv install fastapi and its CLI into the ephemeral environment before running the original 'fastapi dev' command."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0402,
+  "input_tokens": 10233,
+  "output_tokens": 1619,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 296.7,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 85.6,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 74.1
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 144.2,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 57.6
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 0,
+  "steps_total": 3,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-115735-fastapi-tiangolo-com",
+  "tags": [
+   "real2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:10d5c44cde5f21aafe07acb6a32745085bc9c42b1820e13ec76d889b4026f7fd",
+   "runbook.json": "sha256:0770fd872d0ec1a139b369c9bf2da9266b62a647b0f0eaeac49cbff545298974",
+   "report.md": "sha256:a704014daf9dcce2a998de3e0f49008eb6c907b75a4d8be3b40e2829d1f0e490"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:3b0311d500ba3caf1851877e4188b54a8a11eeae3d56fdebedb2764bfdecfe60"
+}

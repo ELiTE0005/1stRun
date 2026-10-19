@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-173419-beam-apache-org",
+ "issued_at": "2026-10-11T09:40:36Z",
+ "work": {
+  "source_url": "https://beam.apache.org/get-started/quickstart-py",
+  "run_id": "20261010-173419-beam-apache-org",
+  "started_at": "2026-10-10T17:34:59+00:00",
+  "finished_at": "2026-10-10T17:42:09+00:00",
+  "seconds": 155.5,
+  "first_failed_step": 4,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 4,
+    "was": "python -m apache_beam.examples.wordcount --input /path/to/inputfile --output /path/to/write/counts",
+    "now": "mkdir -p /path/to/write && printf 'hello world\\nhello beam\\n' > /path/to/inputfile && python -m apache_beam.examples.wordcount --input /path/to/inputfile --output /path/to/write/counts",
+    "reason": "Beam started and ran with the DirectRunner. The failure is 'No files found based on the file pattern /path/to/inputfile', because the quickstart's placeholder input file doesn't exist in a clean container. The fix creates a small input file and the output directory, then runs the original command unchanged. The apitools warning is harmless."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0382,
+  "input_tokens": 5520,
+  "output_tokens": 2604,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 281.9,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 81.3,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 75.4
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 137.1,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 59.6
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 4,
+  "steps_total": 4,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-173419-beam-apache-org",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:9943981e52295a659684cbaf1a2f5bd7bca05ca9197f5acc7cd16e4503c1bf43",
+   "runbook.json": "sha256:ea86b7d26aea1e83130a25a29bb2bbba37e217fb5e8dd201f1a08f5ae09454e1",
+   "report.md": "sha256:035cbd33973f44cf30d087562eb4bd1e2c812ad5c83a3bec3e413930cae24f7a"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:2fbebbb603c3fee64dee099039d29ac8d41037a69589842fba59b05ec5fdb48a"
+}

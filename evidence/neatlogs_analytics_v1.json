@@ -1,0 +1,62 @@
+{
+  "tag": "v1",
+  "from": "2026-10-10T07:40:00Z",
+  "to": "2026-10-10T07:48:09Z",
+  "kpis": {
+    "data": {
+      "changePercent": {
+        "averageDurationMs": 24.583909620125965,
+        "averageTokens": -87.75510204081633,
+        "detectionHitRate": 0,
+        "errorRate": 0,
+        "totalCostUsd": 154.35132048848251,
+        "traceCount": -20
+      },
+      "current": {
+        "averageDurationMs": 128449.25,
+        "averageTokens": 6,
+        "detectionHitRate": 0.75,
+        "errorRate": 0,
+        "totalCostUsd": 0.10491,
+        "traceCount": 4
+      },
+      "period": {
+        "from": "2026-10-10T07:40:00Z",
+        "to": "2026-10-10T07:48:09Z"
+      },
+      "previous": {
+        "averageDurationMs": 103102.6,
+        "averageTokens": 49,
+        "detectionHitRate": 0,
+        "errorRate": 0,
+        "totalCostUsd": 0.0412461,
+        "traceCount": 5
+      }
+    },
+    "requestId": "req_97399874e10c2bd17cabb2c6c4033d24",
+    "success": true
+  },
+  "cost": {
+    "data": {
+      "breakdown": "cost",
+      "period": {
+        "from": "2026-10-10T07:40:00Z",
+        "to": "2026-10-10T07:48:09Z"
+      },
+      "rows": [
+        {
+          "group": "firstrun",
+          "traceCount": 4,
+          "totalCostUsd": 0.10491,
+          "totalTokens": 24
+        }
+      ],
+      "truncation": {
+        "limit": 100,
+        "truncated": false
+      }
+    },
+    "requestId": "req_52235d185a9c9bc69d0868d697a57eb9",
+    "success": true
+  }
+}

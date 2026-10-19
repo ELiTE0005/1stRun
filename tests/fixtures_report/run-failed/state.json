@@ -1,0 +1,66 @@
+{
+  "run_id": "run-failed",
+  "source_url": "https://beta.example.com/docs/start",
+  "status": "unverified",
+  "step_status": {
+    "1": "passed",
+    "2": "passed",
+    "3": "gave_up",
+    "4": "pending"
+  },
+  "attempts": {},
+  "results": [
+    {
+      "step_id": 1,
+      "command": "python -m venv .venv",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": true
+    },
+    {
+      "step_id": 2,
+      "command": "pip install beta-cli",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 6.0,
+      "timed_out": false,
+      "passed": true
+    },
+    {
+      "step_id": 3,
+      "command": "beta init --project demo",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "Error: unknown flag --project\nUsage: beta init [name]",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": false
+    }
+  ],
+  "last_good_step": 2,
+  "first_failed_step": 3,
+  "patches": [],
+  "gave_up": [
+    {
+      "step_id": 3,
+      "reason": "No fix found within 3 attempts",
+      "failure_class": "docs_bug"
+    }
+  ],
+  "classifications": {},
+  "usage": {
+    "tool_calls": 11,
+    "input_tokens": 9800,
+    "output_tokens": 1500,
+    "cost_usd": 0.0518
+  },
+  "started_at": "2026-10-11T10:00:00Z",
+  "finished_at": "2026-10-11T10:01:30Z",
+  "time_to_first_success_s": null,
+  "tags": [],
+  "stop_reason": "attempts exhausted on step 3"
+}

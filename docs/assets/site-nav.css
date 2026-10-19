@@ -1,0 +1,138 @@
+/* One floating island nav for every page. site-nav.js builds the markup.
+   Light pill on light pages. Over an element marked data-nav="dark" it turns into a dark pill. */
+:root{--sn-ink:oklch(22% .012 255);--sn-mut:oklch(48% .013 255);--sn-line:oklch(91.6% .007 255);--sn-panel:oklch(99.7% .0015 255);--sn-hover:oklch(96.2% .007 255);
+--sn-test:oklch(55% .19 256);--sn-test-d:oklch(47% .17 256);--sn-test-bg:oklch(95.6% .026 256);--sn-audit:oklch(52% .2 295);--sn-audit-d:oklch(45% .18 295);--sn-audit-bg:oklch(95.8% .03 295);--sn-ok:oklch(52% .14 150);
+--sn-sh:0 1px 2px oklch(30% .02 255/.06),0 10px 30px -12px oklch(30% .04 255/.24);--sn-ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-padding-top:88px}
+#sitenav{height:76px}
+.sn-nav{position:fixed;top:12px;left:50%;transform:translateX(-50%);z-index:60;width:max-content;max-width:calc(100% - 24px);font-family:Geist,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;color:var(--sn-ink)}
+.sn-bar{--bi:var(--sn-ink);--bm:var(--sn-mut);--bh:var(--sn-hover);display:flex;align-items:center;gap:2px;height:54px;padding:0 7px 0 14px;border-radius:99px;background:var(--sn-panel);border:1px solid var(--sn-line);box-shadow:var(--sn-sh);
+ transition:background-color .35s var(--sn-ease),border-color .35s var(--sn-ease),box-shadow .35s var(--sn-ease)}
+.sn-nav a{text-decoration:none;color:inherit}
+.sn-wm{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:15.5px;letter-spacing:-.025em;margin-right:8px;color:var(--bi)!important;border-radius:99px}
+.sn-wm svg{width:26px;height:26px;display:block;flex:none}
+.sn-apps,.sn-links{display:flex;align-items:center;gap:2px}
+.sn-sep{width:1px;height:22px;background:var(--sn-line);margin:0 8px;transition:background-color .35s}
+.sn-sp{flex:1;min-width:8px}
+.sn-app,.sn-lk{position:relative;display:inline-flex;align-items:center;gap:8px;height:38px;min-height:0;padding:0 12px 0 6px;border:0;background:none;border-radius:99px;font-family:inherit;font-size:14px;font-weight:500;line-height:1;color:var(--bi);cursor:pointer;white-space:nowrap;transition:background-color .2s,color .2s}
+.sn-nav .sn-lk{padding:0 11px;color:var(--bm);font-size:14px}
+.sn-app:hover,.sn-lk:hover,.sn-app[aria-expanded=true]{background:var(--bh)}
+.sn-nav .sn-lk:hover,.sn-nav .sn-lk.is-here{color:var(--bi)}
+.sn-app b{font-weight:650;letter-spacing:-.01em}
+/* where you are: the current page gets a tinted pill and a colored underline. On the home page the section you are reading gets the underline. */
+.sn-app[aria-current=page].a-test{background:var(--sn-test-bg);color:var(--sn-test-d)}
+.sn-app[aria-current=page].a-audit{background:var(--sn-audit-bg);color:var(--sn-audit-d)}
+.sn-nav .sn-lk[aria-current=page]{color:var(--bi);background:var(--bh);font-weight:600}
+.sn-app[aria-current=page]:after,.sn-lk[aria-current=page]:after,.sn-app.is-here:after,.sn-lk.is-here:after{content:"";position:absolute;left:50%;bottom:3px;width:18px;height:2.5px;margin-left:-9px;border-radius:2px;background:var(--sn-test)}
+.sn-app.a-audit[aria-current=page]:after,.sn-app.a-audit.is-here:after{background:var(--sn-audit)}
+.sn-app[aria-current=page]:after{left:calc(50% + 17px)}.sn-app.is-here:after{left:calc(50% + 17px)}
+.sn-lk.is-here{color:var(--bi)}
+/* Agent Ready: a link that opens a dialog. The violet spark marks it as new. Pressed while its dialog is open. */
+.sn-nav .sn-agent{gap:6px;padding:0 11px 0 9px}
+.sn-agi{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.sn-spark{fill:var(--sn-audit);stroke:none}
+.sn-nav.dark .sn-agi .sn-spark{fill:oklch(80% .12 295)}
+.sn-nav .sn-agent[aria-expanded=true]{color:var(--bi);background:var(--bh);box-shadow:inset 0 0 0 1px var(--sn-line)}
+.sn-nav.dark .sn-agent[aria-expanded=true]{box-shadow:inset 0 0 0 1px oklch(100% 0 0/.18)}
+.sn-it.sn-ag[aria-expanded=true]{background:var(--sn-hover)}
+.sn-tile{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;color:oklch(99.5% .003 256);flex:none}
+.sn-tile svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.t-test{background:var(--sn-test)}.t-audit{background:var(--sn-audit)}
+.sn-car{width:12px;height:12px;fill:none;stroke:var(--bm);stroke-width:1.8;transition:transform .25s var(--sn-ease)}
+.sn-app[aria-expanded=true] .sn-car{transform:rotate(180deg)}
+.sn-gh{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:99px;color:var(--bm)!important;transition:background-color .2s,color .2s}
+.sn-gh:hover{background:var(--bh);color:var(--bi)!important}
+.sn-gh svg{width:17px;height:17px;fill:currentColor}
+/* the one primary action */
+.sn-try{display:inline-flex;align-items:center;height:38px;padding:0 17px;margin-left:4px;border-radius:99px;background:var(--sn-test);color:oklch(99.5% .003 256)!important;font-weight:600;font-size:14px;letter-spacing:-.01em;white-space:nowrap;box-shadow:0 1px 0 oklch(100% 0 0/.18) inset,0 6px 16px -8px oklch(55% .19 256/.8);transition:background-color .2s}
+.sn-try:hover{background:var(--sn-test-d)}
+.sn-burger{display:none;width:40px;height:40px;margin-left:4px;padding:0;min-height:0;border:0;border-radius:99px;background:none;cursor:pointer;color:var(--bi);place-items:center}
+.sn-burger:hover{background:var(--bh)}
+.sn-burger svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;grid-area:1/1;transition:opacity .2s,transform .3s var(--sn-ease)}
+.sn-burger .sn-ix{opacity:0;transform:rotate(-45deg)}
+.sn-burger[aria-expanded=true] .sn-ib{opacity:0;transform:rotate(45deg)}.sn-burger[aria-expanded=true] .sn-ix{opacity:1;transform:none}
+/* dark: the same pill, tinted for a dark stage */
+.sn-nav.dark .sn-bar{--bi:oklch(96% .006 275);--bm:oklch(80% .016 275);--bh:oklch(100% 0 0/.09);background:oklch(17% .025 278/.86);border-color:oklch(100% 0 0/.13);box-shadow:0 1px 0 oklch(100% 0 0/.06) inset,0 14px 34px -14px oklch(3% .02 278/.9)}
+.sn-nav.dark .sn-sep{background:oklch(100% 0 0/.16)}
+.sn-nav.dark .sn-app[aria-current=page].a-test{background:oklch(55% .19 256/.22);color:oklch(86% .08 256)}
+.sn-nav.dark .sn-app[aria-current=page].a-audit{background:oklch(52% .2 295/.24);color:oklch(86% .09 295)}
+.sn-nav.dark .sn-try{box-shadow:0 1px 0 oklch(100% 0 0/.2) inset,0 0 0 1px oklch(70% .15 256/.4),0 8px 22px -8px oklch(55% .19 256/.9)}
+.sn-nav.dark :focus-visible{outline-color:oklch(80% .12 256)}
+/* mega menu */
+.sn-mm{position:absolute;top:62px;left:50%;width:min(660px,calc(100vw - 24px));transform:translate(-50%,-6px);opacity:0;visibility:hidden;transition:opacity .2s var(--sn-ease),transform .25s var(--sn-ease),visibility 0s .25s;border-radius:22px;background:var(--sn-panel);border:1px solid var(--sn-line);box-shadow:var(--sn-sh),0 30px 60px -30px oklch(20% .04 270/.35);padding:10px;display:grid;grid-template-columns:1.1fr 1fr;gap:6px;color:var(--sn-ink)}
+.sn-mm.on{opacity:1;visibility:visible;transform:translate(-50%,0);transition:opacity .2s var(--sn-ease),transform .25s var(--sn-ease)}
+.sn-hero{border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:10px}
+.mm-test .sn-hero{background:var(--sn-test-bg)}.mm-audit .sn-hero{background:var(--sn-audit-bg)}
+.sn-hero .sn-tile{width:40px;height:40px;border-radius:11px}.sn-hero .sn-tile svg{width:22px;height:22px}
+.sn-hero h3{font-size:19px;letter-spacing:-.025em;margin:0}
+.sn-hero p{margin:0;font-size:13.5px;line-height:1.45;color:var(--sn-mut)}
+.sn-nums{display:flex;gap:16px;margin-top:auto}
+.sn-nums span{font-size:12px;color:var(--sn-mut)}.sn-nums b{display:block;font-size:22px;letter-spacing:-.03em;color:var(--sn-ink)}
+.sn-go{align-self:flex-start;display:inline-flex;align-items:center;gap:6px;height:34px;padding:0 14px;border-radius:99px;color:oklch(99.5% .003 256)!important;font-weight:600;font-size:13.5px}
+.mm-test .sn-go{background:var(--sn-test)}.mm-audit .sn-go{background:var(--sn-audit)}
+.sn-list{display:flex;flex-direction:column;gap:2px;padding:4px 0}
+.sn-h{font-size:12px;font-weight:600;color:var(--sn-mut);padding:8px 10px 4px}
+.sn-it{display:grid;grid-template-columns:22px 1fr auto;gap:2px 10px;align-items:center;padding:8px 10px;border-radius:11px}
+.sn-it:hover,.sn-it:focus-visible{background:var(--sn-hover);outline:0}
+.sn-it svg{width:16px;height:16px;fill:none;stroke:var(--sn-mut);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;grid-row:1/span 2}
+.sn-it b{font-size:14px;font-weight:600}.sn-it small{grid-column:2;font-size:12.5px;color:var(--sn-mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sn-it i{font-style:normal;font-size:12px;font-weight:600;color:var(--sn-mut);grid-row:1/span 2;grid-column:3}
+.sn-it i.ok{color:var(--sn-ok)}
+.sn-big{display:grid;grid-template-columns:40px 1fr;gap:1px 12px;align-items:center;padding:10px;border-radius:14px}
+.sn-big .sn-tile{width:40px;height:40px;border-radius:11px;grid-row:1/span 2}.sn-big .sn-tile svg{width:21px;height:21px}
+.sn-big b{font-size:16px;letter-spacing:-.015em}.sn-big small{font-size:13px;color:var(--sn-mut)}
+.sn-big.b-test{background:var(--sn-test-bg)}.sn-big.b-audit{background:var(--sn-audit-bg);margin-top:6px}
+.sn-big[aria-current=page]{box-shadow:inset 0 0 0 1.5px var(--sn-test)}.sn-big.b-audit[aria-current=page]{box-shadow:inset 0 0 0 1.5px var(--sn-audit)}
+.sn-nav :focus-visible{outline:3px solid var(--sn-test);outline-offset:2px}
+/* Proof dropdown: one list, centered under its button by site-nav.js */
+.sn-mm.mm-proof{display:block;width:min(360px,calc(100vw - 24px))}
+.mm-proof .sn-list{padding:2px 0}
+.mm-proof .sn-it{padding:10px}
+.mm-proof .sn-it small{white-space:normal}
+.t-proof{background:oklch(60% .13 68)}
+/* Agent Ready launcher */
+.fr-agw{position:fixed;right:20px;bottom:20px;z-index:40;font-family:Geist,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;opacity:0;visibility:hidden;transform:translateY(8px);pointer-events:none;transition:opacity .2s var(--sn-ease),transform .2s var(--sn-ease),visibility 0s .2s}
+.fr-agw.is-on:not(.is-open){opacity:1;visibility:visible;transform:none;pointer-events:auto;transition:opacity .2s var(--sn-ease),transform .2s var(--sn-ease)}
+/* the border is a conic gradient in the agent colors that turns. @property lets the angle animate. */
+@property --fr-a{syntax:"<angle>";initial-value:0deg;inherits:false}
+@keyframes fr-spin{to{--fr-a:360deg}}
+@keyframes fr-glow{0%,100%{box-shadow:0 1px 2px oklch(30% .02 255/.08),0 10px 26px -12px oklch(45% .12 290/.35)}50%{box-shadow:0 1px 2px oklch(30% .02 255/.08),0 10px 30px -8px oklch(55% .17 40/.45)}}
+.fr-agl{display:inline-flex;align-items:center;gap:9px;height:44px;padding:0 16px 0 7px;border-radius:99px;border:2px solid transparent;background:linear-gradient(var(--sn-panel),var(--sn-panel)) padding-box,conic-gradient(from var(--fr-a),#D97757,#F2B45C,#0A66D6,#7A9DFF,#6B3FC8,#D97757) border-box;animation:fr-spin 3.2s linear infinite,fr-glow 3.2s ease-in-out infinite;box-shadow:var(--sn-sh);color:var(--sn-ink);text-decoration:none;font-size:14px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;cursor:pointer;transition:transform .2s var(--sn-ease),box-shadow .2s var(--sn-ease)}
+.fr-agl:hover{transform:translateY(-2px);animation-duration:1.6s,3.2s}
+.has-agl .sf-in{padding-bottom:88px}
+.fr-agl:focus-visible{outline:3px solid var(--sn-test);outline-offset:2px}
+.fr-agl-st{display:inline-flex}
+.fr-agl-lg{display:grid;place-items:center;width:28px;height:28px;border-radius:50%;background:var(--sn-panel);border:1px solid var(--sn-line);margin-left:-8px}
+.fr-agl-lg:first-child{margin-left:0}
+.fr-agl-lg svg{width:16px;height:16px;display:block}
+.fr-agl-lg.lg-codex svg{width:18px;height:18px}
+.fr-agl-tip{position:absolute;right:0;bottom:calc(100% + 10px);width:260px;padding:10px 12px;border-radius:12px;background:var(--sn-panel);border:1px solid var(--sn-line);box-shadow:var(--sn-sh);color:var(--sn-ink);font-size:13px;line-height:1.45;font-weight:450;opacity:0;visibility:hidden;transform:translateY(4px);pointer-events:none;transition:opacity .2s var(--sn-ease),transform .2s var(--sn-ease),visibility 0s .2s}
+.fr-agw:hover .fr-agl-tip,.fr-agw:focus-within .fr-agl-tip{opacity:1;visibility:visible;transform:none;transition:opacity .2s var(--sn-ease),transform .2s var(--sn-ease)}
+@media(max-width:759px){.fr-agw{right:16px;bottom:16px}.fr-agl{height:40px;gap:7px;padding:0 13px 0 6px}.fr-agl-x{display:none}.fr-agl-lg{width:26px;height:26px}.fr-agl-tip{width:min(260px,calc(100vw - 32px))}}
+@media(max-height:399px){.fr-agw{display:none}}
+@media(prefers-reduced-motion:reduce){.fr-agw,.fr-agl,.fr-agl-tip{transition:none!important;transform:none!important}.fr-agl{animation:none}}
+/* below 1080 px the section links move into the menu */
+@media(max-width:1079px){
+ .sn-links,.sn-sep,.sn-gh{display:none}
+ .sn-burger{display:inline-grid}
+ .sn-mm.mm-more{left:auto;right:0;transform:translateY(-6px);width:min(380px,calc(100vw - 24px));display:block;max-height:calc(100vh - 90px);overflow:auto}
+ .sn-mm.mm-more.on{transform:none}
+}
+@media(min-width:1080px){.sn-mm.mm-more{display:none}}
+/* 1080 to 1239 px: Agent Ready makes the bar about 1050 px wide, so the links pack tighter */
+@media(min-width:1080px) and (max-width:1239px){
+ .sn-nav .sn-lk{padding:0 8px}.sn-nav .sn-agent{padding:0 8px 0 7px}
+ .sn-sep{margin:0 5px}.sn-wm{margin-right:4px}
+}
+/* below 760 px the two tools move into the menu too, so the bar is brand, Try it, menu */
+@media(max-width:759px){
+ #sitenav{height:72px}
+ .sn-nav{left:12px;right:12px;transform:none;width:auto;max-width:none}
+ .sn-bar{height:52px;padding:0 6px 0 12px}
+ .sn-apps{display:none}
+ .sn-try{height:38px;padding:0 15px}
+ .sn-mm{left:0;width:100%;transform:translateY(-6px);grid-template-columns:1fr;max-height:calc(100vh - 90px);overflow:auto}
+ .sn-mm.on{transform:none}
+ .sn-mm.mm-more{width:100%}
+}
+@media(prefers-reduced-motion:reduce){.sn-mm,.sn-car,.sn-bar,.sn-burger svg{transition:none!important}}

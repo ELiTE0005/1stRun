@@ -1,0 +1,123 @@
+{
+ "receipt_id": "FR-20261010-113542-typer-tiangolo-com",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://typer.tiangolo.com/tutorial/first-steps/",
+  "run_id": "20261010-113542-typer-tiangolo-com",
+  "started_at": "2026-10-10T11:36:05+00:00",
+  "finished_at": "2026-10-10T11:38:39+00:00",
+  "seconds": 121.0,
+  "first_failed_step": 1,
+  "failure_class": "docs_bug",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 1,
+    "was": "uv run python main.py",
+    "now": "pip install --quiet uv && uv run python main.py",
+    "reason": "The error 'uv: command not found' shows uv is not installed in the clean python:3.11-slim container. Installing it via pip (available in the image) provides the missing prerequisite, then the original command runs unchanged."
+   },
+   {
+    "step": 1,
+    "was": "pip install --quiet uv && uv run python main.py",
+    "now": "pip install --quiet uv && uv run --with typer python main.py",
+    "reason": "The traceback shows typer isn't installed. `uv run` outside a project doesn't install it, and pip only installed uv. `--with typer` makes uv install typer into a temporary environment for this run. I didn't search or fetch any docs to confirm this. It relies on my knowledge of uv's `--with` flag. main.py must already exist in the working directory."
+   },
+   {
+    "step": 2,
+    "was": "uv run python main.py --help",
+    "now": "uv run --with typer python main.py --help",
+    "reason": "The traceback shows main.py imports typer, which is not installed in the clean container's environment. Adding `--with typer` makes uv install it into the run environment, and the original command and arguments stay the same."
+   },
+   {
+    "step": 3,
+    "was": "uv run python main.py Camila",
+    "now": "uv run --with typer python main.py Camila",
+    "reason": "main.py imports typer, but nothing in the clean container installs it. The `--with typer` flag makes uv add typer to the run environment, so the original command and its argument run unchanged."
+   },
+   {
+    "step": 4,
+    "was": "uv run python main.py Camila Gutiérrez",
+    "now": "uv run --with typer python main.py Camila Gutiérrez",
+    "reason": "The traceback shows main.py imports typer, which is not installed in uv's environment. Adding --with typer installs it for this run, and the original command and arguments are unchanged."
+   },
+   {
+    "step": 5,
+    "was": "uv run python main.py Camila Gutiérrez --formal",
+    "now": "uv run --with typer python main.py Camila Gutiérrez --formal",
+    "reason": "uv ran but the script imports typer, which is not in the project environment of the clean container. `--with typer` installs it for this run, and the original command and arguments are unchanged."
+   },
+   {
+    "step": 6,
+    "was": "uv run python main.py Camila --lastname Gutiérrez",
+    "now": "uv run --with typer python main.py Camila --lastname Gutiérrez",
+    "reason": "uv ran the script but typer is not installed in the clean container's environment. The --with flag makes uv install typer for this run, and the original command and arguments are unchanged."
+   },
+   {
+    "step": 7,
+    "was": "uv run python main.py --help",
+    "now": "uv run --with typer python main.py --help",
+    "reason": "main.py imports typer, which is not installed in the clean container and is not declared as a project dependency. Using uv's --with flag installs typer into the run environment and keeps the original command and arguments."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0815,
+  "input_tokens": 18453,
+  "output_tokens": 4205,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 601.5,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 173.5,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 48.9
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 292.4,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 16.2
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 7,
+  "steps_total": 7,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-113542-typer-tiangolo-com",
+  "tags": [
+   "real2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:177ad58acb859ab27a5b7a4d276172910b7ac7737f93ca840762af371c2957d0",
+   "runbook.json": "sha256:f4bdea13c475aab72df1c3a63b801d50ce39e49f5b73b3f25abb5660eeb80790",
+   "report.md": "sha256:660dbfbe878410aa42b02646aa2db7e379b1a8bf89bcc01559e3b8cb3d10b985"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:6228ba98facdd516457dc343fa2389947e473f79b4442864d0705ceef472947a"
+}

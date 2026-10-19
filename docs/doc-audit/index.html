@@ -1,0 +1,1239 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Doc-audit | FirstRun</title>
+<meta name="description" content="Which docs pages are stale, which shipped features have no docs, and what your docs team should ship next. Built from the git history.">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site-nav.css">
+<link rel="stylesheet" href="/assets/site-footer.css">
+<link rel="stylesheet" href="/assets/type.css">
+<link rel="alternate" type="text/markdown" href="/agent.md" title="FirstRun agent quickstart">
+<link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+--bg:oklch(98.2% .004 255);--panel:oklch(99.7% .0015 255);--sunk:oklch(97.1% .005 255);--hover:oklch(96.2% .007 255);
+--line:oklch(91.6% .007 255);--line2:oklch(94.6% .005 255);
+--ink:oklch(22% .012 255);--ink2:oklch(36% .012 255);--mut:oklch(50% .013 255);--faint:oklch(68% .01 255);
+--acc:oklch(53% .19 256);--acc-bg:oklch(95.6% .026 256);
+--vio:oklch(52% .2 295);--vio-bg:oklch(95.8% .03 295);
+--ok:oklch(52% .14 150);--ok-bg:oklch(96.4% .032 150);
+--bad:oklch(53% .19 27);--bad-bg:oklch(96.6% .02 27);
+--warn:oklch(52% .12 66);--warn-bg:oklch(96.2% .045 85);
+--sh:0 1px 2px oklch(30% .02 255/.06);--sh2:0 1px 3px oklch(30% .02 255/.08),0 16px 40px -12px oklch(30% .04 255/.26);
+--ease:cubic-bezier(.22,1,.36,1);--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+--lift:0 1px 2px oklch(30% .03 256/.05),0 8px 24px -10px oklch(35% .06 256/.16),0 24px 56px -28px oklch(35% .06 256/.18);
+/* person color slots by rank: --pN ribbon and ring, --dN initials disc, --tN tint */
+--p0:oklch(62% .15 295);--p1:oklch(62% .15 256);--p2:oklch(62% .15 195);--p3:oklch(62% .15 150);--p4:oklch(62% .15 78);--p5:oklch(62% .15 35);
+--p6:oklch(62% .15 340);--p7:oklch(62% .15 220);--p8:oklch(62% .15 120);--p9:oklch(62% .15 10);--p10:oklch(62% .15 270);--p11:oklch(62% .15 170);
+--po:oklch(70% .01 255)}
+html,body{overflow-x:clip}
+*{box-sizing:border-box;margin:0}
+html{background:var(--bg);color:var(--ink);font-family:Geist,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{line-height:1.45;font-size:15px;-webkit-font-smoothing:antialiased;background:var(--bg);min-height:100vh}
+a{color:var(--acc);text-underline-offset:3px}
+button{font:inherit;color:inherit}
+code,.mono{font-family:var(--mono)}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:8px}
+[hidden]{display:none!important}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+main{max-width:1240px;margin:0 auto;padding:24px 20px 72px}
+h1{font-size:var(--t-h1);line-height:1.05;letter-spacing:-.04em;font-weight:700}
+h2{font-size:var(--t-h2);line-height:1.15;letter-spacing:-.03em;font-weight:700}
+.lede{font-size:16px;color:var(--mut);margin-top:6px;max-width:58ch}
+.sec{margin-top:36px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.sec-h p{color:var(--mut);font-size:13.5px}
+.btn{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:600;font-size:13.5px;text-decoration:none;cursor:pointer;white-space:nowrap;box-shadow:var(--sh)}
+.btn:hover{background:var(--hover)}
+.btn.pri{background:var(--vio);border-color:transparent;color:oklch(99% .005 295)}
+.btn.pri:hover{background:oklch(47% .2 295)}
+.tile{display:inline-grid;place-items:center;width:28px;height:28px;border-radius:8px;flex:none;color:oklch(99% .005 255)}
+.tile svg.i{width:16px;height:16px}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh)}
+.back{display:inline-flex;align-items:center;gap:6px;font-size:13.5px;color:var(--mut);text-decoration:none}
+.back:hover{color:var(--ink)}
+.av{width:40px;height:40px;border-radius:10px;background:var(--sunk);border:1px solid var(--line);flex:none;object-fit:cover}
+
+/* start view */
+.lh-top{display:flex;gap:16px;align-items:flex-start}
+.lh-top .sn-tile{width:52px;height:52px;border-radius:14px;margin-top:4px}.lh-top .sn-tile svg{width:28px;height:28px}
+.ask{display:flex;gap:8px;align-items:center;margin-top:22px;max-width:640px;padding:6px 6px 6px 16px}
+.ask svg.i{color:var(--mut)}
+.ask input{flex:1;min-width:0;font:inherit;font-size:15.5px;border:0;background:none;color:var(--ink);padding:8px 0;outline:0}
+.mode{display:inline-flex;gap:4px;margin-top:22px;padding:4px;border-radius:12px;background:var(--sunk);border:1px solid var(--line)}
+.mode button{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 14px;border:0;border-radius:9px;background:none;font-weight:600;font-size:13.5px;color:var(--mut);cursor:pointer}
+.mode button svg.i{width:15px;height:15px}
+.mode button[aria-pressed=true]{background:var(--panel);color:var(--ink);box-shadow:var(--sh)}
+.ask.top{margin-top:10px}
+.hint{font-size:13px;color:var(--mut);margin-top:8px;max-width:640px}
+.steps{list-style:none;padding:0;margin-top:12px;max-width:760px;display:grid;gap:8px}
+.steps li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:4px 12px;padding:12px 14px}
+.steps .n{grid-row:1/span 3;width:26px;height:26px;border-radius:99px;display:grid;place-items:center;font-size:13px;font-weight:700;background:var(--vio-bg);color:var(--vio)}
+.steps b{font-size:14.5px}
+.steps span{font-size:13px;color:var(--mut)}
+.steps .opt{font-size:var(--t-meta);font-weight:600;color:var(--vio);margin-left:8px}
+.steps .dw-acts{margin-top:6px}
+.code{display:flex;align-items:center;gap:8px;margin-top:4px;background:var(--sunk);border:1px solid var(--line);border-radius:9px;padding:6px 6px 6px 12px;font:12.5px var(--mono);overflow-x:auto}
+.code code{flex:1;white-space:pre}
+.code .btn{height:30px;padding:0 10px;flex:none}
+.cmd{display:flex;gap:10px;align-items:flex-start;justify-content:space-between;margin-top:10px;max-width:640px;padding:12px 12px 12px 16px;font-size:13px}
+.cmd code{white-space:pre;overflow-x:auto}
+.flow{list-style:none;padding:0;display:grid;gap:14px;margin-top:22px}
+.flow li{display:flex;gap:14px;align-items:flex-start}
+.flow b{display:block;font-size:15px;letter-spacing:-.01em}
+.flow span{font-size:13.5px;color:var(--mut);line-height:1.45}
+.flow .tile{background:var(--vio-bg);color:var(--vio);width:32px;height:32px;border-radius:9px}
+/* hero */
+.hero{margin:-24px calc(50% - 50vw) 0;padding:clamp(48px,6vw,88px) 0 clamp(40px,4.5vw,64px);background:oklch(96.5% .022 300);border-bottom:1px solid oklch(89.5% .045 300)}
+.hero-in{max-width:1120px;margin:0 auto;padding:0 24px;display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);gap:clamp(40px,5vw,72px);align-items:center}
+.hero-l,.hero-r{min-width:0}
+.hero .sn-tile{width:56px;height:56px;border-radius:16px}.hero .sn-tile svg{width:30px;height:30px}
+.hero h1{font-size:clamp(40px,4.6vw,56px);line-height:1.05;font-weight:700;letter-spacing:-.04em;margin-top:22px}
+.hero .lede{font-size:18px;line-height:1.5;margin-top:16px;max-width:44ch;color:var(--ink2)}
+.hero .mode{margin-top:28px;background:oklch(99% .006 300/.7);border-color:oklch(89.5% .045 300)}
+.hero .ask{max-width:560px;height:60px;border-radius:16px;padding:8px 8px 8px 18px;margin-top:12px}
+.hero .ask input{font-size:16px}
+.hero .ask .btn.pri{height:44px;border-radius:12px;padding:0 20px;font-size:14.5px}
+.hero .hint{margin-top:12px;max-width:560px;font-size:13.5px}
+.hero .steps{grid-column:1/-1;max-width:none;margin-top:0}
+.demo{position:relative;display:grid;place-items:center;aspect-ratio:16/9;border-radius:24px;overflow:hidden;text-decoration:none;color:var(--ink);background:linear-gradient(150deg,oklch(99% .008 300),oklch(93.5% .045 295));border:1px solid oklch(89.5% .045 300);box-shadow:var(--lift);transition:transform .25s var(--ease),box-shadow .25s var(--ease)}
+.demo:hover{transform:translateY(-2px)}
+.demo-ic{position:absolute;top:18px;left:20px;display:flex;gap:8px}
+.demo-ic .tile{background:var(--panel);color:var(--vio);border:1px solid oklch(89.5% .045 300);width:32px;height:32px;border-radius:10px}
+.demo-play{display:grid;place-items:center;width:76px;height:76px;border-radius:50%;background:var(--vio);color:#fff;box-shadow:0 12px 30px -8px oklch(52% .2 295/.55);transition:transform .25s var(--ease)}
+.demo:hover .demo-play{transform:scale(1.06)}
+.demo-play svg{width:30px;height:30px;fill:currentColor;margin-left:4px}
+.demo-cap{position:absolute;left:20px;bottom:16px;font-weight:650;font-size:15px;text-decoration:underline;text-underline-offset:3px}
+.demo:focus-visible{outline:3px solid var(--acc);outline-offset:3px}
+.demo.has-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}.demo.has-img .demo-play{position:relative;z-index:1}
+.demo-sub{display:flex;flex-wrap:wrap;justify-content:space-between;gap:6px 16px;margin-top:14px;font-size:15px;color:var(--mut)}.demo-sub>a{font-weight:650;color:var(--vio)}
+.alist{list-style:none;padding:0;overflow:hidden}
+.alist li+li{border-top:1px solid var(--line2)}
+.alist a{display:grid;grid-template-columns:40px minmax(0,1fr) 220px auto;gap:4px 16px;align-items:center;padding:14px 18px;color:inherit;text-decoration:none}
+.alist li:hover{background:var(--hover)}
+.alist .rcpw{padding:0 18px 14px 74px;margin-top:-4px}
+.alist a.rcp,.rcp{display:inline-flex;grid-template-columns:none;align-items:center;gap:7px;min-height:30px;padding:3px 13px 3px 10px;border-radius:99px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:13px;font-weight:600;text-decoration:none;box-shadow:var(--sh);transition:border-color .15s,color .15s,background .15s}
+.rcp svg.i{width:15px;height:15px;color:var(--vio)}
+.rcp .lbl{text-decoration:underline;text-decoration-color:oklch(80% .08 295);text-underline-offset:3px}
+.rcp .sep{color:var(--faint);font-weight:400}
+.rcp .amt{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.rcp .nc{font-weight:400;color:var(--mut)}
+.rcp .est{font-weight:500;color:var(--mut);font-size:.92em}
+.alist a.rcp:hover,.rcp:hover{border-color:var(--vio);color:var(--vio);background:var(--vio-bg)}
+.rcp:hover .lbl{text-decoration-color:currentColor}
+.rh .acts .rcp{height:36px;min-height:36px;border-radius:10px;padding:0 14px 0 12px}
+.alist .nm{font-weight:650;font-size:15.5px;letter-spacing:-.01em}
+.alist .nm small{display:block;font-weight:400;font-size:12.5px;color:var(--mut)}
+.alist .go{color:var(--vio);font-weight:600;font-size:13.5px;display:inline-flex;gap:4px;align-items:center}
+.minis{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+
+/* chips */
+.chip{display:inline-flex;align-items:center;gap:5px;height:24px;padding:0 9px;border-radius:99px;font-size:12.5px;font-weight:600;background:var(--sunk);color:var(--ink2);border:1px solid transparent;white-space:nowrap}
+.chip svg.i{width:13px;height:13px}
+.c-stale{background:var(--bad-bg);color:var(--bad)}.c-unchecked{background:var(--warn-bg);color:var(--warn)}
+.c-quiet{background:var(--sunk);color:var(--mut)}.c-aging{background:var(--warn-bg);color:var(--warn)}.c-fresh{background:var(--ok-bg);color:var(--ok)}
+.c-gap{background:var(--vio-bg);color:var(--vio)}
+button.chip{cursor:pointer}
+button.chip[aria-pressed=true]{border-color:currentColor}
+
+/* report: head and health */
+.rh{display:flex;gap:14px;align-items:center;margin-top:10px;flex-wrap:wrap}
+.rh h1{font-size:28px}
+.rh .meta{color:var(--mut);font-size:13.5px;margin-top:2px}
+.rh .acts{margin-left:auto;display:flex;gap:8px}
+.health{margin-top:18px;padding:14px 16px;display:grid;gap:10px}
+.bar{display:flex;height:10px;border-radius:99px;overflow:hidden;background:var(--line2);gap:2px}
+.bar i{display:block;height:100%}
+.b-stale{background:var(--bad)}.b-unchecked{background:oklch(72% .15 75)}.b-quiet{background:var(--faint)}.b-aging{background:oklch(82% .12 85)}.b-fresh{background:var(--ok)}
+.hrow{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+.hrow .lbl{font-size:13px;color:var(--mut);margin-right:4px}
+.hrow .sp{flex:1}
+
+/* kind tiles */
+.k-document .tile{background:var(--bad)}.k-refresh .tile{background:oklch(64% .14 70)}.k-feature .tile{background:var(--acc)}.k-content .tile{background:var(--vio)}
+.k-automate .tile{background:var(--ok)}.k-quickstart .tile{background:var(--ink)}
+.allgood{display:flex;gap:12px;align-items:center;padding:16px 18px;flex-wrap:wrap}.allgood p{color:var(--ink2);font-size:14.5px}
+
+/* centered section heads, no subtitle */
+.hc{text-align:center;font-size:var(--t-h2);line-height:1.15;font-weight:700;letter-spacing:-.03em;text-wrap:balance;margin:0 auto 22px;max-width:20em}
+.cap{text-align:center;color:var(--mut);font-size:13.5px;margin-top:14px}
+
+/* team band: the homepage Doc-audit band, full bleed */
+.tband{position:relative;isolation:isolate;margin:44px calc(50% - 50vw) 0;padding:clamp(52px,6.5vw,88px) 0 clamp(40px,5vw,64px);background:oklch(96.5% .022 300);border-block:1px solid oklch(89.5% .045 300);overflow:hidden}
+.tband:before,.tband:after{content:"";position:absolute;inset:0;z-index:-1;pointer-events:none}
+.tband:before{background:radial-gradient(90% 55% at 50% 0%,oklch(91.5% .06 300/.85),transparent 70%)}
+.tband:after{background-image:radial-gradient(circle,oklch(52% .2 295/.15) 1px,transparent 1.4px);background-size:24px 24px;-webkit-mask-image:radial-gradient(70% 50% at 50% 22%,#000,transparent 78%);mask-image:radial-gradient(70% 50% at 50% 22%,#000,transparent 78%)}
+.tb-in{max-width:1240px;margin:0 auto;padding:0 20px}
+.tm{background:var(--panel);border:1px solid var(--line);border-radius:20px;box-shadow:var(--lift);padding:24px 24px 18px}
+.tm-top{display:flex;gap:16px 24px;align-items:flex-start;justify-content:space-between}
+.tm-say{font-size:16.5px;line-height:1.5;color:var(--ink2);max-width:64ch;min-height:3em;letter-spacing:-.005em;text-wrap:pretty}
+.tm-say b{color:var(--ink);font-weight:650}
+.tm-say .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--pc);margin:0 6px 1px 1px;vertical-align:middle}
+.tm .mode{margin-top:0;flex:none}
+.tm .mode button{height:32px;padding:0 13px}
+
+/* map: people | ribbons | areas, 52px row pitch */
+.tm-map{display:grid;grid-template-columns:minmax(200px,23%) minmax(160px,1fr) minmax(180px,25%);margin-top:18px}
+.tm-hd{font-size:var(--t-meta);font-weight:600;color:var(--mut);padding:0 0 10px 8px;border-bottom:1px solid var(--line2);margin-bottom:10px}
+.tm-hd.r{padding-left:14px}
+.tm-hd.c{border-bottom-color:var(--line2)}
+.tm-ppl,.tm-ars{display:flex;flex-direction:column;min-width:0}
+.tm-sv{position:relative;min-width:0}
+.tm-svg{display:block;width:100%;overflow:visible}
+.tm-p,.tm-a{position:relative;display:grid;align-items:center;height:44px;margin:4px 0;width:100%;border:0;background:none;border-radius:12px;text-align:left;cursor:pointer;transition:background .18s var(--ease),opacity .18s var(--ease)}
+.tm-p{grid-template-columns:32px minmax(0,1fr) auto;gap:0 11px;padding:0 12px 0 6px}
+.tm-a{grid-template-columns:minmax(0,1fr) auto;gap:0 10px;padding:0 10px 0 14px}
+.tm-p:hover,.tm-a:hover{background:var(--hover)}
+.tm-p[aria-pressed=true],.tm-a[aria-pressed=true]{background:var(--tc,var(--vio-bg));box-shadow:inset 0 0 0 1.5px var(--pc,var(--vio))}
+.tm-p .nm,.tm-a .nm{display:block;font-size:14.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.25}
+.tm-p .sb{display:block;font-size:12.5px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-variant-numeric:tabular-nums}
+.tm-a .pth{display:block;font:12.5px/1.3 var(--mono);color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;direction:rtl;text-align:left}
+.tm-a .pth bdi{direction:ltr;unicode-bidi:isolate}
+.tm-p .pk{font-size:12.5px;font-weight:650;color:var(--vio);background:var(--vio-bg);border-radius:99px;padding:2px 8px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.tm-o{cursor:default}.tm-o:hover{background:none}
+.ev{display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:var(--sunk);border:1.5px dashed oklch(78% .01 255);font-size:12.5px;font-weight:650;color:var(--mut);font-variant-numeric:tabular-nums}
+/* focus state: one person or one area lights up, the rest steps back */
+.tm.f .tm-p:not(.hi),.tm.f .tm-a:not(.hi){opacity:.38}
+.tm.f .tm-a.hi .nm{font-weight:700;color:var(--ink)}
+.rb{fill-opacity:.3;mix-blend-mode:multiply;transition:fill-opacity .18s var(--ease)}
+.tm-svg.f .rb{fill-opacity:.055}
+.tm-svg.f .rb.hi{fill-opacity:.8}
+.tm-svg .nd{transition:opacity .18s var(--ease)}
+.tm-svg.f .nd:not(.hi){opacity:.25}
+.tm-svg.pre .rb{opacity:0}
+.tm.f .ar:not(.hi){opacity:.45}
+.tm-svg.in .rb{animation:rbin .5s var(--ease) both;animation-delay:calc(var(--i)*12ms);transform-box:view-box;transform-origin:0 50%}
+@keyframes rbin{from{opacity:0;transform:scaleX(.15)}to{opacity:1;transform:none}}
+
+/* badges */
+.bdg{display:inline-flex;align-items:center;gap:4px;height:22px;padding:0 8px;border-radius:99px;font-size:12.5px;font-weight:650;white-space:nowrap;background:var(--sunk);color:var(--mut)}
+.bdg.warn{background:var(--warn-bg);color:var(--warn)}
+.bdg.qt{background:none;border:1px dashed oklch(80% .01 255)}
+.bdg.dc{background:var(--acc-bg);color:var(--acc)}
+
+/* avatars: ring in the person's color, initials under the photo */
+.avr{position:relative;display:inline-grid;place-items:center;flex:none;width:var(--s,32px);height:var(--s,32px);border-radius:50%;background:var(--panel);box-shadow:0 0 0 2px var(--pc,var(--po))}
+.avr .ini{width:100%;height:100%;border-radius:50%;display:grid;place-items:center;background:var(--dc,oklch(48% .02 255));color:oklch(99% .004 255);font-size:calc(var(--s,32px)*.36);font-weight:650;letter-spacing:.01em;line-height:1}
+.avr img{position:absolute;inset:2px;width:calc(100% - 4px);height:calc(100% - 4px);border-radius:50%;object-fit:cover;background:var(--panel);transition:opacity .2s var(--ease)}
+.avr.none{background:none;box-shadow:none;border:1.5px dashed oklch(74% .01 255)}
+
+/* By-area list */
+.tm-list{list-style:none;padding:0;margin-top:18px;display:none}
+.tm.byarea .tm-map{display:none}.tm.byarea .tm-list{display:block}
+.tm-list li+li{border-top:1px solid var(--line2)}
+.ar{display:grid;grid-template-columns:minmax(150px,240px) minmax(0,1fr) 216px 92px;gap:6px 18px;align-items:center;width:100%;padding:12px 10px;border:0;background:none;text-align:left;cursor:pointer;border-radius:12px;transition:background .18s var(--ease),opacity .18s var(--ease)}
+.ar:hover{background:var(--hover)}
+.ar[aria-pressed=true]{background:var(--vio-bg);box-shadow:inset 0 0 0 1.5px var(--vio)}
+.ar .nm{display:block;font-size:14.5px;font-weight:600;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ar .pth{display:block;font:12.5px/1.3 var(--mono);color:var(--faint);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.sbar{display:flex;height:12px;border-radius:99px;overflow:hidden;gap:2px;background:var(--line2)}
+.sbar i{display:block;height:100%;background:var(--pc);transition:opacity .18s var(--ease)}
+.sbar.qt{opacity:.5;outline:1px dashed oklch(70% .01 255);outline-offset:2px}
+.tm.f .sbar i:not(.hi){opacity:.18}
+.ows{display:flex;gap:12px;align-items:center}
+.ows span{display:inline-flex;align-items:center;gap:6px;font-size:12.5px;font-weight:600;color:var(--ink2);font-variant-numeric:tabular-nums}
+.tm-chips{display:none;flex-wrap:wrap;gap:8px;margin-top:14px}
+.pc{display:inline-flex;align-items:center;gap:7px;height:34px;padding:0 12px 0 5px;border-radius:99px;border:1px solid var(--line);background:var(--panel);font-size:13.5px;font-weight:600;cursor:pointer;box-shadow:var(--sh)}
+.pc[aria-pressed=true]{background:var(--tc);border-color:var(--pc);box-shadow:inset 0 0 0 1px var(--pc)}
+.pc.pmore{padding:0 13px;color:var(--mut)}
+
+/* facts and the note under the card */
+.tm-facts{list-style:none;padding:0;display:flex;flex-wrap:wrap;justify-content:center;gap:10px 30px;margin:24px auto 0;max-width:1080px}
+.tm-facts li{display:flex;align-items:flex-start;gap:9px;font-size:14px;color:var(--ink2);max-width:40ch;line-height:1.4}
+.tm-facts li b{color:var(--ink);font-weight:650}
+.tm-facts .g{display:grid;place-items:center;width:24px;height:24px;border-radius:50%;flex:none;margin-top:-2px;background:var(--panel);box-shadow:var(--sh);color:var(--vio)}
+.tm-facts .g svg.i{width:13px;height:13px}
+.tm-facts .warn .g{color:var(--warn);background:var(--warn-bg)}
+.tm-facts .ok .g{color:var(--ok);background:var(--ok-bg)}
+.tm-note{text-align:center;color:var(--mut);font-size:13px;margin:18px auto 0;max-width:64ch;text-wrap:balance}
+.tm-note a{color:oklch(45% .18 295);text-decoration:underline}
+
+/* What to Ship Next: one ranked column */
+.tband+.sec{margin-top:60px}
+.nx-f{display:flex;justify-content:center;margin:-6px 0 16px;min-height:0}
+.nx-f .chip{height:32px;padding:0 6px 0 12px;gap:8px;font-size:13.5px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--sh);color:var(--ink)}
+.nx-f .chip button{border:0;background:var(--vio-bg);color:oklch(45% .18 295);font-weight:650;font-size:12.5px;height:24px;padding:0 10px;border-radius:99px;cursor:pointer;text-decoration:underline;text-underline-offset:2px}
+.nx{list-style:none;padding:0;max-width:980px;margin:0 auto;border-radius:20px;box-shadow:var(--lift);overflow:hidden}
+.nx>li{position:relative;display:grid;grid-template-columns:40px minmax(0,1fr) 196px;gap:4px 22px;padding:20px 24px 20px 20px;transition:background .18s var(--ease),opacity .18s var(--ease),box-shadow .18s var(--ease)}
+.nx>li+li{border-top:1px solid var(--line2)}
+.nx>li:hover{background:oklch(98.6% .006 295)}
+.nx>li.dim{opacity:.55}
+.nx>li.lit{background:var(--tc);box-shadow:inset 0 0 0 1.5px var(--pc)}
+.nx>li.lit .nx-n{color:var(--dc)}
+.nx-rk{padding-top:1px}
+.nx-n{display:block;font-size:22px;font-weight:700;line-height:1;letter-spacing:-.03em;color:var(--vio);font-variant-numeric:tabular-nums;transition:color .18s var(--ease)}
+.nx-sc{display:block;width:32px;height:3px;border-radius:99px;background:var(--line);margin-top:9px;overflow:hidden}
+.nx-sc i{display:block;height:100%;background:var(--vio);border-radius:99px}
+.nx-k{display:inline-flex;align-items:center;gap:7px;font-size:var(--t-meta);font-weight:600;color:var(--mut)}
+.nx-k .tile{width:18px;height:18px;border-radius:5px}.nx-k .tile svg.i{width:11px;height:11px;stroke-width:2.1}
+.nx-open{display:block;margin-top:6px;padding:0;border:0;background:none;text-align:left;cursor:pointer;font-size:16px;font-weight:650;line-height:1.35;letter-spacing:-.015em;color:var(--ink);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.nx-open:after{content:"";position:absolute;inset:0}
+.nx-open:focus-visible{outline:0}
+.nx-open:focus-visible:after{outline:3px solid var(--acc);outline-offset:-3px;border-radius:4px}
+.nx>li:hover .nx-open{color:oklch(42% .19 295)}
+.nx-p{display:block;font:12.5px var(--mono);color:var(--mut);margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.nx-r{font-size:14px;line-height:1.5;color:var(--ink2);margin-top:6px;max-width:68ch;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.nx-ev{display:flex;flex-wrap:wrap;gap:4px 12px;margin-top:9px;font:12.5px var(--mono);color:var(--mut)}
+.nx-ev a{position:relative;z-index:1;color:var(--ink2);text-decoration:underline;text-decoration-color:oklch(78% .01 255);text-underline-offset:3px;display:inline-flex;align-items:center;gap:5px}
+.nx-ev a:hover{color:var(--acc);text-decoration-color:currentColor}
+.nx-ev svg.i{width:13px;height:13px;color:var(--faint)}
+.nx-m{display:flex;flex-direction:column;align-items:flex-start;gap:10px;padding-top:2px}
+.nx-o{position:relative;z-index:1;display:grid;grid-template-columns:28px minmax(0,1fr);gap:0 10px;align-items:center;max-width:100%;padding:4px 10px 4px 4px;margin:-4px;border:0;background:none;border-radius:12px;text-align:left;cursor:pointer;transition:background .18s var(--ease)}
+button.nx-o:hover{background:var(--panel);box-shadow:var(--sh)}
+.nx-o[aria-pressed=true]{background:var(--tc);box-shadow:inset 0 0 0 1px var(--pc)}
+.nx-o small{display:block;font-size:12.5px;color:var(--mut);line-height:1.2}
+.nx-o b{display:block;font-size:13.5px;font-weight:600;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.nx-o.none b{font-weight:500;color:var(--mut)}
+div.nx-o{cursor:default}
+.nx-mr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px}
+.eff{display:inline-flex;align-items:center;gap:6px;height:22px;padding:0 9px 0 7px;border-radius:99px;background:var(--sunk);border:1px solid var(--line);font-size:12.5px;font-weight:650;color:var(--ink2);cursor:help}
+.eff .m{display:inline-flex;gap:2px;align-items:flex-end}
+.eff .m i{display:block;width:3px;border-radius:1px;background:oklch(82% .01 255)}
+.eff .m i:nth-child(1){height:5px}.eff .m i:nth-child(2){height:8px}.eff .m i:nth-child(3){height:11px}
+.eff .m i.on{background:var(--vio)}
+.nx-w{font-size:12.5px;color:var(--mut);line-height:1.35}
+.nx-more{display:flex;justify-content:center;margin-top:18px}
+.nx-tg{display:flex;justify-content:center;margin:-2px 0 16px}.nx-tg .mode{margin-top:0}
+.board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;align-items:start;max-width:1100px;margin:0 auto}
+.col{background:var(--sunk);border:1px solid var(--line);border-radius:14px;display:flex;flex-direction:column;min-width:0;max-height:640px}
+.col-h{display:flex;align-items:center;gap:10px;padding:12px 12px 10px}
+.col-h b{font-size:14.5px;letter-spacing:-.01em}
+.col-h .n{margin-left:auto;font-size:12.5px;font-weight:600;color:var(--mut);background:var(--panel);border:1px solid var(--line);border-radius:99px;padding:1px 8px}
+.col-s{font-size:12.5px;color:var(--mut);padding:0 12px 10px;line-height:1.4}
+.col-b{display:flex;flex-direction:column;gap:8px;padding:0 8px 8px;overflow-y:auto;min-height:0}
+.kc{display:flex;flex-direction:column;gap:6px;text-align:left;width:100%;background:var(--panel);border:1px solid var(--line);border-radius:11px;padding:11px 12px;cursor:pointer;box-shadow:var(--sh);transition:border-color .15s,transform .2s var(--ease)}
+.kc:hover{border-color:oklch(82% .02 255);transform:translateY(-1px)}
+.kc[aria-expanded=true]{border-color:var(--vio);box-shadow:0 0 0 3px var(--vio-bg)}
+.kc .t{font-weight:600;font-size:13.5px;line-height:1.35;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;overflow-wrap:anywhere}
+.kc .rk{font-size:12.5px;font-weight:700;color:var(--vio);font-variant-numeric:tabular-nums}
+.kc .p{font:12.5px var(--mono);color:var(--mut);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.kc .m{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-size:12.5px;color:var(--mut)}
+.kc .m span{display:inline-flex;align-items:center;gap:4px}
+.col-empty{font-size:13px;color:var(--mut);padding:10px 12px 14px}
+.nx-ag{max-width:980px;margin:0 auto 12px}
+
+/* GitHub issues: one per card, or a walk through the selected ones */
+.imp{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px 0 7px;border-radius:99px;font-size:12.5px;font-weight:650;white-space:nowrap;background:var(--sunk);color:var(--ink2);border:1px solid var(--line)}
+.imp:before{content:"";width:7px;height:7px;border-radius:50%;background:var(--faint)}
+.imp.i-high{background:var(--vio-bg);border-color:oklch(88% .06 295);color:oklch(42% .19 295)}.imp.i-high:before{background:var(--vio)}
+.imp.i-medium:before{background:oklch(68% .12 295)}
+.gi{position:relative;z-index:1;display:inline-flex;align-items:center;gap:6px;height:30px;padding:0 11px 0 9px;border-radius:9px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-size:12.5px;font-weight:600;text-decoration:none;white-space:nowrap;box-shadow:var(--sh);transition:border-color .15s,background .15s,color .15s}
+.gi:hover{border-color:var(--vio);color:oklch(42% .19 295);background:var(--vio-bg)}
+.gi svg.i{width:14px;height:14px}
+.gi.done{color:var(--ok);background:var(--ok-bg);border-color:transparent;box-shadow:none}
+.gh-bar{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 16px;max-width:980px;margin:-8px auto 18px}
+.gh-bar .lk{font-size:13px;font-weight:600;color:var(--ink2);text-decoration:underline;text-decoration-color:oklch(80% .02 295);text-underline-offset:3px;border-radius:4px;cursor:pointer}
+.gh-bar .lk:hover{color:oklch(42% .19 295);text-decoration-color:currentColor}
+.gh-bar .lk:focus-visible{outline:3px solid var(--acc);outline-offset:2px}
+.gh-bar .nt{flex-basis:100%;text-align:center;font-size:12.5px;color:var(--mut);line-height:1.45}
+
+/* drawer: why it ranks, suggested owner */
+.rk-h{display:flex;align-items:baseline;justify-content:space-between;gap:10px}
+.rk-h .lab{margin:0}
+.rk-h .sc{font-size:12.5px;color:var(--mut);font-variant-numeric:tabular-nums}
+.rk-h .sc b{color:var(--vio);font-size:15px}
+.rk-now{font-size:14px;color:var(--ink2);margin:6px 0 10px}
+.rk{display:grid;grid-template-columns:118px minmax(0,1fr) 54px;gap:9px 12px;align-items:center;font-size:13px}
+.rk span{color:var(--ink2)}
+.rk .tr{height:4px;border-radius:99px;background:var(--line2);overflow:hidden}
+.rk .tr i{display:block;height:100%;background:var(--vio);border-radius:99px}
+.rk em{font-style:normal;text-align:right;color:var(--mut);font-variant-numeric:tabular-nums;font-size:12.5px}
+.own{display:grid;grid-template-columns:40px minmax(0,1fr);gap:4px 14px;align-items:start;background:var(--sunk);border:1px solid var(--line);border-radius:14px;padding:14px}
+.own .who{font-size:15px;font-weight:650;display:flex;flex-wrap:wrap;gap:2px 10px;align-items:baseline}
+.own .who a{font:500 13px var(--mono);color:oklch(45% .18 295)}
+.own p{font-size:13.5px;color:var(--ink2);grid-column:2}
+.own .nb{font-size:12.5px;color:var(--mut)}
+
+/* ready for you */
+.ready{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.rd{display:flex;gap:12px;align-items:flex-start;text-align:left;padding:14px 16px;cursor:pointer;width:100%}
+.rd:hover{background:var(--hover)}
+.rd b{display:block;font-size:14.5px}
+.rd span{font-size:13px;color:var(--mut)}
+.rd .go{margin-left:auto;color:var(--mut);align-self:center}
+.rd .tile,.dw-h .tile{color:oklch(99% .005 255)}
+
+/* pages table */
+.tw{overflow:hidden}
+table{width:100%;border-collapse:collapse;font-size:13.5px}
+th,td{text-align:left;padding:9px 14px;border-bottom:1px solid var(--line2);vertical-align:middle}
+tr:last-child td{border-bottom:0}
+.tw caption{caption-side:top;text-align:left;padding:12px 14px;color:var(--mut);font-size:13px;border-bottom:1px solid var(--line2)}
+th{font-size:var(--t-meta);color:var(--mut);font-weight:600;background:var(--sunk)}
+td.path{overflow-wrap:anywhere}
+td.path a{color:var(--ink);text-decoration:none;font-family:var(--mono);font-size:12.5px}
+td.path a:hover{color:var(--acc);text-decoration:underline}
+td.path small{display:block;color:var(--mut);font-size:12.5px}
+.age{display:flex;align-items:center;gap:8px;white-space:nowrap;color:var(--ink2)}
+.age i{display:block;height:5px;border-radius:99px;background:var(--faint);min-width:2px}
+.jv{display:block;font-size:12.5px;color:var(--mut);margin-top:2px}
+.more{margin-top:10px}
+
+/* drawer */
+.scrim{position:fixed;inset:0;background:oklch(22% .02 255/.22);opacity:0;visibility:hidden;transition:opacity .25s var(--ease),visibility 0s .25s;z-index:80}
+.scrim.on{opacity:1;visibility:visible;transition:opacity .25s var(--ease)}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(520px,100vw);background:var(--panel);border-left:1px solid var(--line);box-shadow:var(--sh2);z-index:81;transform:translateX(102%);transition:transform .32s var(--ease);display:flex;flex-direction:column;visibility:hidden}
+.drawer.on{transform:none;visibility:visible}
+.dw-h{display:flex;align-items:center;gap:10px;padding:16px 18px;border-bottom:1px solid var(--line2)}
+.dw-h .kind{font-size:var(--t-meta);font-weight:600;color:var(--mut)}
+.dw-h .x{margin-left:auto;width:34px;height:34px;border-radius:9px;border:0;background:none;cursor:pointer;display:grid;place-items:center;color:var(--mut)}
+.dw-h .x:hover{background:var(--hover);color:var(--ink)}
+.dw-b{padding:18px;overflow-y:auto;display:flex;flex-direction:column;gap:18px}
+.dw-b h3{font-size:20px;letter-spacing:-.02em;line-height:1.25;overflow-wrap:anywhere}
+.dw-b .why{color:var(--ink2);font-size:14.5px}
+.todo{background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:12px 14px;display:flex;gap:10px;align-items:flex-start}
+.todo p{flex:1;font-size:14px;overflow-wrap:anywhere}
+.todo.mono p{font-family:var(--mono);font-size:13px}
+.lab{font-size:var(--t-meta);font-weight:600;color:var(--mut);margin-bottom:6px}
+.evl{list-style:none;padding:0;border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.evl li+li{border-top:1px solid var(--line2)}
+.evl a,.evl span.r{display:grid;grid-template-columns:18px 1fr;gap:2px 10px;padding:10px 12px;color:inherit;text-decoration:none}
+.evl a:hover{background:var(--hover)}
+.evl svg.i{grid-row:1/span 2;margin-top:2px;color:var(--mut)}
+.evl b{font-weight:500;font-size:13.5px;overflow-wrap:anywhere}
+.evl small{font-size:12.5px;color:var(--mut);font-family:var(--mono)}
+.dw-acts{display:flex;flex-wrap:wrap;gap:8px}
+pre.draft{white-space:pre-wrap;font:13px/1.55 var(--mono);background:var(--sunk);border:1px solid var(--line);border-radius:12px;padding:14px;max-height:52vh;overflow:auto}
+.hl{padding:10px 0;border-top:1px solid var(--line2);font-size:14px}.hl:first-child{border-top:0}
+.hl b{display:block}
+.hl span{color:var(--mut);font-size:13px}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,16px);opacity:0;background:var(--ink);color:var(--panel);padding:9px 16px;border-radius:99px;font-size:13.5px;font-weight:500;z-index:90;transition:opacity .2s,transform .25s var(--ease);pointer-events:none}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+.page-note{max-width:1240px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:13.5px}
+
+.ar .bdg{justify-self:end}
+@media(max-width:1000px){.board{grid-template-columns:repeat(4,minmax(260px,82%));overflow-x:auto;scroll-snap-type:x mandatory;padding-bottom:8px;margin:0 -20px;padding-left:20px;padding-right:20px;scroll-padding-left:20px}.col{scroll-snap-align:start;max-height:560px}.ready{grid-template-columns:1fr}.tm-p .pk{display:none}.ar{grid-template-columns:minmax(130px,200px) minmax(0,1fr) 92px}.ar .ows{display:none}}
+@media(max-width:760px){.alist a{grid-template-columns:40px minmax(0,1fr)}.alist .barw,.alist .go{grid-column:2}.hide-sm{display:none}.rh .acts{margin-left:0}
+.hero{padding:36px 0 36px}.hero-in{grid-template-columns:minmax(0,1fr);gap:32px;padding:0 20px}.hero .sn-tile{width:48px;height:48px;border-radius:14px}.hero h1{font-size:36px;margin-top:18px}.hero .lede{font-size:16.5px}.hero .mode{margin-top:22px}.hero .ask{height:56px;padding-left:14px}.hero .ask input{font-size:15px}.hero .ask .btn.pri{padding:0 14px}.demo-play{width:60px;height:60px}.demo-play svg{width:24px;height:24px}.flow{margin-top:18px}}
+@media(max-width:760px){.tw thead{display:none}.tw table,.tw tbody,.tw tr,.tw td{display:block}.tw tr{display:grid;grid-template-columns:auto 1fr;gap:6px 10px;padding:10px 14px;border-bottom:1px solid var(--line2)}.tw td{padding:0;border:0}.tw td.path{grid-column:1/-1}.tw td.hide-sm{display:none}}
+@media(max-width:759.98px){
+ .tm{padding:18px 16px 12px;border-radius:18px}
+ .tm .mode{display:none}
+ .tm .tm-map{display:none}.tm .tm-list{display:block;margin-top:10px}.tm-chips{display:flex}
+ .tm-say{font-size:15.5px;min-height:0}
+ .ar{grid-template-columns:minmax(0,1fr) auto;padding:12px 6px;gap:8px 12px}.ar .sbar{grid-column:1/-1;grid-row:2}.ar .ows{display:flex;grid-column:1/-1;grid-row:3;flex-wrap:wrap;gap:6px 12px}.ar .bdg{grid-column:2;grid-row:1}
+ .tm-facts{flex-direction:column;align-items:flex-start;padding:0 4px}.tm-facts li{max-width:none}
+ .nx>li{grid-template-columns:28px minmax(0,1fr);gap:4px 12px;padding:16px 16px 16px 12px}
+ .nx-m{grid-column:2;flex-direction:row;flex-wrap:wrap;align-items:center;gap:8px 14px;margin-top:10px}
+ .nx-n{font-size:19px}.nx-sc{width:24px}
+ .gh-bar .btn{flex:1 1 100%;justify-content:center}
+}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-document" viewBox="0 0 24 24"><path d="M13 3H7a2.5 2.5 0 0 0-2.5 2.5v13A2.5 2.5 0 0 0 7 21h10a2.5 2.5 0 0 0 2.5-2.5V9.5z"/><path d="M13 3v6.5h6.5M12 12.5v5M9.5 15h5"/></symbol>
+<symbol id="i-refresh" viewBox="0 0 24 24"><path d="M20 11a8 8 0 0 0-14.3-4.9L4 8"/><path d="M4 3.5V8h4.5"/><path d="M4 13a8 8 0 0 0 14.3 4.9L20 16"/><path d="M20 20.5V16h-4.5"/></symbol>
+<symbol id="i-feature" viewBox="0 0 24 24"><path d="M4 10v4a1 1 0 0 0 1 1h2l5 4V5L7 9H5a1 1 0 0 0-1 1z"/><path d="M16 9a4 4 0 0 1 0 6M18.5 6.5a7.5 7.5 0 0 1 0 11"/></symbol>
+<symbol id="i-content" viewBox="0 0 24 24"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16z"/><path d="M13.5 6.5l4 4"/></symbol>
+<symbol id="i-automate" viewBox="0 0 24 24"><path d="M13 3L5 13.5h6L10 21l8-10.5h-6z"/></symbol>
+<symbol id="i-quickstart" viewBox="0 0 24 24"><rect x="2.5" y="3.5" width="19" height="17" rx="3.5"/><path d="M6.8 9.2l3 2.6-3 2.6M12.3 15.6h4.9"/></symbol>
+<symbol id="i-highlights" viewBox="0 0 24 24"><path d="M12 3.5l2.5 5.3 5.8.7-4.3 4 1.1 5.7L12 16.4l-5.1 2.8L8 13.5l-4.3-4 5.8-.7z"/></symbol>
+<symbol id="i-stale" viewBox="0 0 24 24"><path d="M12 4l9 15.5H3z"/><path d="M12 10v4M12 17v.01"/></symbol>
+<symbol id="i-unchecked" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.5a2.5 2.5 0 1 1 3.4 2.3c-.6.3-1 .8-1 1.5v.4M12 16.8v.01"/></symbol>
+<symbol id="i-quiet" viewBox="0 0 24 24"><path d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+<symbol id="i-aging" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></symbol>
+<symbol id="i-fresh" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><path d="M8 12.3l2.8 2.8L16.2 9"/></symbol>
+<symbol id="i-commit" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3.5"/><path d="M3 12h5.5M15.5 12H21"/></symbol>
+<symbol id="i-pr" viewBox="0 0 24 24"><circle cx="6" cy="5.5" r="2.2"/><circle cx="6" cy="18.5" r="2.2"/><circle cx="18" cy="18.5" r="2.2"/><path d="M6 7.7v8.6M18 16.3V10a3 3 0 0 0-3-3h-4M13 4.5L10.5 7l2.5 2.5"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M19.7 4.3L11 13M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
+<symbol id="i-copy" viewBox="0 0 24 24"><rect x="8.5" y="8.5" width="12" height="12" rx="2.5"/><path d="M15.5 8.5V6a2.5 2.5 0 0 0-2.5-2.5H6A2.5 2.5 0 0 0 3.5 6v7A2.5 2.5 0 0 0 6 15.5h2.5"/></symbol>
+<symbol id="i-x" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+<symbol id="i-r" viewBox="0 0 24 24"><path d="M9 5l7 7-7 7"/></symbol>
+<symbol id="i-l" viewBox="0 0 24 24"><path d="M15 5l-7 7 7 7"/></symbol>
+<symbol id="i-gh" viewBox="0 0 16 16"><path fill="currentColor" stroke="none" d="M8 .8a7.2 7.2 0 0 0-2.3 14c.4.1.5-.2.5-.4v-1.3c-2 .4-2.4-.9-2.4-.9-.3-.8-.8-1.1-.8-1.1-.7-.5 0-.5 0-.5.7.1 1.1.8 1.1.8.7 1.1 1.7.8 2.1.6.1-.5.3-.8.5-1-1.6-.2-3.3-.8-3.3-3.6 0-.8.3-1.4.7-1.9-.1-.2-.3-.9.1-1.9 0 0 .6-.2 2 .7a6.8 6.8 0 0 1 3.6 0c1.4-.9 2-.7 2-.7.4 1 .1 1.7.1 1.9.5.5.7 1.1.7 1.9 0 2.8-1.7 3.4-3.3 3.6.3.2.5.7.5 1.4v2.1c0 .2.1.5.5.4A7.2 7.2 0 0 0 8 .8z"/></symbol>
+<symbol id="i-clone" viewBox="0 0 24 24"><circle cx="6" cy="6" r="2.2"/><circle cx="6" cy="18" r="2.2"/><circle cx="18" cy="9" r="2.2"/><path d="M6 8.2v7.6M18 11.2c0 3.5-4 3-9.5 5.6"/></symbol>
+<symbol id="i-match" viewBox="0 0 24 24"><path d="M4 7h7M4 12h5M4 17h7"/><circle cx="16.5" cy="12" r="3.5"/><path d="M19 14.5l2.5 2.5"/></symbol>
+<symbol id="i-board" viewBox="0 0 24 24"><rect x="3.5" y="4" width="5" height="16" rx="1.5"/><rect x="9.5" y="4" width="5" height="11" rx="1.5"/><rect x="15.5" y="4" width="5" height="7" rx="1.5"/></symbol>
+<symbol id="i-lock" viewBox="0 0 24 24"><rect x="5" y="10.5" width="14" height="10" rx="2.5"/><path d="M8.5 10.5V8a3.5 3.5 0 0 1 7 0v2.5"/></symbol>
+<symbol id="i-rcp" viewBox="0 0 24 24"><path d="M5.5 3h13v18l-2.2-1.5-2.2 1.5-2.1-1.5-2.2 1.5-2.1-1.5L5.5 21z"/><path d="M9 8h6M9 12h6M9 16h3.5"/></symbol>
+<symbol id="i-flow" viewBox="0 0 24 24"><path d="M4 6h3c5 0 5 12 10 12h3M4 18h3c2.2 0 3.4-2.4 4.6-5M14.2 8.4C15.2 7 16.2 6 17 6h3"/></symbol>
+<symbol id="i-rows" viewBox="0 0 24 24"><path d="M4 6.5h16M4 12h16M4 17.5h16"/></symbol>
+<symbol id="i-one" viewBox="0 0 24 24"><circle cx="12" cy="8" r="3.5"/><path d="M5 20a7 7 0 0 1 14 0"/></symbol>
+<symbol id="i-team" viewBox="0 0 24 24"><circle cx="9" cy="8.5" r="3"/><path d="M3.5 19a5.5 5.5 0 0 1 11 0"/><circle cx="16.5" cy="9.5" r="2.5"/><path d="M15.5 14.2a4.6 4.6 0 0 1 5 4.8"/></symbol>
+<symbol id="i-issue" viewBox="0 0 24 24"><circle cx="12" cy="12" r="8.5"/><circle cx="12" cy="12" r="1.6"/></symbol>
+<symbol id="i-check" viewBox="0 0 24 24"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="i-down" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6"/></symbol>
+<symbol id="i-repo"viewBox="0 0 24 24"><path d="M6 3.5h11.5v14H7.5A1.5 1.5 0 0 0 6 19z"/><path d="M6 19a1.5 1.5 0 0 0 1.5 1.5h10"/></symbol>
+</svg>
+<div id="sitenav"></div>
+<script src="../assets/site-nav.js" data-cur="audit" defer></script>
+<main>
+
+<section id="start">
+<div class="hero"><div class="hero-in">
+<div class="hero-l">
+<span class="sn-tile t-audit" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12.5 3H7a2.5 2.5 0 0 0-2.5 2.5v13A2.5 2.5 0 0 0 7 21h4.2"/><path d="M12.5 3l5.5 5.5h-5.5z"/><circle cx="16" cy="15.8" r="3.1"/><path d="M18.3 18.1l2.7 2.7"/></svg></span>
+<h1>Doc-audit</h1><p class="lede">Point it at any GitHub repo, with or without a docs folder. It reads the whole git history, code and docs. It shows which pages the code left behind, who works on which part of the code, and what to ship next.</p>
+<div class="mode" role="group" aria-label="Repo type"><button type="button" id="m-pub" aria-pressed="true"><svg class="i" aria-hidden="true"><use href="#i-gh"/></svg>Public repo</button><button type="button" id="m-priv" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-lock"/></svg>Private repo</button></div>
+<form class="ask panel top" id="f"><svg class="i" aria-hidden="true"><use href="#i-gh"/></svg><label for="repo" class="sr">GitHub repo link</label><input id="repo" placeholder="github.com/fastapi/typer" autocomplete="off" spellcheck="false"><button class="btn pri" type="submit" id="go">Audit it</button></form>
+<p class="hint" id="hint"><span id="hint-t">Public repos are audited on GitHub Actions in about 2 minutes. The board link lands on the request issue.</span> Agents can read <a href="../agent.md">agent.md</a>.</p>
+</div>
+<div class="hero-r">
+<a class="demo has-img" href="https://www.youtube.com/watch?v=2vZb6pZAF8Q" target="_blank" rel="noopener" aria-label="Watch the Doc-audit journey, 1 minute 56 seconds"><img src="../assets/vid-docaudit-journey.webp" alt="Doc-audit video thumbnail: 15 stale pages found in dbt-core, each fix goes to the person who knows the code" width="1280" height="720" decoding="async"><span class="demo-play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M7 4.5v15l13-7.5z"/></svg></span></a>
+<p class="demo-sub"><a href="https://www.youtube.com/watch?v=2vZb6pZAF8Q" target="_blank" rel="noopener">Watch the Doc-audit journey, 1:56</a><span>Short on time? <a href="https://www.youtube.com/watch?v=zo94agwRAXc" target="_blank" rel="noopener">The 57 s tour</a></span></p>
+<ol class="flow" aria-label="How the audit works">
+<li><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-clone"/></svg></span><div><b>Clone</b><span>One blobless clone, on GitHub Actions or on your machine. $0 in model calls.</span></div></li>
+<li><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-match"/></svg></span><div><b>Match</b><span>Each commit is matched to the docs pages on its topic, and to the part of the code it changed.</span></div></li>
+<li><span class="tile"><svg class="i" aria-hidden="true"><use href="#i-board"/></svg></span><div><b>Board</b><span>Stale pages, missing docs and the team map of the code land on one board.</span></div></li>
+</ol>
+</div>
+<ol class="steps" id="steps" hidden></ol>
+</div></div>
+<div class="sec"><div class="sec-h"><h2>Open a Real Audit</h2><p>Recorded 2026-10-10</p></div>
+<ol class="alist panel" id="audits"></ol></div>
+</section>
+
+<section id="report" hidden aria-live="polite">
+<a class="back" href="./"><svg class="i" aria-hidden="true"><use href="#i-l"/></svg>All audits</a>
+<div class="rh"><img class="av" id="r-av" alt="" width="40" height="40"><div><h1 id="r-title"></h1><p class="meta" id="r-meta"></p></div>
+<div class="acts"><a class="rcp" id="r-rcp" hidden></a><a class="btn" id="r-gh" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-gh"/></svg>Open the repo</a></div></div>
+<div class="health panel" id="r-health"><div class="bar" id="r-bar" role="img"></div><div class="hrow" id="r-hrow"></div></div>
+
+<section id="r-team" class="tband" hidden aria-labelledby="tm-h">
+<div class="tb-in">
+<h2 class="hc" id="tm-h">Who Works on What</h2>
+<div class="tm" id="tm">
+<div class="tm-top"><p class="tm-say" id="tm-say" aria-live="polite"></p>
+<div class="mode" role="group" aria-label="View"><button type="button" id="tm-vm" aria-pressed="true"><svg class="i" aria-hidden="true"><use href="#i-flow"/></svg>Map</button><button type="button" id="tm-va" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-rows"/></svg>By area</button></div></div>
+<div class="tm-chips" id="tm-chips" role="group" aria-label="People"></div>
+<div class="tm-map" id="tm-map">
+<p class="tm-hd">People · share of their work</p><p class="tm-hd c" aria-hidden="true"></p><p class="tm-hd r">Parts of the code · share of the area</p>
+<div class="tm-ppl" id="tm-ppl" role="group" aria-label="People"></div>
+<div class="tm-sv" id="tm-sv"></div>
+<div class="tm-ars" id="tm-ars" role="group" aria-label="Parts of the code"></div>
+</div>
+<ul class="tm-list" id="tm-list" aria-label="Parts of the code"></ul>
+<table class="sr" id="tm-tab"></table>
+</div>
+<ul class="tm-facts" id="tm-facts"></ul>
+<p class="tm-note">Built from public commits in the last 12 months. Suggestions, not assignments: anyone can pick up any task. <a href="https://github.com/HighnessAtharva/firstrun#team-map-and-privacy" target="_blank" rel="noopener">How this works and how to opt out</a></p>
+</div>
+</section>
+
+<div class="sec" id="r-next"><h2 class="hc">What to Ship Next</h2>
+<div class="nx-tg"><div class="mode" role="group" aria-label="Layout"><button type="button" id="nx-vl" aria-pressed="true"><svg class="i" aria-hidden="true"><use href="#i-rows"/></svg>List</button><button type="button" id="nx-vb" aria-pressed="false"><svg class="i" aria-hidden="true"><use href="#i-board"/></svg>Board</button></div></div>
+<div class="gh-bar" id="gh-bar" hidden>
+<button class="btn pri" type="button" id="gr-copy"><svg class="i" aria-hidden="true"><use href="#i-copy"/></svg>Copy docs gap report</button>
+<a class="lk" id="gr-issue" target="_blank" rel="noopener">Open as one GitHub issue</a>
+<p class="nt" id="gr-hint">Check the repo's CONTRIBUTING rules first. Many maintainers prefer a discussion.</p>
+</div>
+<div class="nx-f" id="nx-f" hidden></div>
+<div class="nx-ag" id="nx-ag" hidden></div>
+<ol class="nx panel" id="r-nx"></ol>
+<div class="board" id="r-board" hidden></div>
+<div class="nx-more"><button class="btn" type="button" id="nx-all" hidden></button></div></div>
+
+<div class="sec" id="r-readyw"><h2 class="hc">Ready for You</h2>
+<div class="ready" id="r-ready"></div>
+<p class="cap">Drafted from commits and pull requests. Edit before you publish.</p></div>
+
+<div class="sec"><h2 class="hc" id="r-ph">Pages Most Likely Wrong</h2>
+<div class="tw panel"><table><caption id="r-pagesub"></caption><thead><tr><th scope="col">Page</th><th scope="col">Status</th><th scope="col">Last updated</th><th scope="col" class="hide-sm">Commits since</th></tr></thead><tbody id="r-pages"></tbody></table></div>
+<button class="btn more" type="button" id="r-more" hidden>Show all pages</button></div>
+<p class="lede" id="r-foot" style="font-size:13px;margin-top:16px"></p>
+</section>
+</main>
+<p class="page-note">Run your own: <code>firstrun audit owner/repo</code>. The data lives in <a href="https://github.com/HighnessAtharva/firstrun/tree/main/docs/audits">docs/audits</a> in the public repo.</p>
+<footer class="sf"><div class="sf-in">
+<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">FirstRun</a>
+<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/HighnessAtharva/firstrun">GitHub</a><a href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/README.md">Evidence</a></nav></div>
+<p class="sf-cred"><a href="https://atharvashah.com">Atharva Shah</a> built FirstRun for <a href="https://neatlogs.com/hackathon">neatHack 2026</a>. <a href="https://neatlogs.com">neatlogs</a> traces each run, <a href="https://cfo.ai">cfo.ai</a> prices it, and <a href="https://entire.io">Entire</a> records the build. Follow <a href="https://x.com/cultist_dev">@cultist_dev</a> on X.</p>
+</div></footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dw-t" tabindex="-1">
+<div class="dw-h"><span class="tile" id="dw-tile"></span><span class="kind" id="dw-k"></span><button class="x" type="button" id="dw-x" aria-label="Close"><svg class="i" aria-hidden="true"><use href="#i-x"/></svg></button></div>
+<div class="dw-b" id="dw-b"></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="../assets/team-map.js"></script>
+<script>
+(function(){
+"use strict";
+var $=function(i){return document.getElementById(i)};
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function ic(n){var s=document.createElementNS("http://www.w3.org/2000/svg","svg");s.setAttribute("class","i");s.setAttribute("aria-hidden","true");var u=document.createElementNS("http://www.w3.org/2000/svg","use");u.setAttribute("href","#i-"+n);s.appendChild(u);return s}
+function tile(kind){var t=el("span","tile");t.appendChild(ic(kind));return t}
+var tt;function toast(m){$("toast").textContent=m;$("toast").classList.add("on");clearTimeout(tt);tt=setTimeout(function(){$("toast").classList.remove("on")},1700)}
+function copy(text,msg){var ok=function(){toast(msg||"Copied")};if(navigator.clipboard&&window.isSecureContext)navigator.clipboard.writeText(text).then(ok,fb);else fb();
+  function fb(){var t=el("textarea");t.value=text;t.style.position="fixed";t.style.opacity="0";document.body.appendChild(t);t.select();try{document.execCommand("copy");ok()}catch(e){toast("Press Ctrl+C to copy")}t.remove()}}
+function fmt(d){if(!d)return"before history";var m=/^(\d{4})-(\d{2})-(\d{2})/.exec(d);if(!m)return d;return["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m[2]-1]+" "+(+m[3])+", "+m[1]}
+function safeUrl(u){return /^https:\/\//.test(u||"")?u:""}
+function owner(repo){return String(repo||"").split("/")[0].replace(/[^\w.-]/g,"")}
+function avatar(img,repo){img.src="https://github.com/"+owner(repo)+".png?size=80";img.onerror=function(){img.style.visibility="hidden"}}
+var ST=["stale","unchecked","quiet","aging","fresh"];
+var STL={stale:"stale",unchecked:"unchecked",quiet:"quiet",aging:"aging",fresh:"fresh"};
+var STT={stale:"Code on its topic moved after the last edit, and Jev expects the page is now wrong.",unchecked:"Code on its topic moved. Jev did not read this page.",quiet:"Old, but no code on its topic moved.",aging:"Edited in the last year.",fresh:"Edited in the last 90 days."};
+var KL={document:"Document this",refresh:"Refresh this page",feature:"Feature this",content:"Create content",automate:"Ready for you",quickstart:"Prove it runs",highlights:"Ready for you"};
+/* ranked items: kind -> label and the tile color class it borrows */
+var NK={document:{l:"Document",t:"document"},refresh:{l:"Update page",t:"refresh"},release:{l:"Release notes",t:"automate"},announce:{l:"Announce",t:"feature"},quickstart:{l:"Prove it runs",t:"quickstart"}};
+var CK={document:"document",refresh:"refresh",automate:"release",feature:"announce",quickstart:"quickstart"};
+var EFF={S:["Small",1],M:["Medium",2],L:["Large",3]};
+var HUE=[295,256,195,150,78,35,340,220,120,10,270,170];
+
+/* start view */
+function repoOf(v){v=String(v||"").trim().replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i,"");var m=/^([\w.-]+)\/([\w.-]+)/.exec(v);return m?m[1]+"/"+m[2].replace(/\.git$/i,""):""}
+var MODE="pub",AUD=[],LOG="https://github.com/HighnessAtharva/firstrun/issues/new";
+var HINT={pub:"Public repos are audited on GitHub Actions in about 2 minutes. The board link lands on the request issue.",
+  priv:"Private repos are audited on your machine with your own git login. Nothing leaves it unless you choose to submit."};
+function reqUrl(r){return LOG+"?template=audit-request.yml&title="+encodeURIComponent("Audit request: "+r)+"&repo="+encodeURIComponent(r)}
+function setMode(m){MODE=m;$("m-pub").setAttribute("aria-pressed",m==="pub");$("m-priv").setAttribute("aria-pressed",m==="priv");
+  $("go").textContent=m==="pub"?"Audit it":"Get the commands";$("hint-t").textContent=HINT[m];$("steps").hidden=true}
+$("m-pub").addEventListener("click",function(){setMode("pub")});$("m-priv").addEventListener("click",function(){setMode("priv")});
+function step(n,title,sub,code,opt){var li=el("li","panel");li.appendChild(el("span","n",String(n)));var b=el("b",null,title);if(opt)b.appendChild(el("span","opt","optional"));li.appendChild(b);
+  if(sub)li.appendChild(el("span",null,sub));
+  if(code){var c=el("div","code");c.appendChild(el("code",null,code));var cb=el("button","btn");cb.type="button";cb.setAttribute("aria-label","Copy");cb.appendChild(ic("copy"));cb.addEventListener("click",function(){copy(code,"Command copied")});c.appendChild(cb);li.appendChild(c)}
+  return li}
+function link(href,label,icon,pri){var a=el("a","btn"+(pri?" pri":""));a.href=href;if(/^https:/.test(href)){a.target="_blank";a.rel="noopener"}a.appendChild(ic(icon));a.appendChild(document.createTextNode(label));return a}
+function acts(){var w=el("div","dw-acts");for(var i=0;i<arguments.length;i++)w.appendChild(arguments[i]);return w}
+/* the prompt for a coding agent: agent.md first, then the task */
+function agentPrompt(r){return "Read https://firstrun.atharvashah.com/agent.md and follow it.\nAudit the GitHub repo "+r+" with Doc-audit (Recipe B). Tell me the top 3 tasks and the suggested owner of each. Ask me before you open any PR or issue."}
+function agentStep(n,r){var li=step(n,"Or hand it to your coding agent","Claude Code, Cursor or Codex reads agent.md and runs the audit for you.",null,true);
+  var b=el("button","btn");b.type="button";b.appendChild(ic("copy"));b.appendChild(document.createTextNode("Copy the agent prompt"));
+  b.addEventListener("click",function(){copy(agentPrompt(r),"Prompt copied")});li.appendChild(acts(b));return li}
+$("f").addEventListener("submit",function(e){e.preventDefault();var r=repoOf($("repo").value),S=$("steps");S.textContent="";S.hidden=false;
+  if(!r){S.appendChild(step("!","Paste a GitHub repo","Write it as owner/repo or paste the github.com link."));return}
+  var have=AUD.filter(function(a){return String(a.repo).toLowerCase()===r.toLowerCase()})[0];
+  if(MODE==="pub"){
+    if(have){var l0=step(1,r+" is already on the board","Audited "+fmt(have.ts)+". Open it, or ask for a fresh audit.");l0.appendChild(acts(link("./?id="+encodeURIComponent(have.id),"Open the board","board",true),link(reqUrl(r),"Audit it again","refresh")));S.appendChild(l0);return}
+    var l1=step(1,"Open the request on GitHub","Click Submit new issue. The repo is already filled in.");l1.appendChild(acts(link(reqUrl(r),"Request the audit of "+r,"gh",true)));S.appendChild(l1);
+    S.appendChild(step(2,"GitHub Actions audits it","One blobless clone, about 2 minutes, $0 in model calls."));
+    S.appendChild(step(3,"The board link lands on the issue","The audit also joins the list below."));
+    S.appendChild(agentStep(4,r));
+  }else{
+    S.appendChild(step(1,"Install FirstRun","Python 3.11 or newer.","pip install git+https://github.com/HighnessAtharva/firstrun"));
+    S.appendChild(step(2,"Audit it on your machine","Uses your own git login. The report stays in runs/ on your disk.","firstrun audit "+r));
+    S.appendChild(step(3,"Add it to this board","Uploads audit.json to a secret gist and opens the request. A maintainer reviews it before it goes live. Needs the GitHub CLI.","firstrun audit-submit --open",true));
+    S.appendChild(agentStep(4,r));
+  }
+});
+function listAudits(){
+  return fetch("../audits/index.json").then(function(r){return r.json()}).then(function(j){
+    AUD=j.audits||[];var ol=$("audits");(j.audits||[]).forEach(function(a){
+      var li=el("li"),x=el("a");x.href="./?id="+encodeURIComponent(a.id);
+      var img=el("img","av");img.alt="";img.width=40;img.height=40;avatar(img,a.repo);x.appendChild(img);
+      var nm=el("div","nm",a.repo);nm.appendChild(el("small",null,a.pages+" docs pages, audited "+fmt(a.ts)));
+      var mi=el("div","minis");
+      mi.appendChild(a.stale?chip("stale",a.stale+" stale"):chip("fresh","No stale pages"));if(a.uncovered)mi.appendChild(chip("gap",a.uncovered+" features with no docs","document"));
+      nm.appendChild(mi);x.appendChild(nm);
+      var bw=el("div","barw hide-sm"),bar=el("div","bar"),tot=Math.max(1,a.pages);
+      [["stale",a.stale],["quiet",a.quiet],["fresh",Math.max(0,a.pages-a.stale-a.quiet)]].forEach(function(p){if(!p[1])return;var i=el("i","b-"+p[0]);i.style.width=(100*p[1]/tot)+"%";bar.appendChild(i)});
+      bar.setAttribute("role","img");bar.setAttribute("aria-label",a.stale+" stale, "+a.quiet+" quiet");bw.appendChild(bar);x.appendChild(bw);
+      var go=el("span","go","Open board");go.appendChild(ic("r"));x.appendChild(go);
+      li.appendChild(x);
+      if(a.receipt){var rw=el("div","rcpw"),rp=el("a","rcp");rcpFill(rp,a.receipt,a.receipt_usd,a.receipt_est);rw.appendChild(rp);li.appendChild(rw)}
+      ol.appendChild(li)});
+    if(!ol.children.length)ol.appendChild(el("li",null,"No published audit yet."));
+  }).catch(function(){});
+}
+/* receipts: docs/receipts/<receipt id>.html. Old audits carry an estimated cost, measured by re-running them. */
+function usd(v){v=+v;return "$"+(v>0&&v<0.001?v.toFixed(6):v.toFixed(4))}
+function rcpFill(x,id,amt,est){x.textContent="";x.href="../receipts/"+encodeURIComponent(id)+".html";x.appendChild(ic("rcp"));x.appendChild(el("span","lbl","View receipt"));
+  if(amt!=null&&isFinite(+amt)){var s=el("span","sep","·");s.setAttribute("aria-hidden","true");x.appendChild(s);if(est)x.appendChild(el("span","est","est."));x.appendChild(el("span","amt",usd(amt)))}else x.appendChild(el("span","nc","no cost recorded"))}
+function paintReceipt(a){var id="FR-"+a.id,b=$("r-rcp");
+  fetch("../receipts/"+encodeURIComponent(id)+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(j){
+    var p=j.price||{};rcpFill(b,j.receipt_id||id,p.recorded&&p.usd!=null?p.usd:null,p.estimated);b.hidden=false}).catch(function(){b.hidden=true})}
+function chip(cls,text,icon){var c=el("span","chip c-"+cls);c.appendChild(ic(icon||cls));c.appendChild(document.createTextNode(text));return c}
+
+/* report */
+var A=null,st="all",allPages=false,ITEMS=[];
+function commitUrl(sha){return A.url?A.url+"/commit/"+sha:""}
+function prUrl(n){return A.url?A.url+"/pull/"+n:""}
+function fileUrl(p){if(/^https:\/\//.test(p))return p;var b=A.docs_url||A.url;return b?b+"/blob/HEAD/"+p.split("/").map(encodeURIComponent).join("/"):""}
+function cardPath(c){var m;if(c.kind==="refresh"&&(m=/^Refresh\s+(\S+)/.exec(c.title)))return m[1];if(c.kind==="document"&&(m=/Add (?:them|it) to (\S+?\.(?:mdx?|rst|txt|adoc))/.exec(c.action)))return m[1];return ""}
+function shortTitle(c){var t=c.title,p=cardPath(c);
+  if(c.kind==="refresh"&&p)return p.split("/").pop().replace(/\.(mdx?|rst|txt)$/,"").replace(/[-_]+/g," ").replace(/^\s+/,"");
+  return t.replace(/^Feature this:\s*/,"").replace(/^Create content around\s*/,"").replace(/^Document the new\s*/,"").replace(/^Document:\s*/,"").replace(/^\[[^\]]+\]\s*/,"").replace(/\s*changes$/,"").replace(/`/g,"")}
+function newest(c){var d=(c.evidence||[]).map(function(e){return e.date}).sort().pop();return d||""}
+function paintHealth(s){
+  var bar=$("r-bar");bar.textContent="";
+  ST.forEach(function(k){if(!s[k])return;var i=el("i","b-"+k);i.style.width=(100*s[k]/Math.max(1,s.pages))+"%";i.title=s[k]+" "+k;bar.appendChild(i)});
+  bar.setAttribute("aria-label",s.stale+" stale, "+(s.unchecked||0)+" unchecked, "+s.quiet+" quiet, "+s.aging+" aging, "+s.fresh+" fresh, of "+s.pages+" pages");
+  var h=$("r-hrow");h.textContent="";h.appendChild(el("span","lbl",s.pages+" pages"));
+  ST.forEach(function(k){if(!s[k])return;var b=el("button","chip c-"+k);b.type="button";b.title=STT[k]+" Filters the page list.";b.appendChild(ic(k));b.appendChild(document.createTextNode(s[k]+" "+STL[k]));b.setAttribute("aria-pressed",st===k?"true":"false");
+    b.addEventListener("click",function(){st=st===k?"all":k;paintHealth(s);paintPages();document.querySelector("#r-pages").closest(".sec").scrollIntoView({behavior:"smooth",block:"start"})});h.appendChild(b)});
+  h.appendChild(el("span","sp"));
+  if(s.uncovered)h.appendChild(chip("gap",s.uncovered+" recent features with no docs","document"));
+}
+/* ---------- team map: who works on what ---------- */
+var T=null,NX=[],PIN=null,HOV=null,SHOWALL=false,SVG=null,RO=null,DRAWN=false;
+function isNum(x){return typeof x==="number"&&isFinite(x)}
+function str(x,n){return typeof x==="string"?x.slice(0,n||200):""}
+function first(n){return String(n||"").split(/\s+/)[0]}
+function pct(x){return Math.round(100*x)+"%"}
+function md(d){return fmt(d).replace(/, \d{4}$/,"")}
+function dot(s){s=String(s||"").trim();return !s||/[.!?]$/.test(s)?s:s+"."}
+/* color slot by rank; people past 12 and everyone else stay gray */
+function colorize(node,p){var h=p&&p.slot>=0?HUE[p.slot]:null;
+  node.style.setProperty("--pc",h==null?"var(--po)":"oklch(62% .15 "+h+")");
+  node.style.setProperty("--dc",h==null?"oklch(46% .015 255)":"oklch(46% .14 "+h+")");
+  node.style.setProperty("--tc",h==null?"var(--sunk)":"oklch(96.8% .026 "+h+")")}
+/* avatars only from validated fields, never a URL from the JSON (assets/team-map.js) */
+var avSrc=FRTeam.avSrc;
+function face(p,size){var w=el("span","avr");w.setAttribute("aria-hidden","true");w.style.setProperty("--s",size+"px");
+  if(!p){w.className="avr none";return w}
+  colorize(w,p);w.appendChild(el("span","ini",p.ini));var s=avSrc(p);
+  if(s){var im=el("img");im.alt="";im.loading="lazy";im.decoding="async";im.width=size;im.height=size;im.style.opacity="0";im.addEventListener("load",function(){im.style.opacity=""});im.addEventListener("error",function(){im.remove()});im.src=s;w.appendChild(im)}
+  return w}
+
+/* validate and index the team block (assets/team-map.js); cells with a bad index are skipped */
+function teamModel(t){return FRTeam.model(t)}
+function personOf(id){return id==="others"?null:T&&T.byId[id]||null}
+function picks(id,top){return NX.filter(function(x){return x.owner&&x.owner.p===id&&(!top||x.rank<=10)}).length}
+function areaPeople(a){var out=[];T.rowsP.forEach(function(p){var w=T.M[p.i+"|"+a.i];if(w)out.push({p:p,s:w/T.colSum[a.i]})});return out.sort(function(x,y){return y.s-x.s})}
+function inArea(p,a){return !!T.M[p.i+"|"+a.i]}
+function badge(a){
+  if(a.single)return el("span","bdg warn","1 owner");
+  if(a.quiet)return el("span","bdg qt","Quiet");
+  /* a truck factor of 1 is the common case, so only 2 or more earns a badge */
+  if(a.bus>1)return el("span","bdg",a.bus+" hold half");
+  var s=el("span");s.setAttribute("aria-hidden","true");return s}
+
+/* the inspector sentence */
+function say(s){
+  var P=$("tm-say");P.textContent="";
+  function t(x){P.appendChild(document.createTextNode(x))}
+  function who(p){if(p&&p.i>=0){var d=el("span","dot");colorize(d,p);d.setAttribute("aria-hidden","true");P.appendChild(d)}P.appendChild(el("b",null,p?p.name:"Everyone else"))}
+  function ar(a){P.appendChild(el("b",null,a.label))}
+  if(!s){
+    var lead=T.rowsP[0];
+    if(T.solo){who(lead);t(" made every commit "+PERIOD());if(lead.topA){t(", most of it in ");ar(lead.topA)}t(".");return}
+    var k=T.A.filter(function(a){return a.single}).length;
+    if(lead.i>=0&&lead.topA){who(lead);t(" works most on ");ar(lead.topA);t(". ")}
+    t(k===0?"No area rests on one person.":k===1?"1 area rests on one person.":k+" areas rest on one person.");return}
+  if(s.t==="p"||(s.t==="pa"&&!s.a)){var id=s.id||s.p;
+    if(id==="others"){var O=T.O;t(O.people+" other people made ");P.appendChild(el("b",null,pct(O.share)));t(" of the work, each too little to list on their own.");return}
+    var p=personOf(id);if(!p)return;who(p);
+    if(p.topA){t(" works most on ");ar(p.topA);if(p.top_share!=null)t(" ("+pct(p.top_share)+" of their recent work)");t(".")}else t(" made "+p.commits+" commits "+PERIOD()+".");
+    if(p.last)t(" Last commit "+md(p.last)+".");
+    if(NX.length&&!NX[0].fb){var n=picks(p.id);t(n?" Suggested for "+n+(n===1?" task":" tasks")+" below.":" No task below is suggested for them yet.")}return}
+  if(s.t==="pa"){var pp=personOf(s.p),aa=T.aById[s.a];if(!aa){say({t:"p",id:s.p});return}
+    var w=pp?T.M[pp.i+"|"+aa.i]:0;who(pp);
+    if(w){t(" holds "+pct(w/T.colSum[aa.i])+" of ");ar(aa);t(", which is "+pct(w/T.rowSum[pp.i])+" of their recent work.")}
+    else{t(" is suggested here. ");ar(aa);t(" is mostly someone else's code.")}return}
+  if(s.t==="a"){var a=T.aById[s.id];if(!a)return;ar(a);t(": ");
+    var ps=areaPeople(a),shown=ps.filter(function(x){return x.p.i>=0}).slice(0,3),rest=1;
+    shown.forEach(function(x,j){if(j)t(", ");t(first(x.p.name)+" "+pct(x.s));rest-=x.s});
+    var left=ps.length-shown.length,hasO=ps.some(function(x){return x.p.i<0});
+    if(rest>.005&&left>0)t((shown.length?", ":"")+(hasO&&left===1?"everyone else ":left+(left===1?" other ":" others "))+pct(rest));
+    t(". ");
+    t(a.single?"One person holds this area.":a.bus===1?"One person holds half the work.":a.bus+" people hold half the work.");
+    if(a.last)t(" Last commit "+md(a.last)+".");
+    if(a.quiet)t(" Nothing changed in 6 months.")}
+}
+
+/* draw the ribbons: left end = share of the person's work, right end = share of the area */
+function drawMap(){
+  var host=$("tm-sv");if(!T||!host.offsetParent)return;
+  var W=Math.max(120,Math.round(host.clientWidth));
+  var svg=FRTeam.ribbons(T,{W:W,pitch:52,bar:36,clip:"tmc"});
+  $("tm-ppl").style.paddingTop=svg._oP+"px";$("tm-ars").style.paddingTop=svg._oA+"px";
+  /* hovering a ribbon names the pair */
+  svg.addEventListener("mouseover",function(e){var x=e.target;if(x.classList&&x.classList.contains("rb")){HOV={t:"pa",p:x.getAttribute("data-p"),a:x.getAttribute("data-a"),src:"rb"};apply()}});
+  svg.addEventListener("mouseleave",function(){HOV=null;apply()});
+  host.textContent="";host.appendChild(svg);SVG=svg;
+  /* entrance once: at once when on screen, else when scrolled to; it fails open after 5 s */
+  if(!DRAWN){DRAWN=true;if(!matchMedia("(prefers-reduced-motion: reduce)").matches){var r=host.getBoundingClientRect();
+    if(r.top<innerHeight&&r.bottom>0||!("IntersectionObserver" in window))svg.classList.add("in");
+    else{svg.classList.add("pre");var go=function(){io.disconnect();if(SVG&&SVG.classList.contains("pre")){SVG.classList.remove("pre");SVG.classList.add("in")}};
+      var io=new IntersectionObserver(function(es){if(es.some(function(x){return x.isIntersecting}))go()},{threshold:.2});io.observe(host);
+      setTimeout(function(){if(SVG)SVG.classList.remove("pre")},5000)}}}
+}
+function wire(node,s){
+  node.addEventListener("mouseenter",function(){HOV=s;apply()});node.addEventListener("mouseleave",function(){HOV=null;apply()});
+  node.addEventListener("focus",function(){HOV=s;apply()});node.addEventListener("blur",function(){HOV=null;apply()});
+  if(node.tagName==="BUTTON")node.addEventListener("click",function(){togglePin(s)})}
+function personLabel(p){return p.name+", "+p.commits+" commits "+PERIOD()+""+(p.topA?", works most on "+p.topA.label:"")+". Show their suggested tasks."}
+
+function PERIOD(){return IDLE?"over the life of the repo":"in the last 12 months"}
+var IDLE=0;
+function paintTeam(a){
+  var S=$("r-team");T=null;DRAWN=false;SVG=null;
+  try{T=teamModel(a.team)}catch(e){T=null;console.warn("team map skipped",e)}
+  if(!T){S.hidden=true;return}
+  S.hidden=false;
+  /* a repo with no commit in 12 months maps its whole history up to the last commit, and the board says so */
+  var nt=S.querySelector(".tm-note"),idle=+(a.team&&a.team.idle_days)||0;IDLE=idle;
+  if(nt&&!nt.dataset.base)nt.dataset.base=nt.firstChild.textContent;
+  if(nt&&nt.dataset.base)nt.firstChild.textContent=idle?"This repo has been quiet for "+idle.toLocaleString("en-US")+" days. The map covers its public commits up to the last one, on "+fmt(a.team.as_of)+". Suggestions, not assignments: anyone can pick up any task. ":nt.dataset.base;
+  try{buildTeam(a)}catch(e){T=null;S.hidden=true;console.warn("team map skipped",e)}
+}
+function buildTeam(a){
+  var tm=$("tm"),PL=$("tm-ppl"),AL=$("tm-ars"),LI=$("tm-list"),CH=$("tm-chips");PL.textContent="";AL.textContent="";LI.textContent="";CH.textContent="";
+  var docsBoth=T.A.some(function(x){return x.repo==="docs"})&&T.A.some(function(x){return x.repo==="code"});
+  T.rowsP.forEach(function(p){
+    if(p.i<0){var d=el("div","tm-p tm-o");d.dataset.p="others";var n=p.others.people;d.appendChild(el("span","ev","+"+(n>999?"999":n)));
+      var tx=el("span");tx.appendChild(el("span","nm","Everyone else"));tx.appendChild(el("span","sb",n+(n===1?" person · ":" people · ")+pct(p.others.share)+" of the work"));d.appendChild(tx);
+      d.addEventListener("mouseenter",function(){HOV={t:"p",id:"others"};apply()});d.addEventListener("mouseleave",function(){HOV=null;apply()});PL.appendChild(d);return}
+    var b=el("button","tm-p");b.type="button";b.dataset.p=p.id;b.setAttribute("aria-pressed","false");b.setAttribute("aria-label",personLabel(p));colorize(b,p);
+    b.appendChild(face(p,32));var tx2=el("span");tx2.appendChild(el("span","nm",p.name));
+    tx2.appendChild(el("span","sb",p.commits+(p.commits===1?" commit":" commits")+(p.last?" · last "+md(p.last):"")));b.appendChild(tx2);
+    var k=picks(p.id);if(k){var pk=el("span","pk",k+(k===1?" task":" tasks"));pk.setAttribute("aria-hidden","true");b.appendChild(pk)}
+    wire(b,{t:"p",id:p.id});PL.appendChild(b)});
+  T.A.forEach(function(x){
+    var b=el("button","tm-a");b.type="button";b.dataset.a=x.id;b.setAttribute("aria-pressed","false");
+    var ps=areaPeople(x).slice(0,3).map(function(o){return (o.p.i<0?"everyone else":o.p.name)+" "+pct(o.s)}).join(", ");
+    b.setAttribute("aria-label",x.label+": "+ps+(x.single?". One owner.":". "+x.bus+" people hold half the work.")+" Show its tasks.");
+    var tx=el("span");tx.appendChild(el("span","nm",x.label));var pth=el("span","pth");pth.appendChild(el("bdi",null,(docsBoth&&x.repo==="docs"?"docs repo: ":"")+x.path));tx.appendChild(pth);b.appendChild(tx);
+    b.appendChild(badge(x));wire(b,{t:"a",id:x.id});AL.appendChild(b)});
+  /* By area: share order, stacked ownership bar, owners, badge */
+  T.A.slice().sort(function(x,y){return y.share-x.share}).forEach(function(x){
+    var li=el("li"),b=el("button","ar");b.type="button";b.dataset.a=x.id;b.setAttribute("aria-pressed","false");
+    var ps=areaPeople(x);
+    b.setAttribute("aria-label",x.label+": "+ps.slice(0,3).map(function(o){return (o.p.i<0?"everyone else":o.p.name)+" "+pct(o.s)}).join(", ")+(x.single?". One owner.":". "+x.bus+" people hold half the work.")+" Show its tasks.");
+    var tx=el("span");tx.appendChild(el("span","nm",x.label));tx.appendChild(el("span","pth",(docsBoth&&x.repo==="docs"?"docs repo: ":"")+x.path));b.appendChild(tx);
+    var bar=el("span","sbar"+(x.quiet?" qt":""));bar.setAttribute("aria-hidden","true");
+    ps.slice().sort(function(u,v){return (u.p.i<0?99:u.p.i)-(v.p.i<0?99:v.p.i)}).forEach(function(o){var i=el("i");i.dataset.p=o.p.id;colorize(i,o.p.i<0?null:o.p);i.style.width=(100*o.s)+"%";bar.appendChild(i)});
+    b.appendChild(bar);
+    var ow=el("span","ows");ow.setAttribute("aria-hidden","true");ps.slice(0,3).forEach(function(o){var sp=el("span");sp.appendChild(o.p.i<0?el("span","ev","+"):face(o.p,22));if(o.p.i<0){sp.firstChild.style.cssText="width:22px;height:22px;font-size:10px"}sp.appendChild(document.createTextNode(pct(o.s)));ow.appendChild(sp)});
+    b.appendChild(ow);b.appendChild(badge(x));wire(b,{t:"a",id:x.id});li.appendChild(b);LI.appendChild(li)});
+  /* people chips for small screens: top 6 and a +N that opens the rest */
+  var ppl=T.rowsP.filter(function(p){return p.i>=0});
+  function chipFor(p){var c=el("button","pc");c.type="button";c.dataset.p=p.id;c.setAttribute("aria-pressed","false");c.setAttribute("aria-label",personLabel(p));colorize(c,p);c.appendChild(face(p,24));c.appendChild(document.createTextNode(first(p.name)));wire(c,{t:"p",id:p.id});return c}
+  ppl.slice(0,6).forEach(function(p){CH.appendChild(chipFor(p))});
+  if(ppl.length>6){var mo=el("button","pc pmore","+"+(ppl.length-6));mo.type="button";mo.setAttribute("aria-label","Show "+(ppl.length-6)+" more people");
+    mo.addEventListener("click",function(){ppl.slice(6).forEach(function(p){CH.insertBefore(chipFor(p),mo)});mo.remove();syncPressed();CH.querySelector(".pc:nth-child(7)").focus()});CH.appendChild(mo)}
+  /* the text equivalent of the map */
+  var tb=$("tm-tab");tb.textContent="";tb.appendChild(el("caption",null,"Share of each part of the code, by person"));
+  var th=el("thead"),hr=el("tr"),h0=el("th",null,"Person");h0.scope="col";hr.appendChild(h0);T.A.forEach(function(x){var c=el("th",null,x.label);c.scope="col";hr.appendChild(c)});th.appendChild(hr);tb.appendChild(th);
+  var bd=el("tbody");T.rowsP.forEach(function(p){var tr=el("tr"),h=el("th",null,p.i<0?"Everyone else":p.name);h.scope="row";tr.appendChild(h);
+    T.A.forEach(function(x){var w=T.M[p.i+"|"+x.i];tr.appendChild(el("td",null,w?pct(w/T.colSum[x.i])+" of area":"none"))});bd.appendChild(tr)});tb.appendChild(bd);
+  /* facts */
+  var F=$("tm-facts");F.textContent="";
+  function fact(cls,icon,lead,rest){var li=el("li",cls),g=el("span","g");g.appendChild(ic(icon));li.appendChild(g);var sp=el("span");sp.appendChild(el("b",null,lead));if(rest)sp.appendChild(document.createTextNode(rest));li.appendChild(sp);F.appendChild(li)}
+  if(T.solo)fact("warn","one","One person made every commit "+PERIOD()+"."," Every area rests on them.");
+  else{var single=T.A.filter(function(x){return x.single});
+    if(single.length){var names=single.slice(0,4).map(function(x){return x.label});
+      fact("warn","one",single.length+" of "+T.A.length+" areas rest on one person",": "+names.join(", ")+(single.length>4?" and "+(single.length-4)+" more":"")+".")}
+    else fact("ok","fresh","No area rests on one person.","");
+    var ms=T.A.slice().sort(function(x,y){return (y.bus-x.bus)||(y.share-x.share)})[0];
+    if(ms&&ms.bus>=2)fact("","team","Most shared: "+ms.label,", "+ms.bus+" people hold half the work.");
+    var q=T.A.filter(function(x){return x.quiet}).length;if(q)fact("","quiet",q+(q===1?" area had":" areas had")+" no commit in 6 months.","")}
+  F.hidden=!F.children.length;
+  /* view toggle; small screens only get By area */
+  var view="map";try{view=localStorage.getItem("fr-tm-view")||"map"}catch(e){}
+  setView(view);
+  drawMap();
+  if(!RO&&"ResizeObserver" in window){var tmr;RO=new ResizeObserver(function(){clearTimeout(tmr);
+      /* first paint at once; later width changes wait 150 ms */
+      if(T&&!SVG){drawMap();apply();return}tmr=setTimeout(function(){if(T){drawMap();apply()}},150)});RO.observe($("tm-sv"))
+    var mq=matchMedia("(min-width:760px)");if(mq.addEventListener)mq.addEventListener("change",function(){if(T){drawMap();apply()}})}
+  apply();
+}
+function setView(v){var by=v==="area";$("tm").classList.toggle("byarea",by);$("tm-vm").setAttribute("aria-pressed",String(!by));$("tm-va").setAttribute("aria-pressed",String(by));
+  try{localStorage.setItem("fr-tm-view",by?"area":"map")}catch(e){}if(!by)drawMap();apply()}
+$("tm-vm").addEventListener("click",function(){setView("map")});$("tm-va").addEventListener("click",function(){setView("area")});
+
+/* one state drives the map, the list and the inspector */
+function syncPressed(){
+  [].forEach.call(document.querySelectorAll("#tm [data-p]:is(button),#tm [data-a]:is(button),#r-nx .nx-o[data-p]"),function(b){
+    var on=!!PIN&&((PIN.t==="p"&&b.dataset.p===PIN.id&&!b.dataset.a)||(PIN.t==="a"&&b.dataset.a===PIN.id));b.setAttribute("aria-pressed",String(on))})}
+function apply(){
+  if(!T)return;var s=HOV||PIN,tm=$("tm");
+  var on=!!s;tm.classList.toggle("f",on);if(SVG)SVG.classList.toggle("f",on);
+  function hitP(pid){if(!s)return false;if(s.t==="p")return pid===s.id;if(s.t==="pa")return pid===s.p;var a=T.aById[s.id],p=pid==="others"?T.rowsP.filter(function(x){return x.i<0})[0]:T.byId[pid];return !!(a&&p&&inArea(p,a))}
+  function hitA(aid){if(!s)return false;if(s.t==="a")return aid===s.id;if(s.t==="pa")return s.a?aid===s.a:hitA2(s.p,aid);return hitA2(s.id,aid)}
+  function hitA2(pid,aid){var a=T.aById[aid],p=pid==="others"?T.rowsP.filter(function(x){return x.i<0})[0]:T.byId[pid];return !!(a&&p&&inArea(p,a))}
+  if(SVG)[].forEach.call(SVG.querySelectorAll("[data-p]"),function(x){var p=x.getAttribute("data-p"),a=x.getAttribute("data-a"),h=false;
+    if(s){if(s.t==="p")h=p===s.id;else if(s.t==="a")h=a===s.id||(!a&&hitP(p));else h=p===s.p&&(!s.a||!a||a===s.a)}
+    x.classList.toggle("hi",h)});
+  [].forEach.call(tm.querySelectorAll(".tm-p"),function(r){r.classList.toggle("hi",hitP(r.dataset.p))});
+  [].forEach.call(tm.querySelectorAll(".tm-a,.ar"),function(r){r.classList.toggle("hi",hitA(r.dataset.a))});
+  [].forEach.call(tm.querySelectorAll(".sbar i"),function(i){var h=false;if(s){if(s.t==="a")h=i.parentNode.parentNode.dataset.a===s.id;else h=i.dataset.p===(s.t==="p"?s.id:s.p)}i.classList.toggle("hi",h)});
+  /* the ranked list reacts to the map, never to itself */
+  var lh=HOV&&HOV.src!=="list"&&(HOV.t==="p"||HOV.t==="a")?HOV:null;
+  [].forEach.call(document.querySelectorAll("#r-nx>li"),function(li){var x=NX[+li.dataset.k];if(!x)return;var m=false;
+    if(lh)m=lh.t==="p"?!!(x.owner&&x.owner.p===lh.id):x.area===lh.id;
+    li.classList.toggle("lit",!!lh&&m);li.classList.toggle("dim",!!lh&&!m)});
+  say(s);
+}
+function togglePin(s){var id=s.id||s.p;
+  if(PIN&&PIN.t===s.t&&PIN.id===id)PIN=null;else PIN={t:s.t==="pa"?"p":s.t,id:id};
+  syncPressed();setHash();filterNext();apply()}
+function clearPin(){if(!PIN)return;PIN=null;syncPressed();setHash();filterNext();apply()}
+function pinHash(){return PIN?(PIN.t==="p"?"#who=":"#area=")+PIN.id:""}
+function setHash(){if(history.replaceState&&OPENI<0)history.replaceState(null,"",location.pathname+location.search+pinHash())}
+document.addEventListener("keydown",function(e){if(e.key==="Escape"&&OPENI<0&&PIN){clearPin()}});
+
+/* ---------- What to Ship Next: one ranked column ---------- */
+function normNext(x,i){
+  if(!x||typeof x!=="object"||!NK[x.kind])return null;
+  var ev=(Array.isArray(x.evidence)?x.evidence:[]).filter(function(e){return e&&/^[0-9a-f]{7,40}$/.test(e.sha||"")}).slice(0,5).map(function(e){
+    return {sha:e.sha,date:str(e.date,10),subject:str(e.subject,300)||e.sha,pr:/^\d{1,7}$/.test(String(e.pr||""))?String(e.pr):null}});
+  function who(o){return o&&typeof o==="object"&&T&&T.byId[o.p]?{p:o.p,why:str(o.why,240)}:null}
+  return {rank:Number.isInteger(x.rank)&&x.rank>0?x.rank:i+1,kind:x.kind,title:str(x.title,240)||"Untitled",path:str(x.path,300),area:str(x.area,8),
+    rationale:str(x.rationale,600),why_now:str(x.why_now,160),score:isNum(x.score)?Math.max(0,Math.min(100,Math.round(x.score))):null,
+    parts:x.parts&&typeof x.parts==="object"?x.parts:null,effort:EFF[x.effort]?x.effort:null,effort_why:str(x.effort_why,200),
+    action:str(x.action,800),count:isNum(x.count)?x.count:ev.length,evidence:ev,owner:who(x.owner),runner_up:who(x.runner_up),balanced:x.balanced===true,fallback:str(x.fallback,200)}
+}
+/* old boards: non-content cards by priority, then count, then newest evidence */
+function fallbackNext(cards){
+  return (cards||[]).filter(function(c){return c&&CK[c.kind]}).map(function(c){return {c:c,n:c.count||(c.evidence||[]).length,d:newest(c)}})
+    .sort(function(x,y){return ((x.c.priority||0)-(y.c.priority||0))||(y.n-x.n)||(x.d<y.d?1:x.d>y.d?-1:0)})
+    .map(function(o,i){var c=o.c,k=CK[c.kind],p=cardPath(c),t=String(c.title||"").replace(/`/g,"");
+      if(k==="announce")t="Announce: "+shortTitle(c);else if(k==="quickstart")t="Prove the quickstart still runs";
+      else if(k==="release"&&A.release&&A.release.name)t="Publish the "+A.release.name+" release notes";else if(k==="refresh"&&p)t="Update "+p.split("/").pop();
+      return {rank:i+1,kind:k,title:t,path:p,area:"",rationale:c.why||"",why_now:o.d?"Newest commit "+md(o.d):"",score:null,parts:null,effort:null,effort_why:"",
+        action:c.action||"",count:o.n,evidence:c.evidence||[],owner:null,runner_up:null,balanced:false,fallback:"",fb:true}})
+}
+function nextItems(a){
+  var n=a.next;if(n&&Array.isArray(n.items)&&n.items.length){var out=n.items.slice(0,30).map(normNext).filter(Boolean);
+    if(out.length){out.sort(function(x,y){return x.rank-y.rank});out.forEach(function(x,i){x.rank=i+1});return out}}
+  return fallbackNext(a.cards)}
+function effortPill(x){var e=EFF[x.effort],p=el("span","eff");p.title=x.effort_why||"Effort";var m=el("span","m");m.setAttribute("aria-hidden","true");
+  for(var i=1;i<=3;i++)m.appendChild(el("i",i<=e[1]?"on":null));p.appendChild(m);p.appendChild(document.createTextNode(e[0]));return p}
+function nextRow(x,k,i){
+  var li=el("li");li.dataset.k=k;var own=x.owner?T.byId[x.owner.p]:null;colorize(li,own);
+  var rk=el("div","nx-rk");rk.appendChild(el("span","nx-n",String(x.rank)));
+  if(x.score!=null){var sc=el("span","nx-sc"),f=el("i");f.style.width=x.score+"%";sc.appendChild(f);rk.title="Score "+x.score+" of 100";rk.appendChild(sc)}
+  li.appendChild(rk);
+  var b=el("div"),nk=NK[x.kind],kl=el("span","nx-k k-"+nk.t);kl.appendChild(tile(nk.t));kl.appendChild(document.createTextNode(nk.l));b.appendChild(kl);
+  var op=el("button","nx-open",x.title);op.type="button";op.setAttribute("aria-controls","drawer");op.setAttribute("aria-expanded","false");
+  op.setAttribute("aria-label","Rank "+x.rank+". "+x.title+"."+(x.score!=null?" Score "+x.score+".":"")+(x.effort?" Effort "+EFF[x.effort][0].toLowerCase()+".":"")+(own?" Suggested owner "+own.name+".":""));
+  op.addEventListener("click",function(){openItem(i,op)});b.appendChild(op);
+  if(x.kind==="refresh"&&x.path)b.appendChild(el("span","nx-p",x.path));
+  if(x.rationale)b.appendChild(el("p","nx-r",x.rationale));
+  if(x.evidence.length){var e=el("p","nx-ev");x.evidence.slice(0,3).forEach(function(v){var u=v.pr?prUrl(v.pr):commitUrl(v.sha),a=el(u?"a":"span");
+      if(u){a.href=safeUrl(u);a.target="_blank";a.rel="noopener";a.title=v.subject}a.appendChild(ic(v.pr?"pr":"commit"));a.appendChild(document.createTextNode(v.pr?"#"+v.pr:v.sha));e.appendChild(a)});
+    var more=Math.max(x.count,x.evidence.length)-Math.min(3,x.evidence.length);if(more>0)e.appendChild(el("span",null,"+"+more+" more"));b.appendChild(e)}
+  li.appendChild(b);
+  var m=el("div","nx-m");
+  if(own){var ob=el("button","nx-o");ob.type="button";ob.dataset.p=own.id;ob.setAttribute("aria-pressed","false");colorize(ob,own);
+    ob.setAttribute("aria-label","Suggested: "+own.name+". Show every task suggested for them.");ob.appendChild(face(own,28));
+    var t=el("span");t.appendChild(el("small",null,"Suggested"));t.appendChild(el("b",null,own.name));ob.appendChild(t);
+    ob.addEventListener("click",function(){togglePin({t:"p",id:own.id})});m.appendChild(ob)}
+  else if(T&&!x.fb){var nb=el("div","nx-o none");nb.appendChild(face(null,28));var t2=el("span");t2.appendChild(el("small",null,"Suggested"));t2.appendChild(el("b",null,"No clear owner"));nb.appendChild(t2);m.appendChild(nb)}
+  var mr=el("div","nx-mr");if(x.parts&&isNum(x.parts.impact)){var ib=el("span","imp i-"+impactOf(x),IMPL[impactOf(x)]+" impact");ib.title="Reader impact "+pct(x.parts.impact);mr.appendChild(ib)}if(x.effort)mr.appendChild(effortPill(x));if(x.why_now)mr.appendChild(el("span","nx-w",x.why_now));if(mr.childNodes.length)m.appendChild(mr);
+  if(GHOK)m.appendChild(issueLink(x,k));
+  li.appendChild(m);
+  function hov(){if(!T)return;var s={t:"pa",p:own?own.id:null,a:x.area||null,src:"list"};if(!s.p&&!s.a)return;if(!s.p){s={t:"a",id:s.a,src:"list"}}HOV=s;apply()}
+  li.addEventListener("mouseenter",hov);li.addEventListener("mouseleave",function(){if(HOV&&HOV.src==="list"){HOV=null;apply()}});
+  li.addEventListener("focusin",hov);li.addEventListener("focusout",function(){if(HOV&&HOV.src==="list"){HOV=null;apply()}});
+  return li}
+var VIEW="list",BB=false;try{VIEW=localStorage.getItem("fr-nx-view")==="board"?"board":"list"}catch(e){}
+var BCOLS=[{k:["refresh"],t:"Update",i:"refresh",s:"Pages the code changed underneath."},
+ {k:["document"],t:"Document",i:"document",s:"Shipped features no docs page explains."},
+ {k:["announce"],t:"Announce",i:"feature",s:"New user-visible work worth a release post."},
+ {k:["release","quickstart"],t:"Ship",i:"automate",s:"Release notes and proof the quickstart runs."}];
+function buildBoard(){
+  var B=$("r-board");B.textContent="";BB=true;
+  BCOLS.slice().sort(function(a,b){var na=NX.some(function(x){return a.k.indexOf(x.kind)>-1})?0:1,nb=NX.some(function(x){return b.k.indexOf(x.kind)>-1})?0:1;return na-nb}).forEach(function(col){
+    var xs=NX.filter(function(x){return col.k.indexOf(x.kind)>-1});
+    var C=el("section","col k-"+col.i);C.setAttribute("aria-label",col.t);C.dataset.c=col.t;
+    var h=el("div","col-h");h.appendChild(tile(col.i));h.appendChild(el("b",null,col.t));h.appendChild(el("span","n",String(xs.length)));C.appendChild(h);
+    C.appendChild(el("p","col-s",col.s));
+    var body=el("div","col-b"),em=el("p","col-empty","Nothing here for this repo.");em.hidden=!!xs.length;body.appendChild(em);
+    xs.forEach(function(x){
+      var k=NX.indexOf(x),i=-1;ITEMS.forEach(function(it,j){if(it.next===x)i=j});if(i<0)return;
+      var own=x.owner&&T?T.byId[x.owner.p]:null;
+      var b=el("button","kc");b.type="button";b.setAttribute("aria-expanded","false");b.setAttribute("aria-controls","drawer");b.dataset.k=k;
+      b.setAttribute("aria-label","Rank "+x.rank+". "+x.title+"."+(own?" Suggested owner "+own.name+".":""));
+      b.appendChild(el("span","rk","#"+x.rank));b.appendChild(el("span","t",x.title));
+      if(x.path)b.appendChild(el("span","p",x.path));
+      var m=el("span","m");
+      if(own){var so=el("span");so.appendChild(face(own,18));so.appendChild(document.createTextNode(first(own.name)));m.appendChild(so)}
+      if(x.parts&&isNum(x.parts.impact))m.appendChild(el("span",null,IMPL[impactOf(x)]+" impact"));
+      if(m.childNodes.length)b.appendChild(m);
+      b.addEventListener("click",function(){openItem(i,b)});body.appendChild(b);
+    });
+    C.appendChild(body);B.appendChild(C);
+  });
+}
+function setNxView(v,save){VIEW=v==="board"?"board":"list";
+  if(save){try{localStorage.setItem("fr-nx-view",VIEW)}catch(e){}}
+  filterNext()}
+$("nx-vl").addEventListener("click",function(){setNxView("list",true)});
+$("nx-vb").addEventListener("click",function(){setNxView("board",true)});
+function paintNext(){
+  var ol=$("r-nx");ol.textContent="";ITEMS=[];SHOWALL=false;BB=false;$("r-board").textContent="";
+  var ag=$("nx-ag");ag.textContent="";
+  if(!NX.some(function(x){return x.kind==="document"||x.kind==="refresh"})){var ok=el("div","panel allgood");ok.appendChild(chip("fresh","Nothing to fix"));
+    ok.appendChild(el("p",null,"No stale page and no shipped feature without docs. The docs keep up with the code."));ag.appendChild(ok);ag.hidden=false}else ag.hidden=true;
+  NX.forEach(function(x,k){var i=ITEMS.length;ITEMS.push({next:x});var li=nextRow(x,k,i);ITEMS[i].btn=li.querySelector(".nx-open");ol.appendChild(li)});
+  ol.hidden=!NX.length;
+  $("gh-bar").hidden=!(GHOK&&NX.length);if(GHOK)paintReport();
+  filterNext();
+}
+function filterNext(){
+  var rows=document.querySelectorAll("#r-nx>li"),shown=0;
+  function match(x){if(!PIN)return true;return PIN.t==="p"?!!(x.owner&&x.owner.p===PIN.id):x.area===PIN.id}
+  [].forEach.call(rows,function(li){var x=NX[+li.dataset.k],v=PIN?match(x):(SHOWALL||x.rank<=10);li.hidden=!v;if(v)shown++});
+  var f=$("nx-f");f.textContent="";
+  if(PIN&&T){var c=el("span","chip"),p=PIN.t==="p"?personOf(PIN.id):null,a=PIN.t==="a"?T.aById[PIN.id]:null,txt;
+    if(p){c.appendChild(face(p,22));txt=shown?shown+(shown===1?" pick for ":" picks for ")+first(p.name):"No pick for "+first(p.name)+" yet."+(p.topA?" They work most on "+p.topA.label+".":"")}
+    else txt=shown?shown+(shown===1?" task in ":" tasks in ")+(a?a.label:"this area"):"No task in "+(a?a.label:"this area")+" yet.";
+    c.appendChild(document.createTextNode(txt));var sep=el("span",null,"·");sep.setAttribute("aria-hidden","true");sep.style.color="var(--faint)";c.appendChild(sep);
+    var x=el("button",null,"Show all");x.type="button";x.addEventListener("click",function(){clearPin();var o=$("r-nx").querySelector(".nx-open");if(o)o.focus({preventScroll:true})});c.appendChild(x);
+    f.appendChild(c);f.hidden=false}else f.hidden=true;
+  var bd=VIEW==="board";
+  $("r-nx").hidden=bd||(!shown&&!PIN?true:!shown);
+  $("nx-vl").setAttribute("aria-pressed",String(!bd));$("nx-vb").setAttribute("aria-pressed",String(bd));
+  if(bd&&!BB)buildBoard();
+  var BD=$("r-board");BD.hidden=!bd||!NX.length;
+  if(BB)[].forEach.call(BD.querySelectorAll(".col"),function(col){var n=0;
+    [].forEach.call(col.querySelectorAll(".kc"),function(c){var x=NX[+c.dataset.k],v=PIN?match(x):true;c.hidden=!v;if(v)n++});
+    col.querySelector(".n").textContent=String(n);var em=col.querySelector(".col-empty");em.hidden=n>0;em.textContent=PIN?"Nothing here for this filter.":"Nothing here for this repo."});
+  var all=$("nx-all");all.hidden=bd||!!PIN||SHOWALL||NX.length<=10;all.textContent="Show all "+NX.length+" proposals";
+  syncPressed();
+}
+$("nx-all").addEventListener("click",function(){SHOWALL=true;filterNext();var r=$("r-nx").querySelector("li:nth-child(11) .nx-open");if(r)r.focus()});
+
+/* ---------- GitHub issues: prefilled new-issue links. The visitor submits on GitHub; this page sends nothing ---------- */
+var SITE="https://firstrun.atharvashah.com/doc-audit/",GH_MAX=7500,GHOK=false,OPENED={};
+var IMPL={high:"High",medium:"Medium",low:"Low"};
+function ghRepo(u){var m=/^https:\/\/github\.com\/([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/i.exec(u||"");return m?m[1]+"/"+m[2]:""}
+/* impact comes from the ranker's reader-impact part: 0.75 and up is high, under 0.5 is low */
+function impactOf(x){var v=x.parts&&isNum(x.parts.impact)?x.parts.impact:null;return v==null?"medium":v>=.75?"high":v>=.5?"medium":"low"}
+/* a docs fix goes to the repo that holds the docs; release, announce and quickstart go to the code repo */
+function issueRepo(x){var d=ghRepo(A.docs_url),c=ghRepo(A.url);return (x.kind==="document"||x.kind==="refresh")&&d?d:c}
+function itemPath(x){var fp=x.path||"";if(!fp&&x.kind==="document"){var m=/(\S+?\.(?:mdx?|rst|txt|adoc))\b/.exec(x.action);if(m)fp=m[1]}return fp}
+function oneLine(s){return String(s||"").replace(/\s+/g," ").trim()}
+/* every ask reads as a question to the maintainer, never an order */
+function noPing(s){return s.replace(/(^|[^\w`])@([\w-]+)/g,"$1`@$2`")}
+function askOf(x){return noPing(askRaw(x))}
+function askRaw(x){
+  var t=oneLine(x.title).replace(/`/g,""),fp=itemPath(x),n=x.count||x.evidence.length,m;
+  if(x.kind==="document"||x.kind==="refresh"){
+    if((m=/^Write a page for (.+)$/.exec(t)))return "Is `"+m[1]+"` meant to stay undocumented, or would a page help?";
+    if(fp)return "Does `"+fp+"` still match the code after "+(n>1?n+" commits":"this commit")+"?";
+    m=/^Document:\s*(.+)$/.exec(t);var sub=(m?m[1]:t).replace(/[.?]+$/,"");if(sub.length>110)sub=sub.slice(0,110).replace(/\s+\S*$/,"")+"...";
+    return "Is “"+sub+"” meant to stay undocumented, or would a page help?"}
+  if(x.kind==="release"){m=/^Publish the (.+) release notes$/.exec(t);return "Do the release notes for "+(m&&m[1].indexOf("@")<0?m[1]:"the latest release")+" still need writing?"}
+  if(x.kind==="announce")return "Is “"+t.replace(/^Announce:\s*/,"").replace(/[.?]+$/,"")+"” worth announcing, or is it already covered?";
+  if(x.kind==="quickstart")return "Does the quickstart in the README still run as written?";
+  return t.replace(/[.?]+$/,"")+"?"}
+function evLines(x,nEv,trim){var out=[];
+  x.evidence.slice(0,nEv).forEach(function(e){var cu=safeUrl(commitUrl(e.sha)),pu=e.pr?safeUrl(prUrl(e.pr)):"",id="`"+e.sha.slice(0,9)+"`";
+    out.push("- "+(cu?"["+id+"]("+cu+")":id)+" "+noPing(trim(e.subject))+(e.date?" ("+e.date+")":"")+(e.pr?", "+(pu?"[PR #"+e.pr+"]("+pu+")":"PR #"+e.pr):""))});
+  return out}
+function issueBody(x,k,nEv,cut){
+  var L=[],fp=itemPath(x),fu=fp?safeUrl(fileUrl(fp)):"";
+  function trim(s){s=oneLine(s);return cut&&s.length>cut?s.slice(0,cut)+"...":s}
+  L.push(askOf(x),"");
+  if(x.rationale)L.push(noPing(trim(x.rationale)),"");
+  if(fp)L.push("**Page:** "+(fu?"["+fp+"]("+fu+")":"`"+fp+"`"));
+  if(x.action)L.push("**What the audit suggests:** "+noPing(trim(x.action)));
+  L.push("**Impact:** "+IMPL[impactOf(x)]+(x.effort?" · **Effort:** "+EFF[x.effort][0]:"")+" · **Rank:** "+x.rank+" of "+NX.length,"");
+  var total=Math.max(x.count||0,x.evidence.length);
+  if(total){L.push("**Evidence** ("+total+(total===1?" commit)":" commits)"));
+    evLines(x,nEv,trim).forEach(function(l){L.push(l)});
+    var more=total-Math.min(nEv,x.evidence.length);if(more>0)L.push("- +"+more+" more");L.push("")}
+  L.push("---","Generated by an automated audit, FirstRun Doc-audit, and may be wrong: "+SITE+"?id="+encodeURIComponent(A.id||"")+"#c="+k);
+  return L.join("\n")}
+function issueUrl(x,k){
+  var base="https://github.com/"+issueRepo(x)+"/issues/new?title="+encodeURIComponent(askOf(x))+"&labels=documentation&body=",u;
+  /* stay under about 7,500 characters: drop commits first, then shorten the long lines */
+  for(var n=x.evidence.length;n>=0;n--){u=base+encodeURIComponent(issueBody(x,k,n));if(u.length<=GH_MAX)return u}
+  for(var c=400;c>=60;c-=85){u=base+encodeURIComponent(issueBody(x,k,0,c));if(u.length<=GH_MAX)return u}
+  return u}
+/* Docs gap report: at most 3 questions, highest impact first, one markdown text */
+function reportItems(){var seen={},out=[];
+  NX.forEach(function(x){var q=askOf(x);if(out.length<3&&!seen[q]){seen[q]=1;out.push(x)}});
+  var o={high:0,medium:1,low:2};
+  return out.map(function(x,i){return {x:x,i:i}}).sort(function(a,b){return (o[impactOf(a.x)]-o[impactOf(b.x)])||(a.i-b.i)}).map(function(r){return r.x})}
+function reportBody(items,nEv,cut){
+  var L=[],repo=ghRepo(safeUrl(A.url))||A.repo||"this repo";
+  function trim(s){s=oneLine(s);return cut&&s.length>cut?s.slice(0,cut)+"...":s}
+  L.push("This report comes from an automated audit of the public commits and docs of "+repo+", and it may be wrong. Please ignore any question that does not fit.","");
+  L.push("## Docs gap report","");
+  items.forEach(function(x,j){
+    L.push((j+1)+". **"+askOf(x)+"**");
+    if(x.rationale)L.push("   "+noPing(trim(x.rationale)));
+    var ev=evLines(x,Math.min(nEv,3),trim);if(ev.length){L.push("   Evidence:");ev.forEach(function(l){L.push("   "+l)})}
+    L.push("")});
+  L.push("Full audit board: "+SITE+"?id="+encodeURIComponent(A.id||""));
+  return L.join("\n")}
+function reportText(){return reportBody(reportItems(),3)}
+function reportIssueUrl(){var items=reportItems(),all=items.length&&items.every(function(x){return issueRepo(x)!==ghRepo(A.url)}),
+  repo=all?issueRepo(items[0]):ghRepo(A.url)||issueRepo(items[0]),
+  base="https://github.com/"+repo+"/issues/new?title="+encodeURIComponent("Docs gap report: "+items.length+(items.length===1?" question":" questions")+" from an automated audit")+"&labels=documentation&body=",u;
+  for(var n=3;n>=0;n--){u=base+encodeURIComponent(reportBody(items,n));if(u.length<=GH_MAX)return u}
+  for(var c=400;c>=60;c-=85){u=base+encodeURIComponent(reportBody(items,0,c));if(u.length<=GH_MAX)return u}
+  return u}
+function ghKey(x){return x.kind+":"+x.title}
+function ghLoad(){OPENED={};try{var v=JSON.parse(localStorage.getItem("fr-gh-"+(A.id||A.repo))||"{}");if(v&&typeof v==="object")OPENED=v}catch(e){}}
+function ghSave(){try{localStorage.setItem("fr-gh-"+(A.id||A.repo),JSON.stringify(OPENED))}catch(e){}}
+function isOpened(x){return OPENED[ghKey(x)]===1}
+/* after the link's own click runs, so the new tab still opens */
+function markOpened(x){setTimeout(function(){OPENED[ghKey(x)]=1;ghSave();paintGhMarks()},0)}
+function fillGi(g,x){var d=isOpened(x);g.textContent="";g.classList.toggle("done",d);g.appendChild(ic(d?"check":"issue"));g.appendChild(document.createTextNode(d?"Issue opened":"Open issue on GitHub"));
+  g.setAttribute("aria-label",(d?"Issue form already opened. Open it again for: ":"Open a GitHub issue for: ")+x.title+". Opens in a new tab.")}
+function issueLink(x,k){var g=el("a","gi");g.href=issueUrl(x,k);g.target="_blank";g.rel="noopener";g.dataset.k=k;fillGi(g,x);g.addEventListener("click",function(){markOpened(x)});return g}
+function paintGhMarks(){[].forEach.call(document.querySelectorAll("#r-nx .gi"),function(g){var x=NX[+g.dataset.k];if(x)fillGi(g,x)})}
+function paintReport(){$("gr-issue").href=reportIssueUrl()}
+$("gr-copy").addEventListener("click",function(){if(!NX.length)return;copy(reportText(),"Docs gap report copied")});
+$("gr-issue").addEventListener("click",function(){reportItems().forEach(markOpened)});
+function paintReady(){
+  var R=$("r-ready");R.textContent="";
+  var notes=(A.drafts&&A.drafts.release_notes)||"",hl=(A.drafts&&A.drafts.highlights)||[];
+  var auto=A.cards.filter(function(c){return c.kind==="automate"})[0],qs=A.cards.filter(function(c){return c.kind==="quickstart"})[0];
+  function add(kind,title,sub,item){var i=ITEMS.length;ITEMS.push(item);var b=el("button","rd panel k-"+(kind==="highlights"?"content":kind));b.type="button";b.setAttribute("aria-controls","drawer");b.setAttribute("aria-expanded","false");
+    b.appendChild(tile(kind));var w=el("div");w.appendChild(el("b",null,title));w.appendChild(el("span",null,sub));b.appendChild(w);var g=ic("r");g.setAttribute("class","i go");b.appendChild(g);
+    b.addEventListener("click",function(){openItem(i,b)});item.btn=b;R.appendChild(b)}
+  if(notes)add("automate",A.release&&A.release.name?"Release Notes for "+A.release.name:"Release Notes",(A.release&&A.release.commits?A.release.commits+" commits since "+(A.release.previous||"the last tag")+". ":"")+"Ready to paste.",{notes:notes,card:auto});
+  if(hl.length)add("highlights","Product Highlights",hl.length+" shipped features, one line each.",{hl:hl});
+  if(qs)add("quickstart","Prove It Runs","Run the quickstart in a clean container with doc-test.",{card:qs,qs:true});
+  $("r-readyw").hidden=!R.children.length;
+}
+function paintPages(){
+  var tb=$("r-pages"),max=Math.max.apply(null,A.pages.map(function(p){return p.age_days}).concat([1])),n=0,shown=0;
+  tb.textContent="";
+  var RK={stale:0,unchecked:1,aging:2,quiet:3,fresh:4};
+  A.pages.slice().sort(function(a,b){return (RK[a.status]-RK[b.status])||((b.relevant_since||0)-(a.relevant_since||0))||(b.age_days-a.age_days)}).forEach(function(p){
+    if(st!=="all"&&p.status!==st)return;n++;
+    if(!allPages&&shown>=12)return;shown++;
+    var tr=el("tr"),td=el("td","path"),u=fileUrl(p.path),a=el(u?"a":"span",0,p.path);
+    if(u){a.href=safeUrl(u);a.target="_blank";a.rel="noopener"}td.appendChild(a);
+    if(p.title&&p.title!==p.path)td.appendChild(el("small",0,p.title));tr.appendChild(td);
+    var s=el("td");s.appendChild(chip(p.status,STL[p.status]||p.status));if(p.judge==="jev"&&p.stale_p!=null){var j=el("small","jv","Jev "+Math.round(p.stale_p*100)+"% likely wrong");s.appendChild(j)}tr.appendChild(s);
+    var ag=el("td"),w=el("div","age"),bar=el("i");bar.style.width=Math.round(60*p.age_days/max)+"px";
+    w.appendChild(bar);w.appendChild(document.createTextNode(fmt(p.last_touched)));ag.appendChild(w);tr.appendChild(ag);
+    var ch=el("td","hide-sm",p.relevant_since?String(p.relevant_since):(A.mode==="sitemap"?"n/a":"0"));
+    if(p.evidence&&p.evidence[0])ch.title=p.evidence.map(function(e){return e.date+" "+e.subject}).join("\n");tr.appendChild(ch);
+    tb.appendChild(tr)});
+  if(!n){var tr=el("tr"),td=el("td",null,"No page has this status.");td.colSpan=4;tr.appendChild(td);tb.appendChild(tr)}
+  $("r-more").hidden=allPages||n<=12;
+  $("r-pagesub").textContent=(st==="all"?"Stale first, then the pages with the most commits since":"Showing "+STL[st]+" pages")+". A page goes stale after "+A.stale_days+" days with code moving under it.";
+}
+
+/* drawer */
+var OPENI=-1,LAST=null;
+function evList(evs){var ul=el("ul","evl");evs.forEach(function(e){var u=e.pr?prUrl(e.pr):commitUrl(e.sha),li=el("li"),a=el(u?"a":"span",u?null:"r");if(u){a.href=safeUrl(u);a.target="_blank";a.rel="noopener"}
+  a.appendChild(ic(e.pr?"pr":"commit"));a.appendChild(el("b",null,e.subject));a.appendChild(el("small",null,(e.pr?"#"+e.pr:e.sha)+"  "+fmt(e.date)));li.appendChild(a);ul.appendChild(li)});return ul}
+var PARTS=[["impact","Reader impact"],["urgency","Urgency"],["evidence","Evidence"],["judged","Checked by Jev"],["ease","Effort"]];
+function paintNextDrawer(B,x){
+  B.appendChild(el("h3",null,x.title));B.lastChild.id="dw-t";
+  if(x.rationale)B.appendChild(el("p","why",x.rationale));
+  if(x.score!=null&&x.parts){var w=el("div"),h=el("div","rk-h");h.appendChild(el("p","lab","Why it ranks #"+x.rank));
+    var sc=el("span","sc");sc.appendChild(document.createTextNode("Score "));sc.appendChild(el("b",null,String(x.score)));sc.appendChild(document.createTextNode(" of 100"));h.appendChild(sc);w.appendChild(h);
+    if(x.why_now)w.appendChild(el("p","rk-now",dot(x.why_now)));
+    var g=el("div","rk");PARTS.forEach(function(p){var v=x.parts[p[0]];if(!isNum(v))return;v=Math.max(0,Math.min(1,v));
+      g.appendChild(el("span",null,p[1]));var tr=el("span","tr"),f=el("i");f.style.width=(100*v)+"%";tr.appendChild(f);tr.setAttribute("aria-hidden","true");g.appendChild(tr);
+      g.appendChild(el("em",null,p[0]==="ease"&&x.effort?EFF[x.effort][0]:pct(v)))});
+    w.appendChild(g);B.appendChild(w)}
+  if(T&&!x.fb){var ow=el("div");ow.appendChild(el("p","lab","Suggested owner"));var o=el("div","own");
+    var p=x.owner?T.byId[x.owner.p]:null;
+    if(p){o.appendChild(face(p,40));var who=el("div","who");who.appendChild(el("span",null,p.name));
+      if(p.login){var gl=el("a",null,"@"+p.login);gl.href="https://github.com/"+p.login;gl.target="_blank";gl.rel="noopener";who.appendChild(gl)}o.appendChild(who);
+      if(x.owner.why)o.appendChild(el("p",null,dot(x.owner.why)));
+      var r=x.runner_up?T.byId[x.runner_up.p]:null;
+      if(x.balanced&&r){var k=picks(r.id,true);o.appendChild(el("p",null,r.name+" knows this best but already has "+k+(k===1?" pick.":" picks.")))}
+      else if(r){var rw=x.runner_up.why;o.appendChild(el("p",null,"Also a good fit: "+(rw&&rw.indexOf(r.name)===0?dot(rw):r.name+(rw?". "+dot(rw):"."))))}
+      var bt=el("button","btn");bt.type="button";bt.style.cssText="justify-self:start;grid-column:2;margin-top:6px";bt.appendChild(document.createTextNode("Show all "+first(p.name)+"'s picks"));
+      bt.addEventListener("click",function(){closeDrawer();PIN=null;togglePin({t:"p",id:p.id});var n=$("r-next");if(n)n.scrollIntoView({behavior:"smooth",block:"start"})});o.appendChild(bt)}
+    else{o.appendChild(face(null,40));o.appendChild(el("div","who","No clear owner"));o.appendChild(el("p",null,dot(x.fallback||"No recent commit points to one person.")))}
+    o.appendChild(el("p","nb","A suggestion from public commits, not an assignment."));ow.appendChild(o);B.appendChild(ow)}
+  if(x.action){var wd=el("div"),qs=x.kind==="quickstart";wd.appendChild(el("p","lab",qs?"Run this":"What to do"));
+    var td=el("div","todo"+(qs?" mono":""));td.appendChild(el("p",null,x.action));
+    var cp=el("button","btn");cp.type="button";cp.setAttribute("aria-label","Copy");cp.appendChild(ic("copy"));cp.addEventListener("click",function(){copy(x.action,qs?"Command copied":"Copied")});td.appendChild(cp);wd.appendChild(td);B.appendChild(wd)}
+  var acts2=el("div","dw-acts"),fp=x.path||"";
+  if(!fp&&x.kind==="document"){var m=/(\S+?\.(?:mdx?|rst|txt|adoc))\b/.exec(x.action);if(m)fp=m[1]}
+  if(fp){var fu=fileUrl(fp);if(fu){var ea=el("a","btn pri");ea.href=safeUrl(fu.replace("/blob/HEAD/","/edit/HEAD/"));ea.target="_blank";ea.rel="noopener";ea.appendChild(ic("gh"));ea.appendChild(document.createTextNode("Edit the page on GitHub"));acts2.appendChild(ea);
+    var va=el("a","btn");va.href=safeUrl(fu);va.target="_blank";va.rel="noopener";va.appendChild(ic("ext"));va.appendChild(document.createTextNode("View it"));acts2.appendChild(va)}}
+  var notes=(A.drafts&&A.drafts.release_notes)||"";
+  if(x.kind==="release"&&notes){var cn=el("button","btn pri");cn.type="button";cn.appendChild(ic("copy"));cn.appendChild(document.createTextNode("Copy the release notes"));cn.addEventListener("click",function(){copy(notes,"Release notes copied")});acts2.appendChild(cn)}
+  if(x.kind==="quickstart"){var dt=el("a","btn pri");dt.href="../doc-test/";dt.appendChild(ic("quickstart"));dt.appendChild(document.createTextNode("Open doc-test"));acts2.appendChild(dt)}
+  if(GHOK){var gk=NX.indexOf(x),gb=el("a","btn");gb.href=issueUrl(x,gk);gb.target="_blank";gb.rel="noopener";gb.appendChild(ic("issue"));gb.appendChild(document.createTextNode(isOpened(x)?"Open the issue again":"Open issue on GitHub"));gb.addEventListener("click",function(){markOpened(x)});acts2.appendChild(gb)}
+  if(acts2.childNodes.length)B.appendChild(acts2);
+  if(x.evidence.length){var e=el("div");e.appendChild(el("p","lab","The commits behind it ("+Math.max(x.count,x.evidence.length)+")"));e.appendChild(evList(x.evidence));B.appendChild(e)}
+}
+function openItem(i,btn){
+  var it=ITEMS[i];if(!it)return;OPENI=i;LAST=btn||it.btn;
+  ITEMS.forEach(function(x){if(x.btn)x.btn.setAttribute("aria-expanded","false")});[].forEach.call(document.querySelectorAll(".kc"),function(c){c.setAttribute("aria-expanded","false")});if(LAST)LAST.setAttribute("aria-expanded","true");
+  var B=$("dw-b");B.textContent="";var kind=it.notes?"automate":it.hl?"highlights":it.next?NK[it.next.kind].t:it.card.kind;
+  var TL=$("dw-tile");TL.className="tile k-"+(kind==="highlights"?"content":kind);TL.parentNode.className="dw-h k-"+(kind==="highlights"?"content":kind);TL.textContent="";TL.appendChild(ic(kind));
+  $("dw-k").textContent=it.next?NK[it.next.kind].l+" · Rank "+it.next.rank:(KL[kind]||kind);
+  if(it.next){paintNextDrawer(B,it.next)}
+  else if(it.notes){
+    B.appendChild(el("h3",null,"Release notes"+(A.release&&A.release.name?" for "+A.release.name:"")));B.lastChild.id="dw-t";
+    if(it.card&&it.card.why)B.appendChild(el("p","why",it.card.why));
+    var acts=el("div","dw-acts"),cb=el("button","btn pri");cb.type="button";cb.appendChild(ic("copy"));cb.appendChild(document.createTextNode("Copy the notes"));cb.addEventListener("click",function(){copy(it.notes,"Release notes copied")});acts.appendChild(cb);
+    if(A.url){var rl=el("a","btn");rl.href=A.url+"/releases";rl.target="_blank";rl.rel="noopener";rl.appendChild(ic("gh"));rl.appendChild(document.createTextNode("Open releases"));acts.appendChild(rl)}
+    B.appendChild(acts);B.appendChild(el("pre","draft",it.notes));
+  }else if(it.hl){
+    B.appendChild(el("h3",null,"Product highlights"));B.lastChild.id="dw-t";
+    B.appendChild(el("p","why","One line per shipped, user-visible feature. Paste into a newsletter or the homepage."));
+    var txt=it.hl.map(function(h){return "- "+h.headline+(h.date?" ("+h.date+")":"")}).join("\n");
+    var a2=el("div","dw-acts"),c2=el("button","btn pri");c2.type="button";c2.appendChild(ic("copy"));c2.appendChild(document.createTextNode("Copy as a list"));c2.addEventListener("click",function(){copy(txt,"Highlights copied")});a2.appendChild(c2);B.appendChild(a2);
+    var box=el("div");it.hl.forEach(function(h){var d=el("div","hl");d.appendChild(el("b",null,h.headline));d.appendChild(el("span",null,fmt(h.date)+(h.pr?"  #"+h.pr:"")));box.appendChild(d)});B.appendChild(box);
+  }else{
+    var c=it.card,p=cardPath(c);
+    B.appendChild(el("h3",null,it.qs?"Prove the quickstart runs":c.title.replace(/`/g,"")));B.lastChild.id="dw-t";
+    B.appendChild(el("p","why",c.why));
+    var w=el("div");w.appendChild(el("p","lab",it.qs?"Run this":"What to do"));
+    var td=el("div","todo"+(it.qs?" mono":""));td.appendChild(el("p",null,c.action));
+    var cp=el("button","btn");cp.type="button";cp.setAttribute("aria-label","Copy");cp.appendChild(ic("copy"));cp.addEventListener("click",function(){copy(c.action,it.qs?"Command copied":"Copied")});td.appendChild(cp);w.appendChild(td);B.appendChild(w);
+    var acts2=el("div","dw-acts");
+    if(p){var fu=fileUrl(p);if(fu){var ea=el("a","btn pri");ea.href=safeUrl(fu.replace("/blob/HEAD/","/edit/HEAD/"));ea.target="_blank";ea.rel="noopener";ea.appendChild(ic("gh"));ea.appendChild(document.createTextNode("Edit the page on GitHub"));acts2.appendChild(ea);
+      var va=el("a","btn");va.href=safeUrl(fu);va.target="_blank";va.rel="noopener";va.appendChild(ic("ext"));va.appendChild(document.createTextNode("View it"));acts2.appendChild(va)}}
+    if(it.qs){var dt=el("a","btn pri");dt.href="../doc-test/";dt.appendChild(ic("quickstart"));dt.appendChild(document.createTextNode("Open doc-test"));acts2.appendChild(dt)}
+    if(acts2.childNodes.length)B.appendChild(acts2);
+    if(c.evidence&&c.evidence.length){var e=el("div");e.appendChild(el("p","lab","The commits behind it ("+(c.count||c.evidence.length)+")"));e.appendChild(evList(c.evidence));B.appendChild(e)}
+  }
+  $("scrim").classList.add("on");$("drawer").classList.add("on");$("drawer").setAttribute("aria-hidden","false");
+  document.body.style.overflow="hidden";
+  setTimeout(function(){$("dw-x").focus()},60);
+  if(history.replaceState)history.replaceState(null,"",location.pathname+location.search+"#c="+i);
+}
+function closeDrawer(){
+  if(OPENI<0)return;OPENI=-1;$("scrim").classList.remove("on");$("drawer").classList.remove("on");$("drawer").setAttribute("aria-hidden","true");document.body.style.overflow="";
+  ITEMS.forEach(function(x){if(x.btn)x.btn.setAttribute("aria-expanded","false")});[].forEach.call(document.querySelectorAll(".kc"),function(c){c.setAttribute("aria-expanded","false")});
+  if(LAST)LAST.focus({preventScroll:true});
+  if(history.replaceState)history.replaceState(null,"",location.pathname+location.search+pinHash());
+}
+$("dw-x").addEventListener("click",closeDrawer);$("scrim").addEventListener("click",closeDrawer);
+document.addEventListener("keydown",function(e){
+  if(OPENI<0)return;
+  if(e.key==="Escape"){e.preventDefault();closeDrawer();return}
+  if(e.key==="Tab"){var f=[].slice.call($("drawer").querySelectorAll("a[href],button")).filter(function(x){return x.offsetParent});if(!f.length)return;var a=f[0],z=f[f.length-1];
+    if(e.shiftKey&&document.activeElement===a){e.preventDefault();z.focus()}else if(!e.shiftKey&&document.activeElement===z){e.preventDefault();a.focus()}}
+});
+$("drawer").setAttribute("aria-hidden","true");
+
+function render(a){
+  A=a;document.title=a.repo+" | Doc-audit";
+  $("start").hidden=true;$("report").hidden=false;
+  $("r-title").textContent=a.repo;avatar($("r-av"),a.repo);
+  if(safeUrl(a.url))$("r-gh").href=a.url;else $("r-gh").hidden=true;
+  if(a.id&&/^[a-z0-9-]+$/i.test(a.id))paintReceipt(a);
+  var meta=["Audited "+fmt(a.generated_at)];
+  if(a.history&&a.history.commits)meta.push(a.history.commits.toLocaleString()+" commits since "+fmt(a.history.since));
+  if(a.release&&a.release.name)meta.push("newest release "+a.release.name);
+  if(a.docs_repo&&a.docs_repo!==a.repo)meta.push("docs in "+a.docs_repo);
+  if(a.mode==="sitemap")meta.push("sitemap only");
+  $("r-meta").textContent=meta.join(" · ");
+  $("r-ph").textContent=(a.summary.stale||a.summary.unchecked)?"Pages Most Likely Wrong":"Every Page Keeps Up";
+  paintHealth(a.summary);
+  try{T=teamModel(a.team)}catch(e){T=null}
+  NX=nextItems(a);
+  GHOK=!!ghRepo(safeUrl(a.url));ghLoad();
+  paintTeam(a);paintNext();paintReady();paintPages();
+  $("r-foot").textContent=a.jev?"Jev read each stale page against the commits and sorted commits that have no conventional prefix.":"Commits were sorted by their subject line. Set TYPESAFE_API_KEY to let Jev read the pages.";
+  var h=/#(who|area)=([pa]\d{1,4})\b/.exec(location.hash);
+  if(h&&T&&(h[1]==="who"?T.byId[h[2]]:T.aById[h[2]]))togglePin({t:h[1]==="who"?"p":"a",id:h[2]});
+  var vw=/#view=(list|board)\b/.exec(location.hash);if(vw)setNxView(vw[1],false);
+  var m=/#c=(\d+)/.exec(location.hash);if(m&&ITEMS[+m[1]])openItem(+m[1]);
+}
+$("r-more").addEventListener("click",function(){allPages=true;paintPages()});
+var QS=new URLSearchParams(location.search),id=QS.get("id");
+if(id&&/^[a-z0-9-]+$/i.test(id)){fetch("../audits/"+id+".json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(render).catch(function(){listAudits()})}
+else{
+  /* ?repo=owner/repo, from the home page. repoOf keeps only owner/repo characters, and it lands in .value, never in HTML */
+  var pre=repoOf(QS.get("repo"));
+  var ready=listAudits();
+  if(pre){$("repo").value=pre;Promise.resolve(ready).then(function(){$("f").dispatchEvent(new Event("submit",{cancelable:true}))})}
+}
+})();
+</script>
+</body>
+</html>

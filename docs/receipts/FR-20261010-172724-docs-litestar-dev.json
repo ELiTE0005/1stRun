@@ -1,0 +1,74 @@
+{
+ "receipt_id": "FR-20261010-172724-docs-litestar-dev",
+ "issued_at": "2026-10-11T09:40:36Z",
+ "work": {
+  "source_url": "https://docs.litestar.dev/main/getting-started.html",
+  "run_id": "20261010-172724-docs-litestar-dev",
+  "started_at": "2026-10-10T17:27:42+00:00",
+  "finished_at": "2026-10-10T17:33:32+00:00",
+  "seconds": 345.5,
+  "first_failed_step": 2,
+  "failure_class": "environment",
+  "classified_by": "timeout",
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0247,
+  "input_tokens": 5651,
+  "output_tokens": 1221,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 182.3,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 52.6,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 83.6
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 88.6,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 73.2
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 1,
+  "steps_total": 2,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-172724-docs-litestar-dev",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:36cd908be0eb9a0800ae145e74174455c2b7e30976be01c3c207ed33c7845fb9",
+   "runbook.json": "sha256:35949b2f9904d6eed0d0ce3fa2bb298c9ff827eb460b356d04ac79703d493ff3",
+   "report.md": "sha256:8af0a83219ae978ed9cffcce0853fc554920464c114150d29b81377ffe4fa478"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:a529bd92cbd95221a38fffce2d26008d5da4fb79514cdea1d20c7f5ddf5b74aa"
+}

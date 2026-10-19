@@ -1,0 +1,74 @@
+{
+ "receipt_id": "FR-20261010-074200-docs-entire-io",
+ "issued_at": "2026-10-11T09:40:38Z",
+ "work": {
+  "source_url": "https://docs.entire.io/installation",
+  "run_id": "20261010-074200-docs-entire-io",
+  "started_at": "2026-10-10T07:42:20+00:00",
+  "finished_at": "2026-10-10T07:42:26+00:00",
+  "seconds": 1.9,
+  "first_failed_step": 1,
+  "failure_class": null,
+  "classified_by": null,
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0226,
+  "input_tokens": 4509,
+  "output_tokens": 1135,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 166.8,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 48.1,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 84.9
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 81.1,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 75.3
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 0,
+  "steps_total": 4,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-074200-docs-entire-io",
+  "tags": [
+   "v1"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:587ffb8bed05c0b59fe4e1dcc741bca63883fc3cd4b2b7461d96dbb8af718b0b",
+   "runbook.json": "sha256:a206a52a0301b044537da597ddb7de417e7fbf9cdbf5d217fd4bae2163a3b13b",
+   "report.md": "sha256:6f80e2fea931273c9d7eddaaa33bda3bd6b68327a88936114bce95f089f1c521"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:ce8fa02f291682d25c98c0cf0c33f9c02c912e03af9818e62a3d4e52917dbce5"
+}

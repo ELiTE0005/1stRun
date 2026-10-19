@@ -1,0 +1,59 @@
+{
+  "run_id": "run-passed",
+  "source_url": "https://docs.acme.dev/quickstart",
+  "status": "passed",
+  "step_status": {
+    "1": "passed",
+    "2": "passed",
+    "3": "passed"
+  },
+  "attempts": {},
+  "results": [
+    {
+      "step_id": 1,
+      "command": "python -m venv .venv",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": true
+    },
+    {
+      "step_id": 2,
+      "command": "pip install acme-sdk",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 8.4,
+      "timed_out": false,
+      "passed": true
+    },
+    {
+      "step_id": 3,
+      "command": "python hello.py",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": true
+    }
+  ],
+  "last_good_step": 3,
+  "first_failed_step": null,
+  "patches": [],
+  "gave_up": [],
+  "classifications": {},
+  "usage": {
+    "tool_calls": 4,
+    "input_tokens": 3100,
+    "output_tokens": 420,
+    "cost_usd": 0.0142
+  },
+  "started_at": "2026-10-11T09:00:00Z",
+  "finished_at": "2026-10-11T09:00:12Z",
+  "time_to_first_success_s": 11.1,
+  "tags": [],
+  "stop_reason": ""
+}

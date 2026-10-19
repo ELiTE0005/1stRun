@@ -1,0 +1,74 @@
+{
+ "receipt_id": "FR-20261010-172129-go-dev",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://go.dev/doc/tutorial/getting-started",
+  "run_id": "20261010-172129-go-dev",
+  "started_at": "2026-10-10T17:21:54+00:00",
+  "finished_at": "2026-10-10T17:23:28+00:00",
+  "seconds": 94.3,
+  "first_failed_step": null,
+  "failure_class": null,
+  "classified_by": null,
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0296,
+  "input_tokens": 4080,
+  "output_tokens": 2098,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 218.5,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 63.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 80.6
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 106.2,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 68.3
+  }
+ ],
+ "proof": {
+  "status": "passed",
+  "verified": false,
+  "steps_passed": 8,
+  "steps_total": 8,
+  "claim": "Every step passed on the first run. No fix was needed, so no second run was made."
+ },
+ "audit": {
+  "run_id": "20261010-172129-go-dev",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:48fa3f40d7f63871f8c3373d42e06c060de520d110f72f180eba8aaedce66aa8",
+   "runbook.json": "sha256:5f6a1b8d4d56221f4f399652108f5bd0954c62ff83cf24ad0daddc0caf378e8c",
+   "report.md": "sha256:7b4c0b33fa18f380b3e7b85e0612609632f5eda25f3cfa4dcbfd156dbc55c1af"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:a2075fc948d19f031b6a36406c749ee6b98521430f3028435b05a1d261798a39"
+}

@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-101029-mkdocs-org",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://www.mkdocs.org/getting-started/",
+  "run_id": "20261010-101029-mkdocs-org",
+  "started_at": "2026-10-10T10:10:59+00:00",
+  "finished_at": "2026-10-10T10:13:43+00:00",
+  "seconds": 91.8,
+  "first_failed_step": 5,
+  "failure_class": "environment",
+  "classified_by": "precedent",
+  "patches": [
+   {
+    "step": 5,
+    "was": "curl 'https://jaspervdj.be/lorem-markdownum/markdown.txt' > docs/about.md",
+    "now": "apt-get update -qq && apt-get install -y -qq curl && curl 'https://jaspervdj.be/lorem-markdownum/markdown.txt' > docs/about.md",
+    "reason": "the base image lacks curl; install it first"
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0314,
+  "input_tokens": 3482,
+  "output_tokens": 2427,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 231.7,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 66.9,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 79.5
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 112.7,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 66.5
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 9,
+  "steps_total": 9,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-101029-mkdocs-org",
+  "tags": [
+   "real"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:9f7ddbc2da4416cff9871ca8db4dace798201b40b4309e6e2dd2182f2b2dae16",
+   "runbook.json": "sha256:e565f28da1f49c6faf8a6baf5a0b9973808c1ba9671411c2142d937a9bcd5726",
+   "report.md": "sha256:494764677c91211a2ecb9e0d3119a7354e0b7af76fb40603fa011e7191ece42d"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:99036447fc68869ff1d83d2586445f2d8f6c11e94224635afedbe5184fee6426"
+}

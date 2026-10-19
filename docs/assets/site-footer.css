@@ -1,0 +1,15 @@
+/* One footer for every main page. The markup is pasted into each page, so the footer works without JS.
+   tests/test_site_footer.py fails if a page's copy drifts from the others. */
+.sf{--sf-ink:oklch(22% .012 255);--sf-ink2:oklch(36% .012 255);--sf-mut:oklch(48% .013 255);--sf-line:oklch(89% .008 255);--sf-acc:oklch(50% .19 256);
+ margin-top:40px;border-top:1px solid var(--sf-line);font-family:Geist,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;font-size:13.5px;line-height:1.5;color:var(--sf-mut);text-align:left}
+.sf-in{max-width:1120px;margin:0 auto;padding:22px 24px 32px;display:grid;gap:10px}
+.sf-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 28px}
+.sf a{color:inherit;text-decoration:underline;text-decoration-color:var(--sf-line);text-decoration-thickness:1px;text-underline-offset:3px;transition:color .2s,text-decoration-color .2s}
+.sf a:hover{color:var(--sf-acc);text-decoration-color:currentColor;text-decoration-thickness:1px}
+.sf a:focus-visible{outline:2px solid var(--sf-acc);outline-offset:2px;border-radius:3px}
+.sf .sf-wm{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:14px;letter-spacing:-.02em;color:var(--sf-ink);text-decoration:none}
+.sf-wm img{width:22px;height:22px;display:block;max-width:none}
+.sf-nav{display:flex;flex-wrap:wrap;gap:4px 18px;color:var(--sf-ink2)}
+.sf-cred{margin:0;padding:0;max-width:none;font-size:13px}
+@media (max-width:600px){.sf-in{padding:20px 16px 28px}.sf-top{flex-direction:column;align-items:flex-start}.sf-nav a{display:inline-block;padding:4px 0}}
+@media (prefers-reduced-motion:reduce){.sf a{transition:none}}

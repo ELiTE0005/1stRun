@@ -1,0 +1,61 @@
+{
+ "kind": "audit",
+ "receipt_id": "FR-audit-20261010-163526-entireio-cli",
+ "issued_at": "2026-10-11T11:03:23Z",
+ "work": {
+  "repo": "entireio/cli",
+  "docs_repo": "",
+  "url": "https://github.com/entireio/cli",
+  "audited_at": "2026-10-10T16:35:26+00:00",
+  "head": "",
+  "commits_read": 10062,
+  "since": "2026-01-03",
+  "history_capped": false,
+  "pages": 26,
+  "fresh": 25,
+  "aging": 1,
+  "stale": 0,
+  "quiet": 0,
+  "features": 235,
+  "uncovered": 82,
+  "cards": {
+   "document": 8,
+   "content": 4,
+   "feature": 4,
+   "automate": 1,
+   "quickstart": 1
+  },
+  "judged_by_jev": true
+ },
+ "price": {
+  "recorded": true,
+  "estimated": true,
+  "jev_calls": 2,
+  "jev_input_tokens": 51272,
+  "usd": 0.002153,
+  "basis": "Estimate. This audit ran before cost tracking. Re-running the same audit on 2026-10-11 used this much Jev input, billed at TypeSafe's list price of $0.042 per million input tokens. Output is free, and the clone and the analysis are free."
+ },
+ "limits": {
+  "dollar_cap_per_audit": null,
+  "jev_stale_pages_max": 200,
+  "jev_commit_sorts_max": 80,
+  "jev_batch_size": 40,
+  "history_commits_max": 20000,
+  "note": "The plan sets no dollar cap per audit. Jev reads are limited by the counts below."
+ },
+ "proof": {
+  "cards": 18,
+  "cards_citing_evidence": 16,
+  "all_cited": false,
+  "claim": "16 of 18 cards cite commits or pages you can open. This audit did not record the commit it read."
+ },
+ "audit": {
+  "audit_id": "audit-20261010-163526-entireio-cli",
+  "evidence_sha256": {
+   "audit.json": "sha256:d0a898743b137811c977a4cb9ceac8d727272424909bc60161ddef60d01d4b68",
+   "audit.md": "sha256:76fb783c6cf9dbaf25cf0be4f2a845f764232353d66872917ae8c836d8771a1f"
+  },
+  "generated_by": "firstrun audit"
+ },
+ "hash": "sha256:6d5b98e04d80d93a974216287d1fa1ed5f57ea9413410b4d8706ea49866ce060"
+}

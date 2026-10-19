@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-173117-docs-peewee-orm-com",
+ "issued_at": "2026-10-11T09:40:36Z",
+ "work": {
+  "source_url": "https://docs.peewee-orm.com/en/latest/peewee/quickstart.html",
+  "run_id": "20261010-173117-docs-peewee-orm-com",
+  "started_at": "2026-10-10T17:32:30+00:00",
+  "finished_at": "2026-10-10T17:34:19+00:00",
+  "seconds": 82.8,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 1,
+    "was": "python quickstart.py",
+    "now": "pip install peewee && python quickstart.py",
+    "reason": "The traceback shows ModuleNotFoundError for 'peewee', which is a missing prerequisite in the clean python:3.11-slim image. Installing the peewee package from PyPI before running the original command resolves it."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0639,
+  "input_tokens": 7332,
+  "output_tokens": 4877,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 471.6,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 136.0,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 59.6
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 229.3,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 33.9
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 1,
+  "steps_total": 1,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-173117-docs-peewee-orm-com",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:f57477130c8773f1270775966ce504a8ca51ba89942f93da1b19fcb1be1144aa",
+   "runbook.json": "sha256:12de42f9757d60cfc3873f7de2101fa2518c9c96eeeef364b9ce963183d4ac1b",
+   "report.md": "sha256:e3deab665bdea5b36ad65d096329eca0218b3d4a777c981452791f9d2fc439bd"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:4d635a7830066efe9bcb2942735c84025b56036c00bfd9296b24ff0c2bd82045"
+}

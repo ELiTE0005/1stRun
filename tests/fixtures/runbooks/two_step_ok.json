@@ -1,0 +1,32 @@
+{
+  "source_url": "file://tests/fixtures/docs/two_step_ok.md",
+  "title": "Two Step OK",
+  "image": "python:3.11-slim",
+  "docs_markdown": "",
+  "steps": [
+    {
+      "id": 1,
+      "intent": "Say hello",
+      "command": "echo hello",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": "hello",
+        "file_exists": null
+      },
+      "source_line": ""
+    },
+    {
+      "id": 2,
+      "intent": "Add numbers",
+      "command": "python -c \"print(1+1)\"",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": "2",
+        "file_exists": null
+      },
+      "source_line": ""
+    }
+  ]
+}

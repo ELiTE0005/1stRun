@@ -1,0 +1,56 @@
+{
+  "source_url": "https://docs.gamma.io/quickstart/",
+  "title": "Gamma quickstart",
+  "image": "python:3.11-slim",
+  "docs_markdown": "",
+  "steps": [
+    {
+      "id": 1,
+      "intent": "step",
+      "command": "python -m venv .venv",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    },
+    {
+      "id": 2,
+      "intent": "step",
+      "command": "pip install gamma",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    },
+    {
+      "id": 3,
+      "intent": "step",
+      "command": "gamma init --name demo",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    },
+    {
+      "id": 4,
+      "intent": "step",
+      "command": "gamma status",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+{
+ "receipt_id": "FR-20261010-074001-docs-neatlogs-com",
+ "issued_at": "2026-10-11T09:40:39Z",
+ "work": {
+  "source_url": "https://docs.neatlogs.com/sdk/python",
+  "run_id": "20261010-074001-docs-neatlogs-com",
+  "started_at": "2026-10-10T07:40:36+00:00",
+  "finished_at": "2026-10-10T07:42:00+00:00",
+  "seconds": 84.3,
+  "first_failed_step": null,
+  "failure_class": null,
+  "classified_by": null,
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0355,
+  "input_tokens": 10544,
+  "output_tokens": 919,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 262.0,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 75.6,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 77.0
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 127.4,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 62.3
+  }
+ ],
+ "proof": {
+  "status": "passed",
+  "verified": false,
+  "steps_passed": 3,
+  "steps_total": 3,
+  "claim": "Every step passed on the first run. No fix was needed, so no second run was made."
+ },
+ "audit": {
+  "run_id": "20261010-074001-docs-neatlogs-com",
+  "tags": [
+   "v1"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:373d9a7340bf82b6faabdaf1cbbcd1b2577747347745c5d51958ad178ac8ea86",
+   "runbook.json": "sha256:fc1cbe5c56d3ca6ba487a94952f81832f93ff59833a28322a975fa8c889087b9",
+   "report.md": "sha256:5ca394154cc1eb5d17e64ed26bf4be14c01f690f2a1572850dd1ee0ec255f9f6"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:afb3d1729e4cbe9e1369c5dd825f1448c80bb99338e668bdff190e5ec929fa2b"
+}

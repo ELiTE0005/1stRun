@@ -1,0 +1,72 @@
+{
+ "receipt_id": "FR-20261010-172617-github-com",
+ "issued_at": "2026-10-11T09:40:36Z",
+ "work": {
+  "source_url": "https://github.com/dlt-hub/dlt/blob/devel/docs/website/docs/build-a-pipeline-tutorial",
+  "run_id": "20261010-172617-github-com",
+  "started_at": "2026-10-10T17:26:24+00:00",
+  "finished_at": "2026-10-10T17:26:24+00:00",
+  "seconds": 0,
+  "first_failed_step": null,
+  "failure_class": null,
+  "classified_by": null,
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0,
+  "input_tokens": 0,
+  "output_tokens": 0,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 98.8
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 0.0,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 98.0
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 0,
+  "steps_total": 0,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-172617-github-com",
+  "tags": [],
+  "evidence_sha256": {
+   "state.json": "sha256:f073db31ac12ed1299c38ce2d950edde7193dd6f0beb84e32faf71cbb595f01f",
+   "runbook.json": "sha256:2b8d84d4b514e7b9b2e664f7bc40da195f86a5f56178af507fc21d149a750b58",
+   "report.md": "sha256:960407ed6f525886d1cea4e648060db868d18f518ee06ced0cf8707eea933a74"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:92bd3ddb5d20616b889ce5a4b7c977cccf8eddade7b0acef6dcdb175525bb3de"
+}

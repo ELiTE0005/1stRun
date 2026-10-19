@@ -1,0 +1,89 @@
+{
+  "run_id": "run-verified",
+  "source_url": "https://docs.gamma.io/quickstart/",
+  "status": "verified",
+  "step_status": {
+    "1": "passed",
+    "2": "passed",
+    "3": "passed",
+    "4": "passed"
+  },
+  "attempts": {},
+  "results": [
+    {
+      "step_id": 1,
+      "command": "python -m venv .venv",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": true
+    },
+    {
+      "step_id": 2,
+      "command": "pip install gamma",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 5.1,
+      "timed_out": false,
+      "passed": true
+    },
+    {
+      "step_id": 3,
+      "command": "gamma init --name demo",
+      "exit_code": 2,
+      "stdout": "",
+      "stderr": "error: unrecognized arguments: --name",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": false
+    },
+    {
+      "step_id": 3,
+      "command": "gamma init demo",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": true
+    },
+    {
+      "step_id": 4,
+      "command": "gamma status",
+      "exit_code": 0,
+      "stdout": "",
+      "stderr": "",
+      "duration_s": 1.2,
+      "timed_out": false,
+      "passed": true
+    }
+  ],
+  "last_good_step": 4,
+  "first_failed_step": 3,
+  "patches": [
+    {
+      "step_id": 3,
+      "old_command": "gamma init --name demo",
+      "new_command": "gamma init demo",
+      "reason": "The flag --name was removed in 2.0. The docs still show it.",
+      "failure_class": "docs_bug",
+      "source": "https://github.com/gamma/gamma/releases/tag/v2.0.0"
+    }
+  ],
+  "gave_up": [],
+  "classifications": {},
+  "usage": {
+    "tool_calls": 9,
+    "input_tokens": 7200,
+    "output_tokens": 900,
+    "cost_usd": 0.0377
+  },
+  "started_at": "2026-10-11T11:00:00Z",
+  "finished_at": "2026-10-11T11:01:10Z",
+  "time_to_first_success_s": 64.2,
+  "tags": [],
+  "stop_reason": ""
+}

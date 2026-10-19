@@ -1,0 +1,99 @@
+{
+ "receipt_id": "FR-20261010-124014-typer-tiangolo-com",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://typer.tiangolo.com/tutorial/first-steps/",
+  "run_id": "20261010-124014-typer-tiangolo-com",
+  "started_at": "2026-10-10T12:40:24+00:00",
+  "finished_at": "2026-10-10T12:41:43+00:00",
+  "seconds": 32.0,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "precedent",
+  "patches": [
+   {
+    "step": 1,
+    "was": "uv run python main.py",
+    "now": "pip install --quiet uv && uv run python main.py",
+    "reason": "uv is not installed in the clean python:3.11-slim image, as the 'uv: command not found' error shows. Installing it from PyPI with pip adds the missing prerequisite, and the original command then runs unchanged."
+   },
+   {
+    "step": 1,
+    "was": "pip install --quiet uv && uv run python main.py",
+    "now": "pip install --quiet uv && uv run --with typer python main.py",
+    "reason": "main.py imports typer, which is not installed in the clean container, and uv run found no project dependencies that would install it. Adding --with typer makes uv provide typer for this run and leaves the rest of the command unchanged."
+   },
+   {
+    "step": 2,
+    "was": "uv run python main.py --help",
+    "now": "uv run --with typer python main.py --help",
+    "reason": "The traceback shows main.py imports typer, which is not installed in the clean container's environment. uv's --with flag adds typer to the run environment without changing the original command or its arguments."
+   },
+   {
+    "step": 3,
+    "was": "uv run python main.py Camila",
+    "now": "uv run --with typer python main.py Camila",
+    "reason": "main.py imports typer, which is not installed in the clean container and is not declared as a project dependency. `uv run --with typer` installs it into the temporary environment for this run, and the original command and its Camila argument stay the same."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0115,
+  "input_tokens": 3389,
+  "output_tokens": 1083,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 84.9,
+   "within_cap": true,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 24.5,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 91.7
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 41.3,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 86.4
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 3,
+  "steps_total": 7,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-124014-typer-tiangolo-com",
+  "tags": [
+   "tiercap"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:3c944f7984a1416995f47893dd31bc89f6a8457a2ae13b0330426d052743f674",
+   "runbook.json": "sha256:f4bdea13c475aab72df1c3a63b801d50ce39e49f5b73b3f25abb5660eeb80790",
+   "report.md": "sha256:6c55cfc15c1c91aa356d0d07f67eb08087e3e0ff4577d58046b2ece78d1a654b"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:0c53764c931c3a8bb29b2b6dd215b3d6fab3a23400e482a9459e7b3994534f07"
+}

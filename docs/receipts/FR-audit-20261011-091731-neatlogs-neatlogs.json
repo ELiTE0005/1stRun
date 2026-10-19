@@ -1,0 +1,60 @@
+{
+ "kind": "audit",
+ "receipt_id": "FR-audit-20261011-091731-neatlogs-neatlogs",
+ "issued_at": "2026-10-11T09:17:46Z",
+ "work": {
+  "repo": "neatlogs/neatlogs",
+  "docs_repo": "",
+  "url": "https://github.com/neatlogs/neatlogs",
+  "audited_at": "2026-10-11T09:17:31+00:00",
+  "head": "202f8776ea7d0902a6cb085495c6bcb00c226f8e",
+  "commits_read": 423,
+  "since": "2025-06-05",
+  "history_capped": false,
+  "pages": 1,
+  "fresh": 1,
+  "aging": 0,
+  "stale": 0,
+  "quiet": 0,
+  "features": 17,
+  "uncovered": 17,
+  "cards": {
+   "document": 8,
+   "content": 4,
+   "feature": 4,
+   "automate": 1,
+   "quickstart": 1
+  },
+  "judged_by_jev": true
+ },
+ "price": {
+  "recorded": true,
+  "jev_calls": 2,
+  "jev_input_tokens": 13272,
+  "usd": 0.000557,
+  "basis": "TypeSafe list price, $0.042 per million input tokens, output free. The clone and the analysis are free."
+ },
+ "limits": {
+  "dollar_cap_per_audit": null,
+  "jev_stale_pages_max": 200,
+  "jev_commit_sorts_max": 80,
+  "jev_batch_size": 40,
+  "history_commits_max": 20000,
+  "note": "The plan sets no dollar cap per audit. Jev reads are limited by the counts below."
+ },
+ "proof": {
+  "cards": 18,
+  "cards_citing_evidence": 16,
+  "all_cited": false,
+  "claim": "16 of 18 cards cite commits or pages you can open. The audit read the history up to commit 202f8776e."
+ },
+ "audit": {
+  "audit_id": "audit-20261011-091731-neatlogs-neatlogs",
+  "evidence_sha256": {
+   "audit.json": "sha256:8161c9f58be64d391d902d0a7787592b7c26d9dd8f132ef79a1f444e82c104c4",
+   "audit.md": "sha256:379e262a926b3bb10e412dacadf9b3ee943328cbc06f995a0dee4bbf0e388ab4"
+  },
+  "generated_by": "firstrun audit"
+ },
+ "hash": "sha256:c05fe5773fe2fb602686d433577f15206251045655ebd3cfd1cca02f9a960a1c"
+}

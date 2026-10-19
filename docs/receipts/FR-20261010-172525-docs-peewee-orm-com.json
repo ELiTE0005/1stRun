@@ -1,0 +1,81 @@
+{
+ "receipt_id": "FR-20261010-172525-docs-peewee-orm-com",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "http://docs.peewee-orm.com/en/latest/peewee/example.html",
+  "run_id": "20261010-172525-docs-peewee-orm-com",
+  "started_at": "2026-10-10T17:25:42+00:00",
+  "finished_at": "2026-10-10T17:31:11+00:00",
+  "seconds": 314.9,
+  "first_failed_step": 2,
+  "failure_class": "environment",
+  "classified_by": "timeout",
+  "patches": [
+   {
+    "step": 2,
+    "was": "python run_example.py",
+    "now": "apt-get update && apt-get install -y git && git clone --depth 1 https://github.com/coleifer/peewee.git && pip install flask peewee && cd peewee/examples/twitter && python run_example.py",
+    "reason": "run_example.py is not in /work. It lives in examples/twitter of the peewee GitHub repo, and the pip package does not ship it. The command adds the missing prerequisites: git (python:3.11-slim does not include it), a clone of the repo, and pip install of flask and peewee, which the app imports. It then cd's into examples/twitter, as the docs say, before running the original command."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0315,
+  "input_tokens": 8395,
+  "output_tokens": 1216,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 232.5,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 67.1,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 79.5
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 113.0,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 66.4
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 1,
+  "steps_total": 2,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-172525-docs-peewee-orm-com",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:e3574797ded33e5114119f392f0fecccee77b454e032feb6a47da793ab7b5366",
+   "runbook.json": "sha256:92da76467e2f4c63dc3e19500654f6c380691ce7bef74378ae0edc6f796820e8",
+   "report.md": "sha256:a7acbca16f972e48e83e94ec2d554857d72a43890767769ddb1f00f37a486f8f"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:751869cd8e552429f923309692ce6372542f8d3f6ca5e31f41a9f9b29e8600a7"
+}

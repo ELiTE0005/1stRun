@@ -1,0 +1,5 @@
+# Real open-source quickstarts with public docs repos (C15). Results feed the README.
+https://docs.getdbt.com/guides/duckdb
+https://help.accuknox.com/knoxctl/
+https://docs.dagster.io/getting-started/quickstart
+https://www.mkdocs.org/getting-started/

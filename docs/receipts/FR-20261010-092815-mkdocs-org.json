@@ -1,0 +1,87 @@
+{
+ "receipt_id": "FR-20261010-092815-mkdocs-org",
+ "issued_at": "2026-10-11T09:40:38Z",
+ "work": {
+  "source_url": "https://www.mkdocs.org/getting-started/",
+  "run_id": "20261010-092815-mkdocs-org",
+  "started_at": "2026-10-10T09:28:36+00:00",
+  "finished_at": "2026-10-10T09:29:20+00:00",
+  "seconds": 13.6,
+  "first_failed_step": 2,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 2,
+    "was": "mkdocs new my-project\ncd my-project",
+    "now": "pip install --quiet mkdocs && mkdocs new my-project && cd my-project",
+    "reason": "A clean python:3.11-slim image does not include mkdocs, so it must be installed with pip first. The tail shows 'mkdocs new' creating the project, so the remaining step is the 'cd', which only works in the same shell line as the command that created the directory. Chaining with && keeps them together."
+   },
+   {
+    "step": 2,
+    "was": "pip install --quiet mkdocs && mkdocs new my-project && cd my-project",
+    "now": "export PIP_ROOT_USER_ACTION=ignore PIP_DISABLE_PIP_VERSION_CHECK=1 && pip install --quiet mkdocs && mkdocs new my-project && cd my-project",
+    "reason": "The original command already worked: mkdocs installed and my-project was created. The error tail only shows pip's root-user warning and its upgrade notice, which are noise from running as root in a clean container. Setting PIP_ROOT_USER_ACTION=ignore and PIP_DISABLE_PIP_VERSION_CHECK=1 suppresses both, and the original command then runs unchanged."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0463,
+  "input_tokens": 7184,
+  "output_tokens": 2990,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 341.7,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 98.6,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 70.4
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 166.1,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 51.5
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 1,
+  "steps_total": 8,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-092815-mkdocs-org",
+  "tags": [
+   "real"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:839c25257dc47f3fcf7f57b68c7aaad67a4197667f6368014ef3bce5790c3a54",
+   "runbook.json": "sha256:4c356f66ab7822b403a3fce68193e599300d0c6036cf0cf9456a19e3129cd1f9",
+   "report.md": "sha256:7adc9b05e2a9ab5ba4a37ac07f74f0172aad7f2a10045b04ba7ed1d2ebc36ba5"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:d73e68f15d762c44359909e6f688754fbc4d4498219134031ff84b1c677046c7"
+}

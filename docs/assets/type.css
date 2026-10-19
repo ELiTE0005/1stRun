@@ -1,0 +1,2 @@
+/* Shared type scale. Tokens only; each page applies them to its own selectors. */
+:root{--t-h1:clamp(40px,4.6vw,56px);--t-h2:clamp(26px,2.6vw,32px);--t-h3:18px;--t-lead:18px;--t-body:16px;--t-small:14px;--t-meta:13px;--t-mono:13px}

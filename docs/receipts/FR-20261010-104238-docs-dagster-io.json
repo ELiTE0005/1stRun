@@ -1,0 +1,93 @@
+{
+ "receipt_id": "FR-20261010-104238-docs-dagster-io",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://docs.dagster.io/getting-started/quickstart",
+  "run_id": "20261010-104238-docs-dagster-io",
+  "started_at": "2026-10-10T10:42:49+00:00",
+  "finished_at": "2026-10-10T10:46:16+00:00",
+  "seconds": 169.6,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "precedent",
+  "patches": [
+   {
+    "step": 1,
+    "was": "create-dagster project dagster-quickstart",
+    "now": "pip install --quiet dagster-dg-cli dagster && create-dagster project dagster-quickstart",
+    "reason": "create-dagster is not installed in the clean python:3.11-slim image. It is provided by the dagster-dg-cli package (installed alongside dagster), so installing it first makes the original command available."
+   },
+   {
+    "step": 1,
+    "was": "pip install --quiet dagster-dg-cli dagster && create-dagster project dagster-quickstart",
+    "now": "pip install --quiet dagster-dg-cli dagster create-dagster && create-dagster project dagster-quickstart",
+    "reason": "The create-dagster executable is shipped by the separate 'create-dagster' PyPI package, not by dagster-dg-cli or dagster. Installing it puts the command on PATH, so the original command can then run unchanged."
+   },
+   {
+    "step": 2,
+    "was": "cd dagster-quickstart && python -m venv .venv && source .venv/bin/activate && pip install pandas && pip install --editable . --group dev",
+    "now": "cd dagster-quickstart && python -m venv .venv && source .venv/bin/activate && pip install --upgrade 'pip>=25.1' && pip install pandas && pip install --editable . --group dev",
+    "reason": "The error 'no such option: --group' means the pip in the venv is too old. pip added --group (PEP 735 dependency groups) in version 25.1, and the venv from python:3.11-slim bundles an older pip. Upgrading pip inside the venv before the install fixes it. I did not run a search to confirm this. It comes from my knowledge of the pip 25.1 release notes."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0255,
+  "input_tokens": 6765,
+  "output_tokens": 1359,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 188.2,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 54.3,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 83.1
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 91.5,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 72.4
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 4,
+  "steps_total": 8,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-104238-docs-dagster-io",
+  "tags": [
+   "real"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:f61d5814226ae1d89d71d81c2dc5ae7a1f8993594356e3fb6fb232bbb2ef3a2f",
+   "runbook.json": "sha256:9cd2e3678f79a50ec64f3906f1208e89ee61d1b8c56a0861f762e2f6e78d85da",
+   "report.md": "sha256:7bb871373ab63c5a43dafd982c02a3c0273f92e27096fd4977d30466e0a4d54b"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:4f571eb154f1dac9216e6263a298458db34f4b4179b68cc9d200692cff82f007"
+}

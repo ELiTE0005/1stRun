@@ -1,0 +1,74 @@
+{
+ "receipt_id": "FR-20261010-093255-docs-neatlogs-com",
+ "issued_at": "2026-10-11T09:40:38Z",
+ "work": {
+  "source_url": "https://docs.neatlogs.com/sdk/python",
+  "run_id": "20261010-093255-docs-neatlogs-com",
+  "started_at": "2026-10-10T09:33:20+00:00",
+  "finished_at": "2026-10-10T09:34:35+00:00",
+  "seconds": 75.2,
+  "first_failed_step": null,
+  "failure_class": null,
+  "classified_by": null,
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0629,
+  "input_tokens": 14690,
+  "output_tokens": 2774,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 464.2,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 133.9,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 60.2
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 225.7,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 34.9
+  }
+ ],
+ "proof": {
+  "status": "passed",
+  "verified": false,
+  "steps_passed": 3,
+  "steps_total": 3,
+  "claim": "Every step passed on the first run. No fix was needed, so no second run was made."
+ },
+ "audit": {
+  "run_id": "20261010-093255-docs-neatlogs-com",
+  "tags": [
+   "v2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:a8c7ec63b65af5b1f160507f0c1e97ed6cad226ee4b13259253178a1a889e50a",
+   "runbook.json": "sha256:97df8eca78e20bcb8a8918f691b93e25a8249cf4fae838cd8d9f109a95f4ee03",
+   "report.md": "sha256:27af5da7a1b1cbd8057c07db6bed681381cc90093f9a72d44b5390dd9f6748f1"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:a64cc65e8813f5c2a151fbc038e58a1dea9b3c18cea337228932876fef816a84"
+}

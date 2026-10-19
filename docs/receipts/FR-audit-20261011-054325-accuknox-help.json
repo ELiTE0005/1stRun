@@ -1,0 +1,58 @@
+{
+ "kind": "audit",
+ "receipt_id": "FR-audit-20261011-054325-accuknox-help",
+ "issued_at": "2026-10-11T11:03:23Z",
+ "work": {
+  "repo": "AccuKnox/help",
+  "docs_repo": "",
+  "url": "https://github.com/AccuKnox/help",
+  "audited_at": "2026-10-11T05:43:25+00:00",
+  "head": "",
+  "commits_read": 1940,
+  "since": "2023-02-13",
+  "history_capped": false,
+  "pages": 521,
+  "fresh": 140,
+  "aging": 110,
+  "stale": 87,
+  "quiet": 184,
+  "features": 43,
+  "uncovered": 0,
+  "cards": {
+   "refresh": 6,
+   "content": 4,
+   "feature": 4,
+   "automate": 1,
+   "quickstart": 1
+  },
+  "judged_by_jev": false
+ },
+ "price": {
+  "recorded": true,
+  "estimated": true,
+  "jev_calls": 5,
+  "jev_input_tokens": 67814,
+  "usd": 0.002848,
+  "basis": "Estimate. This audit ran before cost tracking. Re-running the same audit on 2026-10-11 used this much Jev input, billed at TypeSafe's list price of $0.042 per million input tokens. Output is free, and the clone and the analysis are free."
+ },
+ "limits": {
+  "dollar_cap_per_audit": null,
+  "jev_stale_pages_max": 200,
+  "jev_commit_sorts_max": 80,
+  "jev_batch_size": 40,
+  "history_commits_max": 20000,
+  "note": "The plan sets no dollar cap per audit. Jev reads are limited by the counts below."
+ },
+ "proof": {
+  "cards": 16,
+  "cards_citing_evidence": 14,
+  "all_cited": false,
+  "claim": "14 of 16 cards cite commits or pages you can open. This audit did not record the commit it read."
+ },
+ "audit": {
+  "audit_id": "audit-20261011-054325-accuknox-help",
+  "evidence_sha256": {},
+  "generated_by": "firstrun audit"
+ },
+ "hash": "sha256:5da729d7b2ae60ace20a80a78bd103384188c1d55d761d57507825c988de4642"
+}

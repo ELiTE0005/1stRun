@@ -1,0 +1,87 @@
+{
+ "receipt_id": "FR-20261010-091740-help-accuknox-com",
+ "issued_at": "2026-10-11T07:57:37Z",
+ "work": {
+  "source_url": "https://help.accuknox.com/knoxctl/",
+  "run_id": "20261010-091740-help-accuknox-com",
+  "started_at": "2026-10-10T09:18:03+00:00",
+  "finished_at": "2026-10-10T09:22:27+00:00",
+  "seconds": 154.1,
+  "first_failed_step": 2,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 2,
+    "was": "curl -fsSL https://nexus.accuknox.com/repository/knoxctl-keys/public.key | \\\ngpg --dearmor | sudo tee /usr/share/keyrings/knoxctl.gpg > /dev/null",
+    "now": "apt-get update -qq && apt-get install -y -qq curl && curl -fsSL https://nexus.accuknox.com/repository/knoxctl-keys/public.key | \\\ngpg --dearmor | sudo tee /usr/share/keyrings/knoxctl.gpg > /dev/null",
+    "reason": "the base image lacks curl; install it first"
+   },
+   {
+    "step": 2,
+    "was": "apt-get update -qq && apt-get install -y -qq curl && curl -fsSL https://nexus.accuknox.com/repository/knoxctl-keys/public.key | \\\ngpg --dearmor | sudo tee /usr/share/keyrings/knoxctl.gpg > /dev/null",
+    "now": "apt-get update -qq && apt-get install -y -qq curl gnupg sudo && curl -fsSL https://nexus.accuknox.com/repository/knoxctl-keys/public.key | gpg --dearmor | sudo tee /usr/share/keyrings/knoxctl.gpg > /dev/null",
+    "reason": "The curl install succeeded, but the pipeline then needs `gpg` and `sudo`, and the python:3.11-slim image ships with neither. Installing the `gnupg` and `sudo` packages first lets the original pipeline run unchanged."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0453,
+  "input_tokens": 10963,
+  "output_tokens": 1941,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 334.3,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": true,
+   "cap_usd": 0.04697,
+   "used_pct": 96.4,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 71.0
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 162.5,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 52.5
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 5,
+  "steps_total": 5,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-091740-help-accuknox-com",
+  "tags": [
+   "real"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:1d46590b91fb3f3ba76ee4a0ff348e4912f2e460ca56af74eced48360516665d",
+   "runbook.json": "sha256:1e75bb10ec965e0b9d5c9b0137aa23f34f71deff6cc8773c6660c344ac7b87a2",
+   "report.md": "sha256:3ba51732f14679dbfdd3b3657be4c5fec61357784da64f564848d39d498c6ed4"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:2e011e13b8c61dda9454b664a50cbdfabc70958da85ec97a1dd05f3a29b37922"
+}

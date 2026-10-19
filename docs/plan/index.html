@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Plan | FirstRun</title>
+<meta name="description" content="The cfo.ai plan sets what one doc-test run may spend. FirstRun enforces the cap, and neatlogs alerts when real runs drift past it.">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Plan | FirstRun">
+<meta property="og:description" content="The cfo.ai plan sets what one doc-test run may spend. FirstRun enforces the cap, and neatlogs alerts when real runs drift past it.">
+<meta property="og:image" content="../assets/og-card-1200x630.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="color-scheme" content="light">
+<link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="../assets/site-nav.css">
+<link rel="stylesheet" href="/assets/site-footer.css">
+<link rel="stylesheet" href="/assets/type.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500&display=swap">
+<style>
+:root{
+--bg:oklch(98.2% .004 255);--panel:oklch(99.7% .0015 255);--sunk:oklch(97.1% .005 255);--hover:oklch(96.2% .007 255);
+--line:oklch(91.6% .007 255);--line2:oklch(94.6% .005 255);
+--ink:oklch(22% .012 255);--ink2:oklch(36% .012 255);--mut:oklch(50% .013 255);--faint:oklch(68% .01 255);
+--acc:oklch(55% .19 256);--acc-bg:oklch(95.6% .026 256);--vio:oklch(52% .2 295);
+--ok:oklch(52% .14 150);--ok-bg:oklch(96.4% .032 150);--bad:oklch(53% .19 27);--bad-bg:oklch(96.6% .02 27);
+--warn:oklch(52% .12 66);--warn-bg:oklch(96.2% .045 85);--teal:oklch(55% .11 190);--teal-bg:oklch(96% .03 190);
+--sh:0 1px 2px oklch(30% .02 255/.06);--mono:"Geist Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+*{box-sizing:border-box;margin:0}
+html{background:var(--bg);color:var(--ink);font-family:Geist,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{line-height:1.45;font-size:15px;-webkit-font-smoothing:antialiased;background:var(--bg)}
+a{color:var(--acc);text-underline-offset:3px}
+code{font-family:var(--mono);font-size:.92em}
+:focus-visible{outline:3px solid var(--acc);outline-offset:2px;border-radius:8px}
+svg.i{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round;flex:none}
+main{max-width:1120px;margin:0 auto;padding:24px 20px 72px}
+h1{font-size:var(--t-h1);line-height:1.05;letter-spacing:-.04em;font-weight:700}
+h2{font-size:var(--t-h2);line-height:1.15;letter-spacing:-.03em;font-weight:700}
+.lede{font-size:16px;color:var(--mut);margin-top:6px;max-width:62ch}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:14px;box-shadow:var(--sh)}
+.sec{margin-top:34px}
+.sec-h{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.sec-h p{color:var(--mut);font-size:13.5px}
+.lh-top{display:flex;gap:16px;align-items:flex-start}
+.ptile{display:grid;place-items:center;width:52px;height:52px;border-radius:14px;background:var(--teal);color:oklch(99% .005 190);flex:none;margin-top:4px}
+.ptile svg{width:28px;height:28px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+/* the loop */
+.loop{list-style:none;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;margin-top:22px;overflow:hidden}
+.loop li{padding:16px 18px;display:flex;flex-direction:column;gap:6px;position:relative}
+.loop li+li{border-left:1px solid var(--line2)}
+.loop .who{display:flex;align-items:center;gap:8px;font-size:var(--t-meta);font-weight:600;letter-spacing:0;color:var(--mut)}
+.loop .who img{width:22px;height:22px;border-radius:6px;object-fit:cover}
+.loop .n{margin-left:auto;font-size:12.5px;color:var(--faint)}
+.loop b{font-size:15px;letter-spacing:-.01em}
+.loop p{font-size:13.5px;color:var(--ink2)}
+.loop a{font-size:13px}
+.loop .hot b{color:var(--bad)}
+/* tiers */
+table{width:100%;border-collapse:collapse;font-size:14px}
+th,td{text-align:left;padding:11px 14px;border-bottom:1px solid var(--line2);vertical-align:middle;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+th{font-size:var(--t-meta);color:var(--mut);font-weight:600;background:var(--sunk)}
+td.num{font-family:var(--mono);font-size:13px}
+.tw{overflow-x:auto;-webkit-overflow-scrolling:touch}
+.twx{position:relative}
+.twx::after{content:"";position:absolute;top:1px;right:1px;bottom:1px;width:36px;border-radius:0 13px 13px 0;background:linear-gradient(to left,var(--panel),rgba(255,255,255,0));pointer-events:none;opacity:0;transition:opacity .15s}
+.twx.more::after{opacity:1}
+.twh{display:none;font-size:12.5px;color:var(--mut);margin:0 0 6px}
+@media(max-width:700px){.twh{display:block}}
+.biz{margin:14px 0 0;padding:14px 18px}
+.biz h3{font-size:var(--t-h3);letter-spacing:-.01em;margin:0 0 6px}
+.biz ul{margin:0;padding-left:18px;font-size:14px;line-height:1.55}
+.biz .note{margin-top:8px}
+.chip{display:inline-flex;align-items:center;gap:5px;height:22px;padding:0 8px;border-radius:99px;font-size:12.5px;font-weight:600}
+.c-ok{background:var(--ok-bg);color:var(--ok)}.c-warn{background:var(--warn-bg);color:var(--warn)}.c-bad{background:var(--bad-bg);color:var(--bad)}
+.note{font-size:13px;color:var(--mut);margin-top:10px;max-width:80ch}
+/* charts */
+.two{display:grid;grid-template-columns:1.15fr 1fr;gap:12px}
+.chart{padding:16px 18px}
+.chart h3{font-size:var(--t-h3);letter-spacing:-.01em}
+.chart p.s{font-size:13px;color:var(--mut);margin-top:2px}
+.chart svg.c{display:block;width:100%;height:auto;margin-top:10px}
+.legend{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:12.5px;color:var(--ink2);margin-top:8px}
+.legend i{display:inline-block;width:14px;height:3px;border-radius:2px;margin-right:6px;vertical-align:3px}
+/* guardrail log */
+.log{list-style:none;padding:0;overflow:hidden}
+.log li{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:2px 12px;align-items:center;padding:12px 16px}
+.log li+li{border-top:1px solid var(--line2)}
+.log .dot{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--bad-bg);color:var(--bad)}
+.log .dot{grid-column:1;grid-row:1/span 2}
+.log b{font-size:14px;grid-column:2;grid-row:1}
+.log span{grid-column:2;grid-row:2;font-size:12.5px;color:var(--mut);overflow-wrap:anywhere}
+.log time{grid-column:3;grid-row:1/span 2;align-self:center;font:12.5px var(--mono);color:var(--ink2)}
+.links{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
+.btn{display:inline-flex;align-items:center;gap:7px;height:36px;padding:0 14px;border-radius:10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);font-weight:600;font-size:13.5px;text-decoration:none;box-shadow:var(--sh)}
+.btn:hover{background:var(--hover)}
+.btn img{width:18px;height:18px;border-radius:4px}
+.btn.pri{background:var(--teal);border-color:transparent;color:oklch(99% .005 190)}
+.page-note{max-width:1120px;margin:0 auto;padding:0 20px 40px;color:var(--mut);font-size:13.5px}
+@media(max-width:900px){.loop{grid-template-columns:1fr 1fr}.loop li:nth-child(3){border-left:0}.loop li:nth-child(n+3){border-top:1px solid var(--line2)}.two{grid-template-columns:1fr}}
+@media(max-width:560px){.loop{grid-template-columns:1fr}.loop li+li{border-left:0;border-top:1px solid var(--line2)}.ptile{display:none}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<symbol id="i-alert" viewBox="0 0 24 24"><path d="M12 4l9 15.5H3z"/><path d="M12 10v4M12 17v.01"/></symbol>
+<symbol id="i-ext" viewBox="0 0 24 24"><path d="M14 4h6v6M19.7 4.3L11 13M18 14v4a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4"/></symbol>
+<symbol id="i-file" viewBox="0 0 24 24"><path d="M13 3H7a2.5 2.5 0 0 0-2.5 2.5v13A2.5 2.5 0 0 0 7 21h10a2.5 2.5 0 0 0 2.5-2.5V9.5z"/><path d="M13 3v6.5h6.5"/></symbol>
+</svg>
+<div id="sitenav"></div>
+<script src="../assets/site-nav.js" data-cur="plan" defer></script>
+<main>
+<div class="lh-top"><span class="ptile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
+<div><h1>The Plan Sets What a Run May Spend</h1>
+<p class="lede">neatlogs measures every doc-test run. cfo.ai turns those costs into tier prices and a cost cap per run. FirstRun stops a run at that cap, and a neatlogs alert fires when real runs drift past it.</p></div></div>
+
+<ol class="loop panel" id="loop" aria-label="The cost loop">
+<li><div class="who"><img src="../assets/logo-neatlogs.webp" alt="">neatlogs measures<span class="n">1</span></div><b id="l1">Every run's cost</b><p id="l1s">Read from the firstrun.run traces.</p></li>
+<li><div class="who"><img src="../assets/logo-cfoai.webp" alt="">cfo.ai plans<span class="n">2</span></div><b id="l2">Prices and caps</b><p id="l2s">18 months, 6 Scenarios.</p><a id="l2a" href="https://cfo.ai/s/_u5lbrHIl9KX_JQE" target="_blank" rel="noopener">Open the model</a></li>
+<li><div class="who"><img src="../assets/logo.svg" alt="">FirstRun enforces<span class="n">3</span></div><b id="l3">A cap per run</b><p id="l3s"><code>firstrun run --tier scale</code></p></li>
+<li class="hot"><div class="who"><img src="../assets/logo-neatlogs.webp" alt="">neatlogs watches<span class="n">4</span></div><b id="l4">An alert on drift</b><p id="l4s">p95 run cost above the Scale cap.</p></li>
+</ol>
+
+<section class="sec" aria-labelledby="t-h">
+<div class="sec-h"><h2 id="t-h">Each Tier Gets a Cap That Keeps a 70% Margin</h2></div>
+<p class="twh">Scroll sideways to see every column.</p>
+<div class="twx"><div class="tw panel"><table><thead><tr><th scope="col">Tier</th><th scope="col">Price</th><th scope="col">Runs a month</th><th scope="col">Cap per run</th><th scope="col">Runs the cap stops</th><th scope="col">Margin at the mean run</th><th scope="col">Margin at the p95 run</th></tr></thead><tbody id="tiers"></tbody></table></div></div>
+<script>(function(){var x=document.querySelector(".twx");if(!x)return;var t=x.firstElementChild;function u(){x.classList.toggle("more",t.scrollLeft+t.clientWidth<t.scrollWidth-2)}t.addEventListener("scroll",u,{passive:true});addEventListener("resize",u);addEventListener("load",u);new MutationObserver(u).observe(t,{childList:true,subtree:true});u()})()</script>
+<p class="note" id="t-src"></p>
+<p class="note" id="t-note"></p>
+<div class="biz panel"><h3>How FirstRun Makes Money</h3><ul><li>The buyer is a DevRel or docs team at a dev-tool company.</li><li>Teams pay a monthly tier: Free $0, Team $49, Scale $299.</li><li>Plan, no paying customers yet.</li></ul></div>
+</section>
+
+<section class="sec two" aria-label="Charts">
+<div class="chart panel"><h3>Measured Cost per Run Against the Caps</h3><p class="s" id="h-sub">Each bar counts published doc-test runs in a cost band.</p><svg class="c" id="hist" viewBox="0 0 560 230" role="img"></svg><div class="legend" id="h-leg"></div></div>
+<div class="chart panel"><h3>Cash on Hand Through April 2028</h3><p class="s">cfo.ai Scenarios with the same customers. Only the cap or the Scale price changes.</p><svg class="c" id="cash" viewBox="0 0 520 230" role="img"></svg><div class="legend" id="c-leg"></div></div>
+</section>
+
+<section class="sec" aria-labelledby="g-h">
+<div class="sec-h"><h2 id="g-h">The Guardrails Fired 3 Times in 2 Days</h2></div>
+<ol class="log panel" id="log"></ol>
+<p class="note">neatlogs alert history, read with the CLI</p>
+<p class="note" id="g-note"></p>
+<div class="links">
+<a class="btn pri" href="https://cfo.ai/s/_u5lbrHIl9KX_JQE" target="_blank" rel="noopener"><img src="../assets/logo-cfoai.webp" alt="">Open the cfo.ai model</a>
+<a class="btn" href="https://github.com/HighnessAtharva/firstrun/blob/main/business/drivers.csv" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>drivers.csv</a>
+<a class="btn" href="https://github.com/HighnessAtharva/firstrun/blob/main/business/BUSINESS_PLAN.md" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Business plan</a>
+<a class="btn" href="../data/plan.json"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>plan.json</a>
+</div>
+</section>
+</main>
+<p class="page-note">Refresh it with <code>firstrun econ</code>, then <code>python scripts/plan_snapshot.py</code>. Model costs are list price, not billed.</p>
+<footer class="sf"><div class="sf-in">
+<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">FirstRun</a>
+<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/HighnessAtharva/firstrun">GitHub</a><a href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/README.md">Evidence</a></nav></div>
+<p class="sf-cred"><a href="https://atharvashah.com">Atharva Shah</a> built FirstRun for <a href="https://neatlogs.com/hackathon">neatHack 2026</a>. <a href="https://neatlogs.com">neatlogs</a> traces each run, <a href="https://cfo.ai">cfo.ai</a> prices it, and <a href="https://entire.io">Entire</a> records the build. Follow <a href="https://x.com/cultist_dev">@cultist_dev</a> on X.</p>
+</div></footer>
+
+<script>
+(function(){
+"use strict";
+var $=function(i){return document.getElementById(i)};
+var NS="http://www.w3.org/2000/svg";
+function s(t,a,p){var e=document.createElementNS(NS,t);for(var k in a)e.setAttribute(k,a[k]);if(p)p.appendChild(e);return e}
+function el(t,c,x){var e=document.createElement(t);if(c)e.className=c;if(x!=null)e.textContent=x;return e}
+function usd(v,d){return "$"+(+v).toFixed(d==null?4:d)}
+function money(v){return (v<0?"-$":"$")+Math.abs(Math.round(v)).toLocaleString("en-US")}
+function when(ts){var d=new Date(ts);return isNaN(d)?ts:d.toISOString().slice(0,16).replace("T"," ")+" UTC"}
+var CAPC={Free:"oklch(68% .01 255)",Team:"oklch(55% .19 256)",Scale:"oklch(55% .11 190)"};
+
+Promise.all([fetch("../data/plan.json").then(function(r){return r.json()}),fetch("../runs/index.json").then(function(r){return r.json()}),fetch("../data/cfo-model.json").then(function(r){return r.json()})]).then(function(v){
+  var P=v[0],R=(v[1].runs||[]).filter(function(r){return !r.fixture&&+r.cost>0}),C=v[2],d=P.drivers,T=P.tiers,floor=P.margin_floor;
+  /* loop */
+  $("l1").textContent=d.traces+" runs, mean "+usd(d.cost_mean)+", p95 "+usd(d.cost_p95.usd);
+  $("l1s").textContent="Read from the firstrun.run traces on "+P.econ_generated_at.slice(0,10)+".";
+  $("l2").textContent="Base Scenario ends April 2028 with "+money(P.cfo.cash_last_month.Base);
+  $("l2s").textContent="The old $0.50 cap ends at "+money(P.cfo.cash_last_month["Old cap"])+". Same customers, same prices.";
+  $("l3").textContent="Scale stops at "+usd(T.Scale.cap_usd_per_run)+", Team at "+usd(T.Team.cap_usd_per_run);
+  var fires=(P.alerts||[]).length;
+  $("l4").textContent=fires+" guardrail fires since Oct 10";
+  $("l4s").textContent=T.Scale.measured_runs_over_cap_pct+"% of measured runs cost more than the Scale cap.";
+  /* tiers */
+  var tb=$("tiers");
+  Object.keys(T).forEach(function(n){var t=T[n],tr=el("tr");
+    tr.appendChild(el("td",null,n));tr.appendChild(el("td","num",t.price_usd_month?"$"+t.price_usd_month+"/mo":"$0"));
+    tr.appendChild(el("td","num",String(t.runs_per_month)));tr.appendChild(el("td","num",usd(t.cap_usd_per_run)));
+    tr.appendChild(el("td","num",t.measured_runs_over_cap_pct+"%"));
+    function m(x){var td=el("td");if(x==null){td.appendChild(el("span","chip","no revenue"));return td}var c=el("span","chip "+(x>=floor*100?"c-ok":x>=50?"c-warn":"c-bad"),x+"%");td.appendChild(c);return td}
+    tr.appendChild(m(t.margin_at_mean_pct));tr.appendChild(m(t.margin_at_p95_pct));tb.appendChild(tr)});
+  $("t-src").textContent="cfo.ai drivers from "+d.traces+" neatlogs traces";
+  var need=T.Scale.price_for_p95_at_floor;
+  $("t-note").textContent="Without the cap, a Scale customer's p95 run keeps "+T.Scale.margin_at_p95_pct+"% margin, under the 70% floor. Holding 70% at p95 needs a Scale price of $"+Math.round(need)+" a month. The closest cfo.ai Scenario prices Scale at $529 and ends April 2028 with "+money(P.cfo.cash_last_month["Scale at $529"])+".";
+  /* histogram */
+  var H=$("hist"),W=560,Hh=230,pl=36,pr=10,pt=12,pb=34,max=0.11,bins=22,cnt=new Array(bins).fill(0);
+  R.forEach(function(r){var b=Math.min(bins-1,Math.floor(+r.cost/max*bins));cnt[b]++});
+  var top=Math.max.apply(null,cnt),bw=(W-pl-pr)/bins,x=function(c){return pl+c/max*(W-pl-pr)},y=function(n){return pt+(1-n/top)*(Hh-pt-pb)};
+  for(var g=0;g<=top;g+=Math.max(1,Math.ceil(top/4))){s("line",{x1:pl,x2:W-pr,y1:y(g),y2:y(g),stroke:"oklch(94.6% .005 255)"},H);var tx=s("text",{x:pl-6,y:y(g)+4,"text-anchor":"end","font-size":11,fill:"oklch(50% .013 255)"},H);tx.textContent=g}
+  cnt.forEach(function(n,i){if(!n)return;s("rect",{x:pl+i*bw+1,y:y(n),width:bw-2,height:y(0)-y(n),rx:2,fill:"oklch(82% .03 255)"},H)});
+  [0,0.025,0.05,0.075,0.1].forEach(function(c){var tx=s("text",{x:x(c),y:Hh-12,"text-anchor":"middle","font-size":11,fill:"oklch(50% .013 255)"},H);tx.textContent="$"+c.toFixed(3)});
+  var L=$("h-leg");
+  ["Free","Scale","Team"].forEach(function(n){var c=T[n].cap_usd_per_run;s("line",{x1:x(c),x2:x(c),y1:pt,y2:Hh-pb,stroke:CAPC[n],"stroke-width":2,"stroke-dasharray":n==="Free"?"4 3":""},H);
+    var tx=s("text",{x:n==="Free"?x(c)-4:x(c)+4,"text-anchor":n==="Free"?"end":"start",y:pt+10+(n==="Team"?0:n==="Scale"?14:28),"font-size":11,"font-weight":600,fill:CAPC[n]},H);tx.textContent=n+" cap";
+    var li=el("span");var i=el("i");i.style.background=CAPC[n];li.appendChild(i);li.appendChild(document.createTextNode(n+" cap "+usd(c)));L.appendChild(li)});
+  H.setAttribute("aria-label",R.length+" runs. "+T.Scale.measured_runs_over_cap_pct+"% cost more than the Scale cap of "+usd(T.Scale.cap_usd_per_run));
+  $("h-sub").textContent=R.length+" published doc-test runs with a cost, list price. Runs right of a line would stop at that tier's cap.";
+  /* cash */
+  var S=$("cash"),CW=520,CH=230,cl=48,cr=70,ct=12,cb=28,keys=[["Base","oklch(55% .19 256)"],["Old cap","oklch(58% .17 40)"],["Scale at $529","oklch(55% .11 190)"]];
+  var all=[];keys.forEach(function(k){all=all.concat(C.scenarios[k[0]].cash)});
+  var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),n=C.months.length,cx=function(i){return cl+i/(n-1)*(CW-cl-cr)},cy=function(v){return ct+(1-(v-mn)/(mx-mn))*(CH-ct-cb)};
+  [-10000,0,10000,20000].forEach(function(g){if(g<mn||g>mx)return;s("line",{x1:cl,x2:CW-cr,y1:cy(g),y2:cy(g),stroke:g===0?"oklch(68% .01 255)":"oklch(94.6% .005 255)"},S);var tx=s("text",{x:cl-6,y:cy(g)+4,"text-anchor":"end","font-size":11,fill:"oklch(50% .013 255)"},S);tx.textContent=(g<0?"-$":"$")+Math.abs(g/1000)+"k"});
+  [0,6,12,17].forEach(function(i){var tx=s("text",{x:cx(i),y:CH-8,"text-anchor":"middle","font-size":11,fill:"oklch(50% .013 255)"},S);var m=C.months[i];tx.textContent=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m.slice(5)-1]+" "+m.slice(0,4)});
+  var CL=$("c-leg");
+  keys.forEach(function(k){var a=C.scenarios[k[0]].cash,pts=a.map(function(v,i){return cx(i)+","+cy(v)}).join(" ");s("polyline",{points:pts,fill:"none",stroke:k[1],"stroke-width":2.2,"stroke-linejoin":"round"},S);
+    var last=a[a.length-1],tx=s("text",{x:cx(n-1)+6,y:cy(last)+4,"font-size":11.5,"font-weight":600,fill:k[1]},S);tx.textContent=money(last);
+    var li=el("span"),i=el("i");i.style.background=k[1];li.appendChild(i);li.appendChild(document.createTextNode(k[0]==="Old cap"?"Old $0.50 cap":k[0]));CL.appendChild(li)});
+  S.setAttribute("aria-label","Cash in April 2028: Base "+money(C.scenarios.Base.cash[n-1])+", old cap "+money(C.scenarios["Old cap"].cash[n-1])+", Scale at $529 "+money(C.scenarios["Scale at $529"].cash[n-1]));
+  /* guardrail log */
+  var G=$("log");(P.alerts||[]).forEach(function(a){var li=el("li"),dot=el("span","dot");dot.innerHTML='<svg class="i" aria-hidden="true"><use href="#i-alert"/></svg>';li.appendChild(dot);
+    li.appendChild(el("b",null,a.rule));li.appendChild(el("span",null,a.trace_id?"The run stopped at its cap. neatlogs trace "+a.trace_id:"Rolling "+(a.window_minutes/60)+" h window over every firstrun.run trace"));
+    var t=el("time",null,when(a.fired_at));t.setAttribute("datetime",a.fired_at);li.appendChild(t);G.appendChild(li)});
+  if(!(P.alerts||[]).length)G.appendChild(el("li",null,"No guardrail fire in the snapshot."));
+  $("g-note").textContent="The p95 alert uses the Scale cap from cfo.ai as its threshold. When it fires, the plan is out of date or a run got expensive, so the next step is firstrun econ and a new cfo.ai read.";
+}).catch(function(){$("t-note").textContent="The plan data did not load."});
+})();
+</script>
+</body>
+</html>

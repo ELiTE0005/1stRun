@@ -1,0 +1,72 @@
+{
+ "receipt_id": "FR-20261012-063402-docs-kleros-io",
+ "issued_at": "2026-10-12T06:39:59Z",
+ "work": {
+  "source_url": "https://docs.kleros.io/developers/quickstart",
+  "run_id": "20261012-063402-docs-kleros-io",
+  "started_at": "2026-10-12T06:34:27+00:00",
+  "finished_at": "2026-10-12T06:39:50+00:00",
+  "seconds": 303.3,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "timeout",
+  "patches": []
+ },
+ "price": {
+  "model_cost_usd": 0.0238,
+  "input_tokens": 7836,
+  "output_tokens": 583,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 175.6,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 50.7,
+   "within_cap": true,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 84.2
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 85.4,
+   "within_cap": true,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 74.1
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 0,
+  "steps_total": 1,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261012-063402-docs-kleros-io",
+  "tags": [],
+  "evidence_sha256": {
+   "state.json": "sha256:2cb3f849c1b0699e7902fb30c2cde3dc8f121eeaf2947fb26618a482387faed5",
+   "runbook.json": "sha256:08166817bbdba67e010b1b39298d15d51b92911c5ce5df0c06da5ca2bdd61797",
+   "report.md": "sha256:91c02ed0c0c86d012e4c6c69e20b78550c2c75626f143b2c1844e0d875eece45"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:e36f4f26fde1a46737a5b0ac96af3484ebb8514ffd5183b512fdfd575479c91b"
+}

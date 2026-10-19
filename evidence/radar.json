@@ -1,0 +1,794 @@
+[
+ {
+  "url": "https://dev.to/alexmercedcoder/getting-started-with-python-web-framework-fastapi-3g51",
+  "title": "Getting Started with Python Web Framework, FastAPI",
+  "runnable": 0.65,
+  "fragile": 0.64,
+  "reach": 2,
+  "official": 0.02,
+  "priority": 2.223
+ },
+ {
+  "url": "https://docs.sqlalchemy.org/en/21/orm/quickstart.html",
+  "title": "ORM Quick Start",
+  "runnable": 0.85,
+  "fragile": 0.34,
+  "reach": 2,
+  "official": 0.94,
+  "priority": 2.142
+ },
+ {
+  "url": "https://pip.pypa.io/en/stable/quickstart",
+  "title": "N/A",
+  "runnable": 0.57,
+  "fragile": 0.6,
+  "reach": 2,
+  "official": 0.85,
+  "priority": 1.881
+ },
+ {
+  "url": "https://flask-sqlalchemy.palletsprojects.com/en/stable/quickstart",
+  "title": "N/A",
+  "runnable": 0.72,
+  "fragile": 0.37,
+  "reach": 2,
+  "official": 0.95,
+  "priority": 1.879
+ },
+ {
+  "url": "https://realpython.com/python-duckdb",
+  "title": "Introducing DuckDB",
+  "runnable": 0.71,
+  "fragile": 0.29,
+  "reach": 2,
+  "official": 0.03,
+  "priority": 1.683
+ },
+ {
+  "url": "https://dlthub.com/docs/tutorial/load-data-from-an-api",
+  "title": "Build advanced dlt pipeline from scratch | dlt Docs",
+  "runnable": 0.77,
+  "fragile": 0.57,
+  "reach": 1,
+  "official": 0.77,
+  "priority": 1.648
+ },
+ {
+  "url": "https://go.dev/doc/tutorial/getting-started",
+  "title": "Tutorial: Get started with Go",
+  "runnable": 0.74,
+  "fragile": 0.24,
+  "reach": 2,
+  "official": 0.83,
+  "priority": 1.643
+ },
+ {
+  "url": "https://flask.palletsprojects.com/en/stable/quickstart",
+  "title": "Quickstart \u00b6",
+  "runnable": 0.66,
+  "fragile": 0.31,
+  "reach": 2,
+  "official": 0.95,
+  "priority": 1.604
+ },
+ {
+  "url": "https://pip.pypa.io/en/stable/getting-started",
+  "title": "Getting Started - pip documentation v26.2.1",
+  "runnable": 0.68,
+  "fragile": 0.28,
+  "reach": 2,
+  "official": 0.9,
+  "priority": 1.591
+ },
+ {
+  "url": "https://tortoise.github.io/getting_started.html",
+  "title": "Getting started - Tortoise ORM v1.1.7 Documentation",
+  "runnable": 0.66,
+  "fragile": 0.53,
+  "reach": 1,
+  "official": 0.94,
+  "priority": 1.36
+ },
+ {
+  "url": "https://docs.djangoproject.com/en/5.2/intro/tutorial01",
+  "title": "Writing your first Django app, part 1 | Django documentation | Django",
+  "runnable": 0.53,
+  "fragile": 0.33,
+  "reach": 2,
+  "official": 0.83,
+  "priority": 1.32
+ },
+ {
+  "url": "https://hypothesis.readthedocs.io/en/latest/quickstart.html",
+  "title": "N/A",
+  "runnable": 0.85,
+  "fragile": 0.26,
+  "reach": 1,
+  "official": 0.88,
+  "priority": 1.292
+ },
+ {
+  "url": "https://github.com/dlt-hub/dlt/blob/devel/docs/website/docs/build-a-pipeline-tutorial",
+  "title": "docs/website/docs/build-a-pipeline-tutorial.md at devel \u00b7 dlt-hub/dlt",
+  "runnable": 0.74,
+  "fragile": 0.37,
+  "reach": 1,
+  "official": 0.91,
+  "priority": 1.288
+ },
+ {
+  "url": "https://ajmani.dev/python-duckdb-tutorial",
+  "title": "Python DuckDB Tutorial: Build a High-Performance Local Analytics Engine - Moncef Ajmani",
+  "runnable": 0.72,
+  "fragile": 0.38,
+  "reach": 1,
+  "official": 0.03,
+  "priority": 1.267
+ },
+ {
+  "url": "https://duckdblab.org/en/posts/duckdb-pandas-polars-hybrid-workflow",
+  "title": "DuckDB in Action: Working with Pandas/Polars",
+  "runnable": 0.62,
+  "fragile": 0.49,
+  "reach": 1,
+  "official": 0.04,
+  "priority": 1.228
+ },
+ {
+  "url": "https://duckdb.org/docs/lts/guides/python/polars.html",
+  "title": "Integration with Polars",
+  "runnable": 0.76,
+  "fragile": 0.29,
+  "reach": 1,
+  "official": 0.95,
+  "priority": 1.201
+ },
+ {
+  "url": "https://github.com/openai/openai-agents-python/blob/main/docs/quickstart",
+  "title": "docs/quickstart.md",
+  "runnable": 0.48,
+  "fragile": 0.32,
+  "reach": 2,
+  "official": 0.93,
+  "priority": 1.181
+ },
+ {
+  "url": "http://docs.peewee-orm.com/en/latest/peewee/example.html",
+  "title": "Example app \u00b6",
+  "runnable": 0.58,
+  "fragile": 0.48,
+  "reach": 1,
+  "official": 0.93,
+  "priority": 1.137
+ },
+ {
+  "url": "https://framesurge.sh/perseus/en-US/docs/next/quickstart",
+  "title": "Quickstart | Perseus Docs",
+  "runnable": 0.61,
+  "fragile": 0.43,
+  "reach": 1,
+  "official": 0.8,
+  "priority": 1.135
+ },
+ {
+  "url": "https://duckdb.org/docs/lts/guides/python/polars",
+  "title": "Integration with Polars",
+  "runnable": 0.7,
+  "fragile": 0.31,
+  "reach": 1,
+  "official": 0.86,
+  "priority": 1.134
+ },
+ {
+  "url": "https://duckdb.org/docs/lts/clients/python/overview.html",
+  "title": "Python API",
+  "runnable": 0.54,
+  "fragile": 0.49,
+  "reach": 1,
+  "official": 0.93,
+  "priority": 1.069
+ },
+ {
+  "url": "https://docs.peewee-orm.com/en/latest/peewee/quickstart.html",
+  "title": "N/A",
+  "runnable": 0.6,
+  "fragile": 0.39,
+  "reach": 1,
+  "official": 0.84,
+  "priority": 1.068
+ },
+ {
+  "url": "https://towardsdatascience.com/modern-dataframes-in-python-a-hands-on-tutorial-with-polars-and-duckdb",
+  "title": "Modern DataFrames in Python: A Hands-On Tutorial with Polars and DuckDB | Towards Data Science",
+  "runnable": 0.55,
+  "fragile": 0.47,
+  "reach": 1,
+  "official": 0.02,
+  "priority": 1.067
+ },
+ {
+  "url": "https://github.com/dlt-hub/dlt/blob/5f600c0e/docs/website/docs/dlt-ecosystem/transformations/python",
+  "title": "docs/website/docs/dlt-ecosystem/transformations/python.md",
+  "runnable": 0.5,
+  "fragile": 0.52,
+  "reach": 1,
+  "official": 0.89,
+  "priority": 1.02
+ },
+ {
+  "url": "https://sarangambekar1997.github.io/data-engineering-handbook/02-processing/duckdb-polars",
+  "title": "DuckDB & Polars - Sarang's Data Engineering Handbook",
+  "runnable": 0.57,
+  "fragile": 0.39,
+  "reach": 1,
+  "official": 0.04,
+  "priority": 1.015
+ },
+ {
+  "url": "https://dlthub.com/docs/intro",
+  "title": "Getting started",
+  "runnable": 0.65,
+  "fragile": 0.28,
+  "reach": 1,
+  "official": 0.88,
+  "priority": 1.014
+ },
+ {
+  "url": "https://mintlify.wiki/dlt-hub/dlt/quickstart",
+  "title": "N/A",
+  "runnable": 0.5,
+  "fragile": 0.49,
+  "reach": 1,
+  "official": 0.1,
+  "priority": 0.99
+ },
+ {
+  "url": "https://github.com/google-gemini/gemini-cli",
+  "title": "google-gemini/gemini-cli: An open-source AI agent that ...",
+  "runnable": 0.44,
+  "fragile": 0.24,
+  "reach": 2,
+  "official": 0.96,
+  "priority": 0.977
+ },
+ {
+  "url": "https://github.com/rust-cli/book",
+  "title": "rust-cli/book: Documentation on how to use the Rust ...",
+  "runnable": 0.55,
+  "fragile": 0.37,
+  "reach": 1,
+  "official": 0.69,
+  "priority": 0.957
+ },
+ {
+  "url": "https://www.rubythalib.ai/en/articles/tutorial-dlt-pipeline-ingestion-data-berbasis-python",
+  "title": "dlt Tutorial: Python-First Data Ingestion Pipelines",
+  "runnable": 0.47,
+  "fragile": 0.49,
+  "reach": 1,
+  "official": 0.03,
+  "priority": 0.931
+ },
+ {
+  "url": "https://docs.litestar.dev/main/getting-started.html",
+  "title": "Getting Started - Litestar Framework",
+  "runnable": 0.59,
+  "fragile": 0.25,
+  "reach": 1,
+  "official": 0.93,
+  "priority": 0.885
+ },
+ {
+  "url": "https://rust-cli.github.io/book/index.html",
+  "title": "Getting started - Command Line Applications in Rust",
+  "runnable": 0.56,
+  "fragile": 0.29,
+  "reach": 1,
+  "official": 0.61,
+  "priority": 0.885
+ },
+ {
+  "url": "https://github.com/google-gemini/gemini-cli/blob/HEAD/docs/get-started/installation",
+  "title": "docs/get-started/installation.md at HEAD \u00b7 google-gemini/gemini-cli",
+  "runnable": 0.38,
+  "fragile": 0.27,
+  "reach": 2,
+  "official": 0.97,
+  "priority": 0.878
+ },
+ {
+  "url": "https://beam.apache.org/get-started/quickstart-py",
+  "title": "WordCount Quickstart for Python",
+  "runnable": 0.5,
+  "fragile": 0.37,
+  "reach": 1,
+  "official": 0.89,
+  "priority": 0.87
+ },
+ {
+  "url": "https://docs.rs/crate/cargo-quickstart/latest",
+  "title": "cargo-quickstart 0.1.4 - Docs.rs",
+  "runnable": 0.77,
+  "fragile": 0.62,
+  "reach": 0,
+  "official": 0.88,
+  "priority": 0.862
+ },
+ {
+  "url": "https://doc.qt.io/qtforpython-6/gettingstarted.html",
+  "title": "Getting Started - Qt for Python",
+  "runnable": 0.46,
+  "fragile": 0.34,
+  "reach": 1,
+  "official": 0.92,
+  "priority": 0.773
+ },
+ {
+  "url": "https://cloudfront-app.crates.io/crates/memstead-cli",
+  "title": "memstead-cli - crates.io: Rust Package Registry",
+  "runnable": 0.71,
+  "fragile": 0.57,
+  "reach": 0,
+  "official": 0.78,
+  "priority": 0.76
+ },
+ {
+  "url": "https://nextorm.readthedocs.io/en/latest/getting_started.html",
+  "title": "Getting Started \u00b6",
+  "runnable": 0.8,
+  "fragile": 0.45,
+  "reach": 0,
+  "official": 0.81,
+  "priority": 0.76
+ },
+ {
+  "url": "https://docs.peewee-orm.com/projects/flask-peewee/en/latest/getting-started.html",
+  "title": "Getting Started \u00b6",
+  "runnable": 0.66,
+  "fragile": 0.63,
+  "reach": 0,
+  "official": 0.9,
+  "priority": 0.746
+ },
+ {
+  "url": "https://fastkit.org/docs/fastkit-core/quick-start",
+  "title": "Quick Start \u2014 fastkit-core \u00b7 FastKit",
+  "runnable": 0.65,
+  "fragile": 0.6,
+  "reach": 0,
+  "official": 0.71,
+  "priority": 0.715
+ },
+ {
+  "url": "https://github.com/goquick-run/cli",
+  "title": "goquick-run/cli",
+  "runnable": 0.69,
+  "fragile": 0.53,
+  "reach": 0,
+  "official": 0.95,
+  "priority": 0.711
+ },
+ {
+  "url": "https://instant-grep.pulseview.app/docs/getting-started",
+  "title": "Getting Started \u2014 ig docs",
+  "runnable": 0.72,
+  "fragile": 0.46,
+  "reach": 0,
+  "official": 0.87,
+  "priority": 0.691
+ },
+ {
+  "url": "https://usage.jdx.dev/rust/quickstart",
+  "title": "Rust quickstart | --usage",
+  "runnable": 0.68,
+  "fragile": 0.48,
+  "reach": 0,
+  "official": 0.73,
+  "priority": 0.666
+ },
+ {
+  "url": "https://docs.rs/crate/grex-cli/latest",
+  "title": "grex-cli 1.4.0 - Docs.rs",
+  "runnable": 0.69,
+  "fragile": 0.45,
+  "reach": 0,
+  "official": 0.9,
+  "priority": 0.655
+ },
+ {
+  "url": "https://github.com/cargo-bins/cargo-quickinstall/blob/main/README",
+  "title": "README.md",
+  "runnable": 0.67,
+  "fragile": 0.44,
+  "reach": 0,
+  "official": 0.86,
+  "priority": 0.63
+ },
+ {
+  "url": "https://docs.ponyorm.org/firststeps.html",
+  "title": "Getting Started with Pony \u2014 Pony ORM documentation",
+  "runnable": 0.57,
+  "fragile": 0.58,
+  "reach": 0,
+  "official": 0.91,
+  "priority": 0.616
+ },
+ {
+  "url": "https://fastapi-startkit.github.io/docs/getting-started",
+  "title": "Getting Started | Fastapi Startkit",
+  "runnable": 0.63,
+  "fragile": 0.46,
+  "reach": 0,
+  "official": 0.8,
+  "priority": 0.605
+ },
+ {
+  "url": "https://docs.getsemantica.ai/getting-started",
+  "title": "Getting Started - Semantica",
+  "runnable": 0.59,
+  "fragile": 0.49,
+  "reach": 0,
+  "official": 0.88,
+  "priority": 0.584
+ },
+ {
+  "url": "https://docs.rs/crate/quickdev/latest",
+  "title": "quickdev 0.4.1 - Docs.rs",
+  "runnable": 0.65,
+  "fragile": 0.39,
+  "reach": 0,
+  "official": 0.88,
+  "priority": 0.579
+ },
+ {
+  "url": "https://sqry.dev/docs/quick-start",
+  "title": "Quick Start",
+  "runnable": 0.65,
+  "fragile": 0.37,
+  "reach": 0,
+  "official": 0.89,
+  "priority": 0.566
+ },
+ {
+  "url": "https://code.claude.com/docs/quickstart",
+  "title": "N/A",
+  "runnable": 0.21,
+  "fragile": 0.38,
+  "reach": 2,
+  "official": 0.83,
+  "priority": 0.554
+ },
+ {
+  "url": "https://docs.turso.tech/sdk/python/quickstart",
+  "title": "N/A",
+  "runnable": 0.49,
+  "fragile": 0.63,
+  "reach": 0,
+  "official": 0.85,
+  "priority": 0.554
+ },
+ {
+  "url": "https://flow-ai.com/docs/quickstart",
+  "title": "Quickstart",
+  "runnable": 0.5,
+  "fragile": 0.57,
+  "reach": 0,
+  "official": 0.8,
+  "priority": 0.535
+ },
+ {
+  "url": "https://oxyde.fatalyst.dev/latest/getting-started/quickstart",
+  "title": "Quick Start - Oxyde ORM",
+  "runnable": 0.42,
+  "fragile": 0.7,
+  "reach": 0,
+  "official": 0.77,
+  "priority": 0.504
+ },
+ {
+  "url": "https://www.youtube.com/watch?v=jQjjqEjZK58",
+  "title": "How to Create a Web Application in Python using Flask",
+  "runnable": 0.14,
+  "fragile": 0.7,
+  "reach": 2,
+  "official": 0.02,
+  "priority": 0.504
+ },
+ {
+  "url": "https://loonghao.github.io/vx/guide/getting-started.html",
+  "title": "Quick Start | vx",
+  "runnable": 0.52,
+  "fragile": 0.41,
+  "reach": 0,
+  "official": 0.82,
+  "priority": 0.473
+ },
+ {
+  "url": "https://github.com/loonghao/vx/blob/main/docs/guide/getting-started",
+  "title": "docs/guide/getting-started.md",
+  "runnable": 0.49,
+  "fragile": 0.44,
+  "reach": 0,
+  "official": 0.88,
+  "priority": 0.461
+ },
+ {
+  "url": "https://commandcode.ai/docs/quickstart",
+  "title": "Quickstart with Command Code - Command Code Docs",
+  "runnable": 0.25,
+  "fragile": 0.38,
+  "reach": 1,
+  "official": 0.83,
+  "priority": 0.44
+ },
+ {
+  "url": "https://docs.activegraph.ai/quickstart",
+  "title": "Quickstart - Active Graph",
+  "runnable": 0.49,
+  "fragile": 0.37,
+  "reach": 0,
+  "official": 0.89,
+  "priority": 0.426
+ },
+ {
+  "url": "https://docs.xorq.dev/getting_started/quickstart",
+  "title": "Quickstart \u2013 Xorq documentation",
+  "runnable": 0.44,
+  "fragile": 0.42,
+  "reach": 0,
+  "official": 0.88,
+  "priority": 0.405
+ },
+ {
+  "url": "https://github.com/ivov/lisette/blob/d3d2fb6e5c674b07bdae1e00d1e772b90bb6d799/docs/intro/quickstart",
+  "title": "docs/intro/quickstart.md at d3d2fb6e5c674b07bdae1e00d1e772b90bb6d799 \u00b7 ivov/lisette",
+  "runnable": 0.34,
+  "fragile": 0.57,
+  "reach": 0,
+  "official": 0.89,
+  "priority": 0.364
+ },
+ {
+  "url": "https://uagents.fetch.ai/docs/quickstart",
+  "title": "Quick Start Guide for uAgents Framework docs",
+  "runnable": 0.34,
+  "fragile": 0.53,
+  "reach": 0,
+  "official": 0.89,
+  "priority": 0.35
+ },
+ {
+  "url": "https://developers.openai.com/api/docs/guides/agents/quickstart",
+  "title": "Quickstart",
+  "runnable": 0.18,
+  "fragile": 0.44,
+  "reach": 1,
+  "official": 0.8,
+  "priority": 0.338
+ },
+ {
+  "url": "https://github.com/microsoft/agent-framework",
+  "title": "microsoft/agent-framework: A framework for building ...",
+  "runnable": 0.15,
+  "fragile": 0.52,
+  "reach": 1,
+  "official": 0.93,
+  "priority": 0.306
+ },
+ {
+  "url": "https://goose-docs.ai/docs/quickstart",
+  "title": "Quickstart | goose | Your open source AI agent",
+  "runnable": 0.34,
+  "fragile": 0.39,
+  "reach": 0,
+  "official": 0.8,
+  "priority": 0.303
+ },
+ {
+  "url": "https://docs.langchain.com/oss/python/langchain/quickstart",
+  "title": "Quickstart - Docs by LangChain",
+  "runnable": 0.1,
+  "fragile": 0.49,
+  "reach": 2,
+  "official": 0.9,
+  "priority": 0.297
+ },
+ {
+  "url": "https://openai.github.io/openai-agents-python/quickstart",
+  "title": "Quickstart - OpenAI Agents SDK",
+  "runnable": 0.1,
+  "fragile": 0.42,
+  "reach": 2,
+  "official": 0.83,
+  "priority": 0.276
+ },
+ {
+  "url": "https://motherduck.com/blog/duckdb-python-e2e-data-engineering-project-part-1",
+  "title": "DuckDB & Python : end-to-end data engineering project",
+  "runnable": 0.13,
+  "fragile": 0.56,
+  "reach": 1,
+  "official": 0.03,
+  "priority": 0.276
+ },
+ {
+  "url": "https://docs.pycord.dev/en/master/quickstart.html",
+  "title": "Quickstart \u00b6",
+  "runnable": 0.12,
+  "fragile": 0.56,
+  "reach": 1,
+  "official": 0.91,
+  "priority": 0.254
+ },
+ {
+  "url": "https://github.com/stateset/stateset-agents/blob/ea58ab9dd1d750dd8220aeb35c5778defbe30475/QUICKSTART",
+  "title": "QUICKSTART.md at ea58ab9dd1d750dd8220aeb35c5778defbe30475 \u00b7 stateset/stateset-agents",
+  "runnable": 0.22,
+  "fragile": 0.57,
+  "reach": 0,
+  "official": 0.9,
+  "priority": 0.235
+ },
+ {
+  "url": "https://docs.langchain.com/oss/python/deepagents/quickstart",
+  "title": "Quickstart - Docs by LangChain",
+  "runnable": 0.08,
+  "fragile": 0.46,
+  "reach": 2,
+  "official": 0.91,
+  "priority": 0.23
+ },
+ {
+  "url": "https://www.kimi.ai/help/kimi-code/cli-getting-started",
+  "title": "Kimi Code CLI Installation & Quick Start - Kimi Help Center",
+  "runnable": 0.1,
+  "fragile": 0.55,
+  "reach": 1,
+  "official": 0.81,
+  "priority": 0.21
+ },
+ {
+  "url": "https://onaether.dev/docs/quickstart",
+  "title": "Aether quickstart: run your first AI coding agent",
+  "runnable": 0.19,
+  "fragile": 0.59,
+  "reach": 0,
+  "official": 0.76,
+  "priority": 0.207
+ },
+ {
+  "url": "https://cmu-l3.github.io/gym-anything/docs/quickstart",
+  "title": "Quickstart",
+  "runnable": 0.19,
+  "fragile": 0.5,
+  "reach": 0,
+  "official": 0.81,
+  "priority": 0.19
+ },
+ {
+  "url": "https://github.com/google-gemini/gemini-cli/blob/main/docs/get-started",
+  "title": "docs/get-started/index.md at main \u00b7 google-gemini/gemini-cli",
+  "runnable": 0.07,
+  "fragile": 0.31,
+  "reach": 2,
+  "official": 0.91,
+  "priority": 0.17
+ },
+ {
+  "url": "https://docs.copilotkit.ai/agent-spec/quickstart",
+  "title": "Quickstart",
+  "runnable": 0.12,
+  "fragile": 0.69,
+  "reach": 0,
+  "official": 0.75,
+  "priority": 0.143
+ },
+ {
+  "url": "https://www.marsys.ai/framework/getting-started/quick-start",
+  "title": "Quick Start - MARSYS Docs",
+  "runnable": 0.14,
+  "fragile": 0.5,
+  "reach": 0,
+  "official": 0.84,
+  "priority": 0.14
+ },
+ {
+  "url": "https://learn.chatgpt.com/docs/codex/cli",
+  "title": "Codex CLI",
+  "runnable": 0.04,
+  "fragile": 0.6,
+  "reach": 2,
+  "official": 0.74,
+  "priority": 0.132
+ },
+ {
+  "url": "https://jazz-cli.vercel.app/docs/getting-started/quick-start",
+  "title": "Quick start",
+  "runnable": 0.15,
+  "fragile": 0.36,
+  "reach": 0,
+  "official": 0.82,
+  "priority": 0.129
+ },
+ {
+  "url": "https://pi.dev/docs/latest/quickstart",
+  "title": "Quickstart",
+  "runnable": 0.12,
+  "fragile": 0.43,
+  "reach": 0,
+  "official": 0.84,
+  "priority": 0.112
+ },
+ {
+  "url": "https://agent-patterns.readthedocs.io/en/stable/quickstart.html",
+  "title": "Quick Start Guide \uf0c1",
+  "runnable": 0.08,
+  "fragile": 0.61,
+  "reach": 0,
+  "official": 0.74,
+  "priority": 0.089
+ },
+ {
+  "url": "https://learn.microsoft.com/en-us/visualstudio/ide/quickstart-python?view=visualstudio",
+  "title": "Quickstart: Create a Python web app with Visual Studio",
+  "runnable": 0.04,
+  "fragile": 0.6,
+  "reach": 1,
+  "official": 0.63,
+  "priority": 0.088
+ },
+ {
+  "url": "https://blocks.ai/docs/quickstart",
+  "title": "Quickstart \u2014 Blocks.ai Docs",
+  "runnable": 0.07,
+  "fragile": 0.42,
+  "reach": 0,
+  "official": 0.88,
+  "priority": 0.064
+ },
+ {
+  "url": "https://docs.celesto.ai/agentor/quickstart",
+  "title": "N/A",
+  "runnable": 0.06,
+  "fragile": 0.55,
+  "reach": 0,
+  "official": 0.79,
+  "priority": 0.063
+ },
+ {
+  "url": "https://learn.microsoft.com/en-us/agent-framework/get-started/your-first-agent",
+  "title": "Step 1: Your First Agent",
+  "runnable": 0.06,
+  "fragile": 0.45,
+  "reach": 0,
+  "official": 0.88,
+  "priority": 0.057
+ },
+ {
+  "url": "https://www.cockroachlabs.com/docs/v26.3/build-a-python-app-with-cockroachdb-sqlalchemy",
+  "title": "N/A",
+  "runnable": 0.05,
+  "fragile": 0.58,
+  "reach": 0,
+  "official": 0.37,
+  "priority": 0.054
+ },
+ {
+  "url": "https://docs.cortex.foundation/cli/quickstart",
+  "title": "CLI quickstart - Cortex Docs",
+  "runnable": 0.04,
+  "fragile": 0.28,
+  "reach": 0,
+  "official": 0.9,
+  "priority": 0.031
+ },
+ {
+  "url": "https://getstream.io/cli/docs/manual-quickstart",
+  "title": "Manual quickstart",
+  "runnable": 0.03,
+  "fragile": 0.28,
+  "reach": 0,
+  "official": 0.89,
+  "priority": 0.023
+ }
+]

@@ -1,0 +1,62 @@
+{
+  "tag": "dev",
+  "from": "2026-10-10T07:35:31Z",
+  "to": "2026-10-10T08:45:18Z",
+  "kpis": {
+    "data": {
+      "changePercent": {
+        "averageDurationMs": 1373.8593586787285,
+        "averageTokens": 1692.5925925925924,
+        "detectionHitRate": 0,
+        "errorRate": 0,
+        "totalCostUsd": 22.500449261221565,
+        "traceCount": 200
+      },
+      "current": {
+        "averageDurationMs": 99709.53333333334,
+        "averageTokens": 32.266666666666666,
+        "detectionHitRate": 0.6666666666666666,
+        "errorRate": 0.4666666666666667,
+        "totalCostUsd": 0.15235484999999999,
+        "traceCount": 15
+      },
+      "period": {
+        "from": "2026-10-10T07:35:31Z",
+        "to": "2026-10-10T08:45:18Z"
+      },
+      "previous": {
+        "averageDurationMs": 6765.2,
+        "averageTokens": 1.8,
+        "detectionHitRate": 0,
+        "errorRate": 0,
+        "totalCostUsd": 0.12437085,
+        "traceCount": 5
+      }
+    },
+    "requestId": "req_4ab58eb2ec2409e3a123cfb03fbe2661",
+    "success": true
+  },
+  "cost": {
+    "data": {
+      "breakdown": "cost",
+      "period": {
+        "from": "2026-10-10T07:35:31Z",
+        "to": "2026-10-10T08:45:18Z"
+      },
+      "rows": [
+        {
+          "group": "firstrun",
+          "traceCount": 14,
+          "totalCostUsd": 0.15235484999999999,
+          "totalTokens": 484
+        }
+      ],
+      "truncation": {
+        "limit": 100,
+        "truncated": false
+      }
+    },
+    "requestId": "req_f88be7afc0f4c17e146319df5fc776ad",
+    "success": true
+  }
+}

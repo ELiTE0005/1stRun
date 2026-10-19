@@ -1,0 +1,93 @@
+{
+ "receipt_id": "FR-20261010-172306-dlthub-com",
+ "issued_at": "2026-10-11T09:40:37Z",
+ "work": {
+  "source_url": "https://dlthub.com/docs/tutorial/load-data-from-an-api",
+  "run_id": "20261010-172306-dlthub-com",
+  "started_at": "2026-10-10T17:23:48+00:00",
+  "finished_at": "2026-10-10T17:25:24+00:00",
+  "seconds": 66.7,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "jev",
+  "patches": [
+   {
+    "step": 1,
+    "was": "dlt --version",
+    "now": "pip install dlt && dlt --version",
+    "reason": "The dlt CLI is not installed in the clean python:3.11-slim image; the 'command not found' error shows the package is missing. Installing the 'dlt' package from PyPI provides the dlt executable, then the original command runs unchanged."
+   },
+   {
+    "step": 2,
+    "was": "python quick_start_pipeline.py",
+    "now": "pip install \"dlt[duckdb]\" && python quick_start_pipeline.py",
+    "reason": "The error shows dlt is installed but the duckdb destination extra is missing; the error itself says to run pip install \"dlt[duckdb]\". The original command is kept and runs after the install."
+   },
+   {
+    "step": 2,
+    "was": "pip install \"dlt[duckdb]\" && python quick_start_pipeline.py",
+    "now": "PIP_ROOT_USER_ACTION=ignore pip install \"dlt[duckdb]\" && python quick_start_pipeline.py",
+    "reason": "The output shows no failure. dlt installed, the pipeline loaded 1 package into duckdb with no failed jobs, and the only complaint is pip's warning about running as root. That warning is harmless in a throwaway container. Setting PIP_ROOT_USER_ACTION=ignore silences it, and the original command and arguments stay the same."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.1,
+  "input_tokens": 14251,
+  "output_tokens": 6600,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 738.0,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 212.9,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 37.5
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 358.8,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": -2.4
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 1,
+  "steps_total": 9,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261010-172306-dlthub-com",
+  "tags": [
+   "radar"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:7d45e9a128e1cc38109cfe24ae19e58a23024814681294abca9b11297ec1b490",
+   "runbook.json": "sha256:a586db01b4c58cb906235e7b92024e123393b1ef3b561315dc333e2121db648d",
+   "report.md": "sha256:00df7491f01cbca8c099d261913227565339bc10521e1c82e6f811a9ca6b3bba"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:4793c6cce8b576bb8be3147b4595705895b59b78feaa4c10241729c4654327e7"
+}

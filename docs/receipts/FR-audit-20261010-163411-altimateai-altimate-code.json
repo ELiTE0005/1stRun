@@ -1,0 +1,61 @@
+{
+ "kind": "audit",
+ "receipt_id": "FR-audit-20261010-163411-altimateai-altimate-code",
+ "issued_at": "2026-10-11T11:03:23Z",
+ "work": {
+  "repo": "AltimateAI/altimate-code",
+  "docs_repo": "",
+  "url": "https://github.com/AltimateAI/altimate-code",
+  "audited_at": "2026-10-10T16:34:11+00:00",
+  "head": "",
+  "commits_read": 724,
+  "since": "2026-03-02",
+  "history_capped": false,
+  "pages": 71,
+  "fresh": 71,
+  "aging": 0,
+  "stale": 0,
+  "quiet": 0,
+  "features": 49,
+  "uncovered": 47,
+  "cards": {
+   "document": 8,
+   "content": 4,
+   "feature": 4,
+   "automate": 1,
+   "quickstart": 1
+  },
+  "judged_by_jev": true
+ },
+ "price": {
+  "recorded": true,
+  "estimated": true,
+  "jev_calls": 2,
+  "jev_input_tokens": 30791,
+  "usd": 0.001293,
+  "basis": "Estimate. This audit ran before cost tracking. Re-running the same audit on 2026-10-11 used this much Jev input, billed at TypeSafe's list price of $0.042 per million input tokens. Output is free, and the clone and the analysis are free."
+ },
+ "limits": {
+  "dollar_cap_per_audit": null,
+  "jev_stale_pages_max": 200,
+  "jev_commit_sorts_max": 80,
+  "jev_batch_size": 40,
+  "history_commits_max": 20000,
+  "note": "The plan sets no dollar cap per audit. Jev reads are limited by the counts below."
+ },
+ "proof": {
+  "cards": 18,
+  "cards_citing_evidence": 16,
+  "all_cited": false,
+  "claim": "16 of 18 cards cite commits or pages you can open. This audit did not record the commit it read."
+ },
+ "audit": {
+  "audit_id": "audit-20261010-163411-altimateai-altimate-code",
+  "evidence_sha256": {
+   "audit.json": "sha256:bcf7e40ee2a6984e5b500fe6efb5f11f7d3c5d49196da4e105f4ac1943f3d59e",
+   "audit.md": "sha256:f42777a6cf2ea1df831d791b36b8819f75000f6cc9a41c7c508fc3e6e57fae9d"
+  },
+  "generated_by": "firstrun audit"
+ },
+ "hash": "sha256:2a77c39258bf72e1379c62c89370daaf3d9060ccae3dc7f4c2078505c8aff279"
+}

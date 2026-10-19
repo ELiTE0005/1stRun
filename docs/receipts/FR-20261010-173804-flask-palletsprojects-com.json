@@ -1,0 +1,87 @@
+{
+ "receipt_id": "FR-20261010-173804-flask-palletsprojects-com",
+ "issued_at": "2026-10-11T09:41:07Z",
+ "work": {
+  "source_url": "https://flask.palletsprojects.com/en/stable/quickstart",
+  "run_id": "20261010-173804-flask-palletsprojects-com",
+  "started_at": "2026-10-10T17:38:25+00:00",
+  "finished_at": "2026-10-10T17:48:58+00:00",
+  "seconds": 322.0,
+  "first_failed_step": 1,
+  "failure_class": "environment",
+  "classified_by": "precedent",
+  "patches": [
+   {
+    "step": 1,
+    "was": "flask --app hello run",
+    "now": "pip install flask && flask --app hello run",
+    "reason": "flask is not installed in the clean python:3.11-slim image, so the flask executable is missing. Installing it with pip provides the command; the original command and arguments are unchanged."
+   },
+   {
+    "step": 2,
+    "was": "flask run --host=0.0.0.0",
+    "now": "flask --app hello run --host=0.0.0.0",
+    "reason": "Flask is installed, but it found no app: there is no app.py or wsgi.py in the working directory and FLASK_APP is not set. The error names the --app option as the fix. The module name 'hello' is a guess taken from the Flask quickstart, so replace it with the module that defines your Flask app. The file must exist in the current directory."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0613,
+  "input_tokens": 18759,
+  "output_tokens": 1781,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 452.4,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 130.5,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 61.2
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 219.9,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 36.5
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 4,
+  "steps_total": 4,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261010-173804-flask-palletsprojects-com",
+  "tags": [
+   "radar-v2"
+  ],
+  "evidence_sha256": {
+   "state.json": "sha256:6d58339919e011588b6816022a23815cc638042dfb09669440fb3d340b039671",
+   "runbook.json": "sha256:692b42d4a581eb5ebcc059d7d0b11fbb13d76f64d6690058a5c4657e89076a3f",
+   "report.md": "sha256:2ca246c440d0e8c1f211620ba92fc674b700d1e40464435f254328b8f282e4f6"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7,
+  "cfo_model": "https://cfo.ai/s/_u5lbrHIl9KX_JQE"
+ },
+ "hash": "sha256:b089e79c1797fcb69e2b62a0d33549188c1a0221a13784a6337598874d2563a0"
+}

@@ -1,0 +1,60 @@
+{
+ "kind": "audit",
+ "receipt_id": "FR-audit-20261012-091549-kleros-kleros-v2",
+ "issued_at": "2026-10-12T09:15:58Z",
+ "work": {
+  "repo": "kleros/kleros-v2",
+  "docs_repo": "",
+  "url": "https://github.com/kleros/kleros-v2",
+  "audited_at": "2026-10-12T09:15:49+00:00",
+  "head": "853db7d47a2da431b885eb6420085ab71e1cebb4",
+  "commits_read": 5159,
+  "since": "2021-11-10",
+  "history_capped": false,
+  "pages": 2,
+  "fresh": 0,
+  "aging": 2,
+  "stale": 0,
+  "quiet": 0,
+  "features": 6,
+  "uncovered": 6,
+  "cards": {
+   "document": 5,
+   "feature": 3,
+   "automate": 1,
+   "quickstart": 1
+  },
+  "judged_by_jev": true
+ },
+ "price": {
+  "recorded": true,
+  "estimated": false,
+  "jev_calls": 2,
+  "jev_input_tokens": 3749,
+  "usd": 0.000157,
+  "basis": "TypeSafe list price, $0.042 per million input tokens, output free. The clone and the analysis are free."
+ },
+ "limits": {
+  "dollar_cap_per_audit": null,
+  "jev_stale_pages_max": 200,
+  "jev_commit_sorts_max": 80,
+  "jev_batch_size": 40,
+  "history_commits_max": 20000,
+  "note": "The plan sets no dollar cap per audit. Jev reads are limited by the counts below."
+ },
+ "proof": {
+  "cards": 10,
+  "cards_citing_evidence": 8,
+  "all_cited": false,
+  "claim": "8 of 10 cards cite commits or pages you can open. The audit read the history up to commit 853db7d47."
+ },
+ "audit": {
+  "audit_id": "audit-20261012-091549-kleros-kleros-v2",
+  "evidence_sha256": {
+   "audit.json": "sha256:845996ffb3fa8fdc550f23e3b5c0f2dda8bf71493d5e929071cdacf2a029f9c4",
+   "audit.md": "sha256:a550aa7cb366ff24b3810e0341c588f5bc9f4a4c5e21509af71a2c859d7e0f04"
+  },
+  "generated_by": "firstrun audit"
+ },
+ "hash": "sha256:49db1b8cac2a491d4815b62c8ac10e059e71d87c6b164e91b606991f94a0e337"
+}

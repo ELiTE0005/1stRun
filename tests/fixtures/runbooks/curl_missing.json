@@ -1,0 +1,32 @@
+{
+  "source_url": "file://tests/fixtures/docs/curl_missing_FIXTURE.md",
+  "title": "Curl Quickstart",
+  "image": "python:3.11-slim",
+  "docs_markdown": "<!-- FIXTURE: hand-written quickstart where curl is missing in python:3.11-slim. Not real docs. -->\n# Curl Quickstart\n\nTwo steps. The first needs curl, which the slim image does not ship.\n\n## 1. Fetch a page\n\n```bash\ncurl -fsSL https://example.com -o /dev/null\n```\n\n## 2. Finish\n\n```bash\necho done\n```\n",
+  "steps": [
+    {
+      "id": 1,
+      "intent": "Fetch a page",
+      "command": "curl -fsSL https://example.com -o /dev/null",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": null,
+        "file_exists": null
+      },
+      "source_line": ""
+    },
+    {
+      "id": 2,
+      "intent": "Finish",
+      "command": "echo done",
+      "files": [],
+      "expected": {
+        "exit_code": 0,
+        "output_contains": "done",
+        "file_exists": null
+      },
+      "source_line": ""
+    }
+  ]
+}
