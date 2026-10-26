@@ -14,7 +14,7 @@ from typing import Callable
 from urllib.parse import unquote, urlparse
 from urllib.request import url2pathname
 
-import neatlogs
+from firstrun import tracing
 from pydantic import ValidationError
 
 from firstrun import config
@@ -137,7 +137,7 @@ def _local_path(url: str) -> Path | None:
     return None
 
 
-@neatlogs.span(kind="TOOL", name="read_docs")
+@tracing.span(kind="TOOL", name="read_docs")
 def read_docs(url: str) -> str:
     """TOOL span `read_docs`. Firecrawl scrape to markdown. A local path or file:// URL reads the file."""
     path = _local_path(url)
@@ -148,13 +148,13 @@ def read_docs(url: str) -> str:
     except Exception as exc:  # fall back to a plain GET
         import httpx
 
-        neatlogs.log("firecrawl failed, using httpx: {err}", err=str(exc))
+        tracing.log("firecrawl failed, using httpx: {err}", err=str(exc))
         try:
             resp = httpx.get(url, follow_redirects=True, timeout=30)
         except httpx.HTTPError as http_exc:
             raise DocsUnreachable(f"docs unreachable: {url} ({str(exc)[:120]}; {http_exc.__class__.__name__})") from http_exc
         if resp.status_code in (401, 403, 404, 410) or resp.status_code >= 500:
-            neatlogs.log("docs unreachable: http {code}", level="error", code=resp.status_code, firecrawl_error=str(exc)[:200])
+            tracing.log("docs unreachable: http {code}", level="error", code=resp.status_code, firecrawl_error=str(exc)[:200])
             raise DocsUnreachable(f"docs unreachable: HTTP {resp.status_code} for {url} (firecrawl: {str(exc)[:120]})")
         return _strip_html(resp.text)
 
@@ -266,25 +266,18 @@ def apply_guards(runbook: Runbook, markdown: str) -> Runbook:
         if verdict == "drop":
             dropped += 1
             carry = step.files
-            neatlogs.log("planner guard dropped step: {command} ({why})", command=step.command, why=why)
+            tracing.log("planner guard dropped step: {command} ({why})", command=step.command, why=why)
             continue
         if verdict == "rewrite":
             rewritten += 1
             name = _EXPORT.match(step.command.strip()).group(1)  # type: ignore[union-attr]
-            neatlogs.log("planner guard rewrote step: {command} ({why})", command=step.command, why=why)
+            tracing.log("planner guard rewrote step: {command} ({why})", command=step.command, why=why)
             step.command = f'export {name}="${{{name}}}"'
         kept.append(step)
     for i, step in enumerate(kept, 1):
         step.id = i
     runbook.steps = kept
-    try:
-        from opentelemetry import trace
-
-        span = trace.get_current_span()
-        span.set_attribute("neatlogs.planner.guard_dropped", dropped)
-        span.set_attribute("neatlogs.planner.guard_rewritten", rewritten)
-    except Exception:  # noqa: BLE001
-        pass
+    tracing.annotate(**{"planner.guard_dropped": dropped, "planner.guard_rewritten": rewritten})
     return runbook
 
 
@@ -316,7 +309,7 @@ def _cache_store(markdown: str, runbook: Runbook) -> None:
         pass
 
 
-@neatlogs.span(kind="AGENT", name="planner")
+@tracing.span(kind="AGENT", name="planner")
 def plan_from_markdown(
     markdown: str, source_url: str, llm: Callable[[str], str] | None = None
 ) -> Runbook:
@@ -325,7 +318,7 @@ def plan_from_markdown(
     if cacheable:
         cached = _cache_load(markdown, source_url)
         if cached is not None:
-            neatlogs.log("planner cache hit")
+            tracing.log("planner cache hit")
             return cached
     ask = llm or (lambda p: ask_claude(p, SYSTEM_PROMPT)[0])
     prompt = f"Source URL: {source_url}\n\nQuickstart page (markdown):\n\n{strip_archive_banner(markdown)}"
@@ -404,7 +397,7 @@ def plan(url: str, llm: Callable[[str], str] | None = None) -> Runbook:
     except Exception as exc:
         from firstrun.llm import ModelAuthError
 
-        neatlogs.log("planner failed: {err}", level="error", err=str(exc)[:300])
+        tracing.log("planner failed: {err}", level="error", err=str(exc)[:300])
         if isinstance(exc, ModelAuthError):
             raise PlanError(str(exc)) from exc
         raise PlanError(f"planner failed: {str(exc)[:300]}") from exc

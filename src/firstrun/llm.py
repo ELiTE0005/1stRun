@@ -1,4 +1,4 @@
-"""Track T4. Small sync helpers over the Claude Agent SDK. Wrapped by neatlogs."""
+"""Track T4. Small sync helpers over the Claude Agent SDK. Traced by the Langfuse instrumentor in tracing.py."""
 
 from __future__ import annotations
 
@@ -11,15 +11,11 @@ import threading
 from typing import Any, Sequence
 
 import claude_agent_sdk
-import neatlogs
 
 from firstrun import config
 
-# Wrapped once. Every query shows up in the neatlogs trace.
-try:
-    sdk = neatlogs.wrap(claude_agent_sdk)
-except Exception:  # wrapping is best effort, the plain SDK still works
-    sdk = claude_agent_sdk
+# tracing.init_tracing patches claude_agent_sdk.query in place, so every query shows up in the trace.
+sdk = claude_agent_sdk
 
 # A cwd outside the repo, so Entire hooks and project settings never fire.
 _WORKDIR = os.path.join(tempfile.gettempdir(), "firstrun-llm")

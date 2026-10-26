@@ -37,7 +37,7 @@ def _default_docker() -> str:
 DOCKER_CMD = (os.environ.get("FIRSTRUN_DOCKER") or _default_docker()).split()
 DEFAULT_IMAGE = "python:3.11-slim"
 
-KEYS = ("NEATLOGS_API_KEY", "CLAUDE_CODE_OAUTH_TOKEN", "TYPESAFE_API_KEY", "FIRECRAWL_API_KEY_1")
+KEYS = ("LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "CLAUDE_CODE_OAUTH_TOKEN", "TYPESAFE_API_KEY", "FIRECRAWL_API_KEY_1")
 
 
 _KEYS_SCRIPT = _AUTHOR_ENV.parent / "SCRIPTS" / "keys" / "keys.py"

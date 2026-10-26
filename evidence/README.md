@@ -24,4 +24,4 @@ Every claim in the README has a file here or a public link. Nothing in this fold
 | The session that built and ran FirstRun is public | [Entire session](https://entire.io/gh/HighnessAtharva/firstrun/session/ae05fb29-0c85-4558-9980-42419f08ca9c) |
 | Every upstream PR carries a public replay of its run | the proof comments on [#10149](https://github.com/dbt-labs/docs.getdbt.com/pull/10149#issuecomment-6097945132), [#10150](https://github.com/dbt-labs/docs.getdbt.com/pull/10150#issuecomment-6097945350), [#2724](https://github.com/entireio/cli/pull/2724#issuecomment-6097945657), [#671](https://github.com/accuknox/help/pull/671#issuecomment-6097945911) |
 
-Refresh the generated files with `python scripts/collect_evidence.py`.
+These files are a record of the hackathon build. The script that generated them is gone.

@@ -1,6 +1,6 @@
-"""Unit economics from neatlogs traces, and the per-tier cost cap the agent enforces.
+"""Unit economics from run folders, and the per-tier cost cap the agent enforces.
 
-`firstrun econ` reads every `firstrun.run` trace, writes business/drivers.csv for cfo.ai,
+`firstrun econ` reads every run folder's state.json, writes business/drivers.csv for cfo.ai,
 and writes business/unit_economics.json. `firstrun run --tier NAME` reads that file and
 stops a run whose spend passes the tier's cap.
 """
@@ -10,15 +10,13 @@ from __future__ import annotations
 import csv
 import json
 import os
-import shutil
-import subprocess
 from datetime import datetime, timezone
 from pathlib import Path
 
+from firstrun import config
 from firstrun.models import Budget
 
 BUSINESS = Path(os.environ.get("FIRSTRUN_BUSINESS_DIR", "business"))
-NEATLOGS = ["npx", "--yes", "-p", "node@22", "-p", "neatlogs-cli@0.2.0", "--", "neatlogs"]
 DEFAULT_MARGIN_FLOOR = 0.70
 
 
@@ -26,21 +24,37 @@ class EconError(Exception):
     pass
 
 
-def fetch_traces(since: str) -> str:
-    """Raw JSON from `neatlogs traces list`. Keys come from the environment, never printed."""
-    cmd = [*NEATLOGS, "traces", "list", "--from", since, "--all", "--max-items", "300", "--limit", "50", "--json"]
-    exe = shutil.which(cmd[0]) or cmd[0]
-    env = dict(os.environ)
-    for attempt in (env, {k: v for k, v in env.items() if k != "NEATLOGS_API_KEY"}):
-        p = subprocess.run([exe, *cmd[1:]], capture_output=True, text=True, encoding="utf-8",
-                           errors="replace", env=attempt, timeout=300)
-        if p.returncode == 0:
-            return p.stdout
-    raise EconError(f"neatlogs traces list failed: {p.stderr.strip()[:300]}")
+def _parse_time(text: str) -> datetime | None:
+    try:
+        t = datetime.fromisoformat((text or "").replace("Z", "+00:00"))
+    except ValueError:
+        return None
+    return t if t.tzinfo else t.replace(tzinfo=timezone.utc)
+
+
+def fetch_traces(since: str, runs_dir: Path | None = None) -> str:
+    """One record per finished run folder since `since`, in the payload shape `run_traces` reads.
+
+    The cost is the list price FirstRun kept in state.json, the same number a tier's cap is checked against.
+    """
+    floor = _parse_time(since) or datetime.min.replace(tzinfo=timezone.utc)
+    traces = []
+    for path in sorted((runs_dir or config.RUNS_DIR).glob("*/state.json")):
+        try:
+            st = json.loads(path.read_text(encoding="utf-8"))
+        except (OSError, ValueError):
+            continue
+        began, ended = _parse_time(st.get("started_at", "")), _parse_time(st.get("finished_at", ""))
+        if not began or not ended or began < floor:
+            continue
+        traces.append({"traceName": "firstrun.run", "traceId": st.get("run_id", path.parent.name),
+                       "totalCostUsd": float((st.get("usage") or {}).get("cost_usd") or 0),
+                       "durationMs": max((ended - began).total_seconds(), 0) * 1000})
+    return json.dumps({"data": {"traces": traces}})
 
 
 def run_traces(text: str) -> list[dict]:
-    """The `firstrun.run` traces of a `neatlogs traces list --json` payload."""
+    """The `firstrun.run` records of a `fetch_traces` payload."""
     data = json.loads(text)
     traces = ((data.get("data") or {}).get("traces")) or []
     return [t for t in traces if t.get("traceName") == "firstrun.run"]
@@ -122,7 +136,7 @@ def build(trace_json: str, inputs: dict, margin_floor: float = DEFAULT_MARGIN_FL
     costs = [float(t.get("totalCostUsd") or 0) for t in traces]
     return {
         "generated_at": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ"),
-        "source": "neatlogs traces, traceName firstrun.run, list price not billed",
+        "source": "FirstRun run folders (state.json), list price not billed",
         "margin_floor": margin_floor,
         "drivers": d,
         "tiers": tier_caps(d, inputs["tiers"], margin_floor, costs),
@@ -136,14 +150,14 @@ def write(econ: dict, out_dir: Path | None = None) -> list[Path]:
     js = out_dir / "unit_economics.json"
     js.write_text(json.dumps(econ, indent=2) + "\n", encoding="utf-8")
     d = econ["drivers"]
-    src = f"neatlogs, {d['traces']} firstrun.run traces"
+    src = f"run folders, {d['traces']} runs"
     rows = [
         ("traces_measured", d["traces"], "traces", "yes", src),
         ("cost_per_run_mean", d["cost_mean"], "USD", "yes", src),
     ]
     for q in ("p50", "p90", "p95", "max"):
         c = d[f"cost_{q}"]
-        rows.append((f"cost_per_run_{q}", c["usd"], "USD", "yes", f"neatlogs trace {c['trace_id']}"))
+        rows.append((f"cost_per_run_{q}", c["usd"], "USD", "yes", f"run {c['trace_id']}"))
     rows += [
         ("run_duration_mean", d["duration_mean_s"], "seconds", "yes", src),
         ("vm_price_per_hour", d["vm_price_per_hour"], "USD", "no", "AWS t3.medium on-demand, assumption"),

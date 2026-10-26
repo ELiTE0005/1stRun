@@ -13,7 +13,7 @@ import urllib.request
 from datetime import datetime, timezone
 from typing import Any, Callable
 
-import neatlogs
+from firstrun import tracing
 
 from firstrun import config, state as state_io
 from firstrun.models import FileSpec, Runbook, Step
@@ -154,7 +154,7 @@ def probe(steps: list[Step], image: str, package: str, version: str,
     name = f"firstrun-bisect-{package}-{version}"
     env = {"PIP_CONSTRAINT": CONSTRAINTS_PATH}
     passed, error = False, ""
-    with neatlogs.trace(f"probe.{version}", kind="TOOL") as span, config.block_model_calls():
+    with tracing.trace(f"probe.{version}", kind="TOOL") as span, config.block_model_calls():
         span.set_attribute("package", package)
         span.set_attribute("version", version)
         try:
@@ -223,7 +223,7 @@ def run(run_id: str, package: str, step_id: int | None = None, max_probes: int =
 
     from firstrun.tracing import session_attrs
 
-    with neatlogs.trace("firstrun.bisect", kind="WORKFLOW", run_id=run_id, package=package, step_id=step_id,
+    with tracing.trace("firstrun.bisect", kind="WORKFLOW", run_id=run_id, package=package, step_id=step_id,
                         **session_attrs(state_io.target_name(runbook.source_url), "bisect", package=package)
                         ) as root, config.block_model_calls():
         set_io(root, input={"run_id": run_id, "package": package, "step_id": step_id, "max_probes": max_probes})
@@ -236,7 +236,7 @@ def run(run_id: str, package: str, step_id: int | None = None, max_probes: int =
             entry = {"version": ver, "date": date, "passed": ok, "error": err}
             doc["releases_tested"].append(entry)
             doc["probes"] = len(doc["releases_tested"])
-            neatlogs.log("probe {version}: {result}", version=ver, result="pass" if ok else "fail", error=err)
+            tracing.log("probe {version}: {result}", version=ver, result="pass" if ok else "fail", error=err)
             _save(run_id, doc)
             if on_probe:
                 on_probe(entry)

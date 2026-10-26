@@ -9,7 +9,7 @@ import time
 from datetime import datetime, timezone
 from typing import Callable
 
-import neatlogs
+from firstrun import tracing
 
 from firstrun import budget as budget_mod, report, state as state_io
 from firstrun.budget import BudgetExceeded
@@ -84,7 +84,7 @@ def check_expected(step: Step, result: StepResult, container: Container | None =
 def run_step(container: Container, step: Step, timeout_s: int | None = None) -> StepResult:
     """TOOL span `step.<id>`. Writes the step's files, runs its command, checks `expected`."""
     timeout_s = timeout_s or Budget().seconds_per_step
-    with neatlogs.trace(f"step.{step.id}", kind="TOOL") as span:
+    with tracing.trace(f"step.{step.id}", kind="TOOL") as span:
         started = time.monotonic()
         if step.files:
             container.write_files(step.files)
@@ -105,11 +105,11 @@ def run_step(container: Container, step: Step, timeout_s: int | None = None) -> 
         result.stdout, result.stderr = redact(result.stdout), redact(result.stderr)  # never keep a secret
         result.passed = check_expected(step, result, container, start_dir)
         result.duration_s = round(time.monotonic() - started, 3)
-        span.set_attribute("neatlogs.step.command", step.command)
-        span.set_attribute("neatlogs.step.exit_code", result.exit_code)
-        span.set_attribute("neatlogs.step.duration", result.duration_s)
-        span.set_attribute("neatlogs.step.passed", result.passed)
-        span.set_attribute("neatlogs.step.server_ready", result.server_ready)
+        span.set_attribute("step.command", step.command)
+        span.set_attribute("step.exit_code", result.exit_code)
+        span.set_attribute("step.duration", result.duration_s)
+        span.set_attribute("step.passed", result.passed)
+        span.set_attribute("step.server_ready", result.server_ready)
         set_io(span,
                input={"step_id": step.id, "command": step.command, "files": [f.path for f in step.files]},
                output={"exit_code": result.exit_code, "passed": result.passed, "timed_out": result.timed_out,
@@ -182,7 +182,7 @@ def run(
     }
     try:
         # trace=False when the caller already opened the run trace around planning.
-        ctx = neatlogs.trace("firstrun.run", kind="WORKFLOW", **attrs) if trace else contextlib.nullcontext()
+        ctx = tracing.trace("firstrun.run", kind="WORKFLOW", **attrs) if trace else contextlib.nullcontext()
         with ctx:
             try:
                 _execute(runbook, state, recover, budget, container_factory, capture_pins=verify is not None)
@@ -227,7 +227,7 @@ def _execute(runbook, state, recover, budget, container_factory, capture_pins: b
                 continue
             eff = _effective_command(state, step)
             res = run_step(container, eff, budget.seconds_per_step)
-            neatlogs.log("replayed step {id}", id=step.id)
+            tracing.log("replayed step {id}", id=step.id)
             if not res.passed:
                 state.step_status[step.id] = StepStatus.FAILED
                 state.first_failed_step = state.first_failed_step or step.id
@@ -240,7 +240,7 @@ def _execute(runbook, state, recover, budget, container_factory, capture_pins: b
                 continue
             if step.skipped_out_of_scope:
                 state.step_status[step.id] = StepStatus.SKIPPED
-                neatlogs.log("step {id} skipped: {why}", id=step.id, why=step.skip_reason)
+                tracing.log("step {id} skipped: {why}", id=step.id, why=step.skip_reason)
                 continue
             if not _run_with_recovery(container, step, state, recover, budget, runbook):
                 state_io.save_state(state)

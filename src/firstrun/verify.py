@@ -8,7 +8,7 @@ from __future__ import annotations
 import uuid
 from typing import Any, Callable
 
-import neatlogs
+from firstrun import tracing
 
 from firstrun import config
 from firstrun.tracing import mark_error, set_io
@@ -54,7 +54,7 @@ def _run(
     name = f"firstrun-verify-{uuid.uuid4().hex[:8]}"
     details: dict = {"container": name, "image": patched.image, "steps": [], "failed_step": None, "reason": ""}
 
-    with neatlogs.trace("verify", kind="GUARDRAIL") as span, config.block_model_calls():
+    with tracing.trace("verify", kind="GUARDRAIL") as span, config.block_model_calls():
         try:
             with factory(patched.image, name) as container:
                 if pins.strip():
@@ -77,21 +77,21 @@ def _run(
                     if not result.passed:
                         details["failed_step"] = step.id
                         details["reason"] = f"step {step.id} failed (exit {result.exit_code})"
-                        neatlogs.log("verify failed at step {id}", id=step.id, command=step.command, exit_code=result.exit_code)
+                        tracing.log("verify failed at step {id}", id=step.id, command=step.command, exit_code=result.exit_code)
                         break
         except config.ModelCallBlocked as exc:
             details["reason"] = f"model call during verification: {exc}"
-            neatlogs.log("verify blocked a model call: {err}", level="error", err=str(exc))
+            tracing.log("verify blocked a model call: {err}", level="error", err=str(exc))
         except Exception as exc:  # a broken container counts as unverified
             details["reason"] = f"verification error: {exc}"
-            neatlogs.log("verify error: {err}", err=str(exc))
+            tracing.log("verify error: {err}", err=str(exc))
 
         runnable = [st for st in patched.steps if not st.skipped_out_of_scope]
         passed = not details["reason"] and len(details["steps"]) == len(runnable)
         if passed:
             details["reason"] = f"all {len(runnable)} steps passed in a fresh container, no model calls"
-        span.set_attribute("neatlogs.guardrail.passed", passed)
-        span.set_attribute("neatlogs.guardrail.reason", details["reason"])
+        span.set_attribute("guardrail.passed", passed)
+        span.set_attribute("guardrail.reason", details["reason"])
         set_io(span, input={"steps": len(patched.steps), "patches": len(patches), "image": patched.image},
                output={"passed": passed, "reason": details["reason"], "steps": details["steps"]})
         if not passed:

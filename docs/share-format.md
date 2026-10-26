@@ -54,7 +54,7 @@ The browser decodes with `atob` after mapping `-`→`+` and `_`→`/`, then `Dec
   "verify": {"status": "verified", "steps_passed": 9, "steps_total": 9},
   "diff": "--- a/duckdb-qs.md\n+++ b/duckdb-qs.md\n...",
   "pr_body": "Fix a broken command in the quickstart...",
-  "trace_id": "optional neatlogs trace id or empty"
+  "trace_id": "optional trace id or empty"
 }
 ```
 

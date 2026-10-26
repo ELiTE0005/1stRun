@@ -7,7 +7,7 @@ import os
 import re
 
 import httpx
-import neatlogs
+from firstrun import tracing
 
 from firstrun import config
 from firstrun.models import Classification, FailureClass
@@ -125,16 +125,16 @@ def _heuristic(error_text: str, command: str = "") -> dict[FailureClass, float]:
     return {c: 0.25 for c in FailureClass}  # no signal: low confidence, so we ask
 
 
-@neatlogs.span(kind="TOOL", name="classify_failure")
+@tracing.span(kind="TOOL", name="classify_failure")
 def classify(error_text: str, command: str = "") -> Classification:
     """TOOL span `classify_failure`. Jev first, Claude as fallback. Returns four probabilities."""
     config.assert_model_call_allowed("classification")
     probs = _jev(error_text, command)
     if probs is not None:
         return Classification(probabilities=probs, source="jev")
-    neatlogs.log("jev unavailable, falling back to claude", level="warning")
+    tracing.log("jev unavailable, falling back to claude", level="warning")
     probs = _claude(error_text, command)
     if probs is not None:
         return Classification(probabilities=probs, source="claude")
-    neatlogs.log("claude unavailable, falling back to heuristics", level="warning")
+    tracing.log("claude unavailable, falling back to heuristics", level="warning")
     return Classification(probabilities=_heuristic(error_text, command), source="heuristic")

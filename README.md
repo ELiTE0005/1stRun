@@ -426,7 +426,7 @@ The business plan sets the agent's spending limit. `firstrun econ` reads 88 neat
 
 Prices, costs, revenue, cash and runway are in [the business plan section above](#the-business-plan-prices-3-tiers-and-ends-month-18-with-16685-in-cash). The old fixed cap of $0.50 let one bad month cost a Scale customer's fee five times over, and [business/BUSINESS_PLAN.md](business/BUSINESS_PLAN.md) holds the Scale fix and every assumption.
 
-The [plan page](https://firstrun.atharvashah.com/plan/) shows the caps, the measured cost spread and the cash per Scenario. Every doc-test run is tagged against the caps. A neatlogs alert fires when the p95 cost passes the Scale cap plus 25% ($0.035), and `scripts/neatlogs_issues.py` mirrors each detection and alert as a GitHub issue labeled [`neatlogs`](https://github.com/HighnessAtharva/firstrun/issues?q=label%3Aneatlogs).
+The [plan page](https://firstrun.atharvashah.com/plan/) shows the caps, the measured cost spread and the cash per Scenario. Every doc-test run is tagged against the caps. A neatlogs alert fires when the p95 cost passes the Scale cap plus 25% ($0.035).
 
 </td>
 </tr>

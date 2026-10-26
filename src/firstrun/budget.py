@@ -2,8 +2,7 @@
 
 from __future__ import annotations
 
-import neatlogs
-from opentelemetry import trace as otel_trace
+from firstrun import tracing
 
 from firstrun.models import Budget, RunState
 from firstrun.tracing import mark_error, set_io
@@ -25,21 +24,17 @@ def _trip_reason(state: RunState, budget: Budget, step_id: int | None) -> str | 
 
 def check(state: RunState, budget: Budget, step_id: int | None = None) -> None:
     """Raise BudgetExceeded when a limit trips."""
-    with neatlogs.trace("budget", kind="GUARDRAIL") as gspan:
+    with tracing.trace("budget", kind="GUARDRAIL") as gspan:
         reason = _trip_reason(state, budget, step_id)
         set_io(gspan, input={"step_id": step_id, "attempts": state.attempts.get(step_id, 0) if step_id else None,
                              "cost_usd": round(state.usage.cost_usd, 4)},
                output={"passed": reason is None, "reason": reason})
         if reason:
             mark_error(gspan, reason)
-        try:
-            span = otel_trace.get_current_span()
-            span.set_attribute("neatlogs.guardrail.name", "budget")
-            span.set_attribute("neatlogs.guardrail.passed", reason is None)
-            span.set_attribute("neatlogs.guardrail.triggered", reason is not None)
-            if reason:
-                span.set_attribute("neatlogs.guardrail.reason", reason)
-        except Exception:  # tracing never breaks the check
-            pass
+        gspan.set_attribute("guardrail.name", "budget")
+        gspan.set_attribute("guardrail.passed", reason is None)
+        gspan.set_attribute("guardrail.triggered", reason is not None)
+        if reason:
+            gspan.set_attribute("guardrail.reason", reason)
     if reason:
         raise BudgetExceeded(reason)

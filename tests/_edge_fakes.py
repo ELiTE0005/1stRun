@@ -50,7 +50,7 @@ def make_runbook(*commands, **kw) -> Runbook:
 
 
 class Recorder:
-    """Collects neatlogs span names and log messages that a test cares about."""
+    """Collects span names and log messages that a test cares about."""
 
     def __init__(self):
         self.spans: list[tuple[str, dict]] = []
@@ -64,10 +64,10 @@ class Recorder:
 
 
 def install_recorder(monkeypatch) -> Recorder:
-    import neatlogs
+    from firstrun import tracing
 
     rec = Recorder()
-    real_trace, real_log = neatlogs.trace, neatlogs.log
+    real_trace, real_log = tracing.trace, tracing.log
 
     @contextlib.contextmanager
     def trace(name, *args, **kwargs):
@@ -79,6 +79,6 @@ def install_recorder(monkeypatch) -> Recorder:
         rec.logs.append((message, kwargs))
         return real_log(message, *args, **kwargs)
 
-    monkeypatch.setattr(neatlogs, "trace", trace)
-    monkeypatch.setattr(neatlogs, "log", log)
+    monkeypatch.setattr(tracing, "trace", trace)
+    monkeypatch.setattr(tracing, "log", log)
     return rec

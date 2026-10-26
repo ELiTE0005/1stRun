@@ -75,8 +75,10 @@ KEY_INFO = {
     "TYPESAFE_API_KEY": (True, "Optional. Jev classifies failures and reads stale pages. Without it, Doc-test asks Claude "
                                "and Doc-audit sorts commits by subject line.",
                          "Optional. Ask the human for a TypeSafe key and put TYPESAFE_API_KEY in .env."),
-    "NEATLOGS_API_KEY": (True, "Optional. Exports one neatlogs trace per run.",
-                         "Optional. Put NEATLOGS_API_KEY in .env to export traces."),
+    "LANGFUSE_PUBLIC_KEY": (True, "Optional. Exports one Langfuse trace per run. Needs LANGFUSE_SECRET_KEY too.",
+                            "Optional. Put LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY in .env to export traces."),
+    "LANGFUSE_SECRET_KEY": (True, "Optional. Exports one Langfuse trace per run. Needs LANGFUSE_PUBLIC_KEY too.",
+                            "Optional. Put LANGFUSE_PUBLIC_KEY and LANGFUSE_SECRET_KEY in .env to export traces."),
     "GITHUB_TOKEN": (True, "Optional. GITHUB_TOKEN, GH_TOKEN or a gh login lets the team map join commit authors "
                            "to GitHub logins.",
                      "Optional. Set GITHUB_TOKEN or GH_TOKEN, or run `gh auth login`."),

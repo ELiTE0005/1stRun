@@ -60,7 +60,7 @@ def test_no_traces_is_an_error():
 def test_write_and_budget_for_tier(tmp_path):
     econ.write(econ.build(TRACES, INPUTS), tmp_path)
     rows = {r["driver"]: r for r in csv.DictReader((tmp_path / "drivers.csv").open(encoding="utf-8"))}
-    assert rows["cost_per_run_max"]["source"] == "neatlogs trace t4"
+    assert rows["cost_per_run_max"]["source"] == "run t4"
     assert rows["cost_per_run_mean"]["measured"] == "yes"
     assert rows["team_cost_cap_per_run"]["measured"] == "no"
     budget = econ.budget_for_tier("team", tmp_path / "unit_economics.json")

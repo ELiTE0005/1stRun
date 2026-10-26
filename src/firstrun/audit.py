@@ -21,7 +21,7 @@ from pathlib import Path
 from urllib.parse import quote
 
 import httpx
-import neatlogs
+from firstrun import tracing
 
 from firstrun import config
 from firstrun.redact import redact
@@ -895,7 +895,7 @@ def _summary(pages: list[dict]) -> dict:
 
 
 def _trace_output(a: dict) -> dict:
-    """What the audit claimed, compact enough for a neatlogs evaluator to check against the spans.
+    """What the audit claimed, compact enough for an evaluator to check against the spans.
     The ranked list goes in as titles and scores. Team counts only, never a name."""
     from firstrun.team import counts
 
@@ -912,11 +912,11 @@ def _trace_output(a: dict) -> dict:
 
 def audit(target: str, stale_days: int = 180, use_jev: bool = True, keep: Path | None = None,
           docs_repo: str | None = None, team: bool = True) -> dict:
-    """WORKFLOW trace `firstrun.audit`, in the docs site's neatlogs session. See _audit."""
+    """WORKFLOW trace `firstrun.audit`, in the docs site's trace session. See _audit."""
     from firstrun.tracing import session_attrs
 
     _, name = resolve_target(target)
-    with neatlogs.trace("firstrun.audit", kind="WORKFLOW", repo=name, docs_repo=docs_repo or "",
+    with tracing.trace("firstrun.audit", kind="WORKFLOW", repo=name, docs_repo=docs_repo or "",
                         **session_attrs(name, "audit", docs_repo=docs_repo)) as root:
         set_io(root, input={"target": target, "docs_repo": docs_repo, "stale_days": stale_days, "jev": use_jev,
                             "team": team})
@@ -940,7 +940,7 @@ def team_and_next(result: dict, code: dict, now: datetime, mom: dict, cl_recent:
     from firstrun import nextup, team as team_mod
 
     try:
-        with neatlogs.trace("audit.team", kind="TOOL") as span:
+        with tracing.trace("audit.team", kind="TOOL") as span:
             t, ctx = team_mod.collect(code, now, docs, release, enabled=enabled, github=github, optout=optout)
             nxt = nextup.build_next(result, ctx, now, mom, cl_recent)
             result["team"], result["next"] = t, nxt
@@ -966,10 +966,10 @@ def _audit(target: str, stale_days: int = 180, use_jev: bool = True, keep: Path 
     _JEV_USE.update(calls=0, input_tokens=0)
     tmp = Path(tempfile.mkdtemp(prefix="firstrun-audit-"))
     try:
-        with neatlogs.trace("audit.clone", kind="TOOL") as span:
+        with tracing.trace("audit.clone", kind="TOOL") as span:
             repo = clone(url, keep or tmp / "repo")
             set_io(span, input={"repo": name})
-        with neatlogs.trace("audit.history", kind="TOOL") as span:
+        with tracing.trace("audit.history", kind="TOOL") as span:
             commits = read_history(repo)
             tags = read_tags(repo)
             set_io(span, output={"commits": len(commits), "tags": len(tags)})
@@ -977,7 +977,7 @@ def _audit(target: str, stale_days: int = 180, use_jev: bool = True, keep: Path 
             raise RuntimeError("the repository has no commits")
         docs_url = f"https://github.com/{name}" if "/" in name and not Path(name).exists() else ""
         drepo, dcommits = None, []
-        with neatlogs.trace("audit.pages", kind="TOOL") as span:
+        with tracing.trace("audit.pages", kind="TOOL") as span:
             if docs_repo:
                 durl, dname = resolve_target(docs_repo)
                 drepo = clone(durl, tmp / "docs")
@@ -994,7 +994,7 @@ def _audit(target: str, stale_days: int = 180, use_jev: bool = True, keep: Path 
             cleared = jev_stale(pages, texts) if use_jev else 0
             set_io(span, input={"docs_repo": docs_repo or name}, output={**_summary(pages), "jev_cleared": cleared})
         corpus = markdown_corpus(repo, texts)
-        with neatlogs.trace("audit.features", kind="TOOL") as span:
+        with tracing.trace("audit.features", kind="TOOL") as span:
             feats = find_features(commits, now, corpus, use_jev, texts,
                                   sources=lambda paths: read_doc_texts(repo, paths),
                                   head_files=_git(repo, "ls-tree", "-r", "--name-only", "HEAD", check=False).splitlines())

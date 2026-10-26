@@ -12,7 +12,7 @@ import re
 import secrets as _secrets
 from typing import Any, Callable
 
-import neatlogs
+from firstrun import tracing
 
 from firstrun import config, state as state_io
 from firstrun.models import FailureClass, Runbook, RunState, Step, StepResult
@@ -318,7 +318,7 @@ def prove(
     proof: dict = {"proven": False, "rounds": 0, "image": runbook.image, "failed_step": None, "error": "",
                    "steps_passed": 0, "steps_total": len(steps), "added": []}
 
-    with neatlogs.trace("prereqs.prove", kind="GUARDRAIL") as span, config.block_model_calls():
+    with tracing.trace("prereqs.prove", kind="GUARDRAIL") as span, config.block_model_calls():
         floor = _floor_tuple(derived["python"]) if derived["python"] else None
         for rnd in range(1, max(1, rounds) + 1):
             proof["rounds"] = rnd
@@ -362,8 +362,8 @@ def prove(
         if not proof["proven"] and proof["failed_step"] in docs_bug_steps:
             proof["note"] = f"step {proof['failed_step']} is a docs bug FirstRun patched. A prerequisite cannot fix it."
         reason = ("all %d steps ran as written" % len(steps)) if proof["proven"] else (proof["error"] or "not proven")
-        span.set_attribute("neatlogs.guardrail.passed", bool(proof["proven"]))
-        span.set_attribute("neatlogs.guardrail.reason", reason)
+        span.set_attribute("guardrail.passed", bool(proof["proven"]))
+        span.set_attribute("guardrail.reason", reason)
         set_io(span, input={"run_id": run_id, "rounds": rounds, "prerequisites": install_set(derived)},
                output={"proven": proof["proven"], "rounds": proof["rounds"], "image": proof["image"],
                        "failed_step": proof["failed_step"], "error": proof["error"]})

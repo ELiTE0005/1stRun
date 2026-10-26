@@ -212,7 +212,7 @@ def _doctor_env(monkeypatch, docker_ok=True, token=True, net_ok=True):
     monkeypatch.setattr(doctor, "probe_docker", lambda: (docker_ok, "docker info"))
     monkeypatch.setattr(doctor, "probe_url", lambda url: (net_ok, url))
     monkeypatch.setattr("firstrun.team._token", lambda: "")
-    for k in ("TYPESAFE_API_KEY", "NEATLOGS_API_KEY", "GITHUB_TOKEN", "GH_TOKEN"):
+    for k in ("TYPESAFE_API_KEY", "LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "GITHUB_TOKEN", "GH_TOKEN"):
         monkeypatch.delenv(k, raising=False)
     if token:
         monkeypatch.setenv("CLAUDE_CODE_OAUTH_TOKEN", "test-value-not-a-real-token")

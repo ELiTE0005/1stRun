@@ -41,7 +41,8 @@ FirstRun reads keys from `.env` in the folder you run it from. Set `FIRSTRUN_ENV
 |---|---|---|---|
 | `CLAUDE_CODE_OAUTH_TOKEN` | Doc-test | Yes, for Doc-test | `firstrun run` stops with exit 2, `auth_missing`. The human creates it with `claude setup-token`. |
 | `TYPESAFE_API_KEY` | Jev in both tools | No | Doc-test asks Claude to classify a failure. Doc-audit sorts commits by subject line. |
-| `NEATLOGS_API_KEY` | Traces | No | A warning on stderr. The run works. |
+| `LANGFUSE_PUBLIC_KEY` and `LANGFUSE_SECRET_KEY` | Traces in Langfuse | No | A warning on stderr. The run works. |
+| `LANGFUSE_BASE_URL` | Langfuse region or self-hosted URL | No | FirstRun uses `https://cloud.langfuse.com`. |
 | `GITHUB_TOKEN` or `GH_TOKEN` | Team map logins | No | `gh auth token` is tried. Without any, some people show up twice. |
 | `FIRSTRUN_DOCKER` | Doc-test | No | FirstRun uses `docker`, or WSL on Windows. |
 | `FIRSTRUN_ENV_FILE` | Key file path | No | FirstRun reads `./.env`. |
@@ -54,7 +55,7 @@ These paths need no key: `firstrun audit <owner/repo> --no-jev`, the hosted audi
 
 ## 3. Install FirstRun in a Virtual Environment
 
-The install takes about 3 minutes, because it pulls the Claude Agent SDK and neatlogs.
+The install takes about 3 minutes, because it pulls the Claude Agent SDK and Langfuse.
 
 ```bash
 python3 -m venv .venv

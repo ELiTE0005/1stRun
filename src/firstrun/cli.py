@@ -198,12 +198,12 @@ def run_json(run_id: str, cached: bool = False) -> dict:
 
 
 def _quiet_logs() -> None:
-    """neatlogs logs at INFO. Show that only when FIRSTRUN_DEBUG=1."""
+    """Langfuse and OpenTelemetry log at INFO. Show that only when FIRSTRUN_DEBUG=1."""
     import logging
 
     if os.environ.get("FIRSTRUN_DEBUG") == "1":
         return
-    for name in ("neatlogs", "opentelemetry"):
+    for name in ("langfuse", "opentelemetry"):
         logging.getLogger(name).setLevel(logging.WARNING)
 
 
@@ -245,7 +245,7 @@ def _echo_share(run_dir) -> None:
 
 def _run_one(url: str, tags: list[str], resume: str | None, verify: bool, recover: bool = True,
              budget=None) -> RunState:
-    import neatlogs
+    from firstrun import tracing
 
     from firstrun import executor, patch, planner, state as state_io
     from firstrun.report import reported_failed_step
@@ -266,13 +266,13 @@ def _run_one(url: str, tags: list[str], resume: str | None, verify: bool, recove
     # One trace per run: reading the docs, planning, every step and verification.
     from firstrun.tracing import session_attrs
 
-    with neatlogs.trace("firstrun.run", kind="WORKFLOW", **attrs,
+    with tracing.trace("firstrun.run", kind="WORKFLOW", **attrs,
                         **session_attrs(attrs["target"], "run", variant=attrs["variant"])) as root:
         set_io(root, input={"url": source, "run_id": run_id, "resume": bool(resume), "tags": list(tags)})
         try:
             runbook = state_io.load_runbook(resume) if resume else planner.plan(url)
         except planner.PlanError as exc:
-            neatlogs.log("run stopped before step 1: {why}", level="error", why=exc.reason)
+            tracing.log("run stopped before step 1: {why}", level="error", why=exc.reason)
             set_io(root, output={"status": "failed", "stop_reason": exc.reason})
             mark_error(root, exc.reason)
             return _early_stop(url, run_id, exc.reason)
@@ -819,7 +819,7 @@ def prereqs_cmd(run_id, no_prove, rounds, as_json) -> None:
 
 
 def _prereqs_cmd(run_id, no_prove, rounds, out: dict) -> None:
-    import neatlogs
+    from firstrun import tracing
 
     from firstrun import prereqs, state as state_io
     from firstrun.tracing import close_tracing, init_tracing
@@ -839,7 +839,7 @@ def _prereqs_cmd(run_id, no_prove, rounds, out: dict) -> None:
         runbook = state_io.load_runbook(run_id)
         from firstrun.tracing import session_attrs
 
-        with neatlogs.trace("firstrun.prereqs", kind="WORKFLOW", run_id=run_id, tags=["prereqs"],
+        with tracing.trace("firstrun.prereqs", kind="WORKFLOW", run_id=run_id, tags=["prereqs"],
                             **session_attrs(state_io.target_name(runbook.source_url), "prereqs")):
             if no_prove:
                 result = prereqs.derive(state_io.load_state(run_id), runbook)
@@ -894,11 +894,11 @@ def doctor_cmd(tool, as_json) -> None:
 
 @cli.command("econ")
 @click.option("--traces", "traces_file", type=click.Path(exists=True, dir_okay=False),
-              help="A saved `neatlogs traces list --json` payload. Default: read neatlogs now.")
-@click.option("--since", default="2026-10-10T00:00:00Z", show_default=True, help="Earliest trace to read.")
+              help="A saved payload of run records. Default: read the run folders now.")
+@click.option("--since", default="2026-10-10T00:00:00Z", show_default=True, help="Earliest run to read.")
 @click.option("--margin-floor", default=0.70, show_default=True, type=float, help="Gross margin each tier must keep.")
 def econ_cmd(traces_file, since, margin_floor) -> None:
-    """Measure cost per run from neatlogs, write drivers.csv for cfo.ai and the per-tier cost caps."""
+    """Measure cost per run from the run folders, write drivers.csv for cfo.ai and the per-tier cost caps."""
     from firstrun import econ
 
     if not 0 <= margin_floor < 1:

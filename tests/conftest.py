@@ -6,9 +6,9 @@ import pytest
 # Tests never export traces. Set FIRSTRUN_EXPORT_TESTS=1 to turn that off on purpose.
 if os.environ.get("FIRSTRUN_EXPORT_TESTS") != "1":
     os.environ["FIRSTRUN_NO_EXPORT"] = "1"
-    # An empty value blocks config.load_env from reading the real key out of .env. Without it,
-    # neatlogs.wrap boots its own exporter and sends hundreds of empty "neatlogs-app" traces.
-    os.environ["NEATLOGS_API_KEY"] = ""
+    # Empty values block config.load_env from reading the real keys out of .env.
+    os.environ["LANGFUSE_PUBLIC_KEY"] = ""
+    os.environ["LANGFUSE_SECRET_KEY"] = ""
     # An empty value also keeps config from calling the author's Firecrawl key rotator in every test.
     os.environ.setdefault("FIRECRAWL_API_KEY", "")
 
@@ -91,15 +91,12 @@ def fake_llm():
 
 
 @pytest.fixture(scope="session", autouse=True)
-def _neatlogs_never_exports():
-    """Start neatlogs once with export off, so no neatlogs.log or span in a test leaves the machine."""
+def _tracing_never_exports():
+    """Mark tracing started with export off, so no tracing.log or span in a test leaves the machine."""
     if os.environ.get("FIRSTRUN_EXPORT_TESTS") == "1":
         yield
         return
-    import neatlogs
-
     from firstrun import tracing
 
-    neatlogs.init(api_key=None, workflow_name="firstrun-tests", disable_export=True)
-    tracing._ready = True  # FirstRun's own init_tracing must not start a second, exporting setup
+    tracing._ready = True  # init_tracing must not start a Langfuse client. With no client every call is a no-op.
     yield

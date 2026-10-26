@@ -8,7 +8,6 @@ import sys
 from pathlib import Path
 
 import httpx
-import neatlogs
 import pytest
 
 from firstrun import config, report_html, sandbox, tracing
@@ -22,24 +21,33 @@ FIX_RUNS = Path(__file__).parent / "fixtures_report"
 
 def test_k3_closing_a_run_flushes_and_never_waits_for_ingestion(monkeypatch):
     calls = []
-    monkeypatch.setattr(neatlogs, "flush", lambda *a, **k: calls.append("flush"))
-    monkeypatch.setattr(neatlogs, "shutdown", lambda *a, **k: pytest.fail("shutdown blocks on ingestion"))
+
+    class FakeClient:
+        def flush(self):
+            calls.append("flush")
+
+        def shutdown(self):
+            pytest.fail("shutdown blocks on ingestion")
+
+    monkeypatch.setattr(tracing, "_client", FakeClient())
     tracing.close_tracing()
     assert calls == ["flush"]
 
 
 # --- K4 ------------------------------------------------------------------------
 
-def test_k4_missing_neatlogs_key_warns_and_the_run_still_starts(monkeypatch, capsys):
-    started = {}
-    monkeypatch.setattr(neatlogs, "init", lambda **kw: started.update(kw))
+def test_k4_missing_langfuse_key_warns_and_the_run_still_starts(monkeypatch, capsys):
     monkeypatch.setattr(tracing, "_ready", False)
+    monkeypatch.setattr(tracing, "_client", None)
     monkeypatch.setattr(tracing, "load_env", lambda: None)
-    monkeypatch.delenv("NEATLOGS_API_KEY", raising=False)
+    monkeypatch.delenv("LANGFUSE_PUBLIC_KEY", raising=False)
+    monkeypatch.delenv("LANGFUSE_SECRET_KEY", raising=False)
     monkeypatch.delenv("FIRSTRUN_NO_EXPORT", raising=False)
     tracing.init_tracing(["v1"])
-    assert "NEATLOGS_API_KEY is missing" in capsys.readouterr().err
-    assert started["disable_export"] is True               # no key: spans stay local, nothing crashes
+    assert "LANGFUSE_PUBLIC_KEY or LANGFUSE_SECRET_KEY is missing" in capsys.readouterr().err
+    assert not tracing.enabled()                           # no keys: tracing is off, nothing crashes
+    with tracing.trace("still.works", kind="TOOL") as span:
+        span.set_attribute("k", 1)
 
 
 # --- K6 ------------------------------------------------------------------------
@@ -118,7 +126,7 @@ def test_d5_live_readme_links_open_logged_out(url):
 SECRET_SHAPES = re.compile(
     r"sk-ant-[A-Za-z0-9_\-]{20,}|sk-[A-Za-z0-9]{32,}|gh[pousr]_[A-Za-z0-9]{30,}|github_pat_[A-Za-z0-9_]{30,}|"
     r"xox[abprs]-[A-Za-z0-9\-]{20,}|AKIA[0-9A-Z]{16}|AIza[0-9A-Za-z_\-]{30,}|fc-[0-9a-f]{24,}|"
-    r"-----BEGIN [A-Z ]*PRIVATE KEY-----|(?:NEATLOGS|ANTHROPIC|TYPESAFE|FIRECRAWL|APIFY|ELEVENLABS)_[A-Z_0-9]*=[A-Za-z0-9_\-]{16,}"
+    r"-----BEGIN [A-Z ]*PRIVATE KEY-----|(?:LANGFUSE|ANTHROPIC|TYPESAFE|FIRECRAWL|APIFY|ELEVENLABS)_[A-Z_0-9]*=[A-Za-z0-9_\-]{16,}"
 )
 
 

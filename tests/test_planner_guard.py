@@ -84,7 +84,7 @@ def test_skipped_steps_are_not_guarded():
 
 def test_guard_logs_and_counts_drops(monkeypatch):
     logs = []
-    monkeypatch.setattr(planner.neatlogs, "log", lambda msg, **kw: logs.append((msg, kw)))
+    monkeypatch.setattr(planner.tracing, "log", lambda msg, **kw: logs.append((msg, kw)))
     _plan([_step(1, "true"), _step(2, "command -v entire"), _step(3, "pip install chromadb")])
     assert [kw["why"] for m, kw in logs if "dropped" in m] == ["no-op command", "invented check"]
 

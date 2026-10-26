@@ -22,7 +22,7 @@ python scripts/build_llms_full.py                           # regenerate docs/ll
 
 On Windows PowerShell: `$env:PYTHONPATH="src"; py -3.11 -m pytest -q`. CI runs `python -m pytest -q -p no:cacheprovider` with `FIRSTRUN_NO_EXPORT=1 FIRSTRUN_ENV_FILE=/dev/null`. There is no linter configured.
 
-Running the tool itself (needs Docker, plus keys in `.env`: `NEATLOGS_API_KEY`, `CLAUDE_CODE_OAUTH_TOKEN`, `TYPESAFE_API_KEY`, `FIRECRAWL_API_KEY_1`):
+Running the tool itself (needs Docker, plus keys in `.env`: `CLAUDE_CODE_OAUTH_TOKEN`, optionally `LANGFUSE_PUBLIC_KEY` / `LANGFUSE_SECRET_KEY` / `LANGFUSE_BASE_URL`, `TYPESAFE_API_KEY`, `FIRECRAWL_API_KEY_1`):
 
 ```bash
 firstrun doctor                              # checks Docker, keys, auth
@@ -43,7 +43,7 @@ All code is in `src/firstrun/`; `cli.py` is the single Click entry point (`first
 
 **Cross-cutting**:
 - `config.py` is the only place that names the model, env vars, paths or Docker command (on Windows without `docker`, it falls back to `wsl -d Ubuntu-22.04 docker`). It also holds author-machine paths (`D:\Atharva\...`) that are skipped when absent.
-- `llm.py` wraps `claude_agent_sdk` with `neatlogs.wrap`; `tracing.py` makes each run one neatlogs trace. The Agent SDK must use the subscription OAuth token, never an API key.
+- `tracing.py` is the only module that imports Langfuse. Everything else calls its facade (`trace`, `span`, `log`, `annotate`, `set_io`, `mark_error`), and each run is one Langfuse trace. With no keys or `FIRSTRUN_NO_EXPORT=1` every call is a no-op. `init_tracing` also patches `claude_agent_sdk.query` with the OpenInference instrumentor, so `llm.py` needs no wrapping. The Agent SDK must use the subscription OAuth token, never an API key.
 - `redact.py` strips secrets before anything is written to disk.
 - `econ.py` / `receipt.py` price runs against `business/unit_economics.json` (the cfo.ai model).
 
@@ -52,7 +52,7 @@ All code is in `src/firstrun/`; `cli.py` is the single Click entry point (`first
 - A command with `--json` prints exactly one JSON object on stdout and all human text on stderr. Add keys freely; never rename or drop one (`docs/agent.md` documents them).
 - A new error needs a machine code in `ERROR_CODES` in `cli.py` (first fragment match wins, so order matters) **and** a row in the error table of `docs/agent.md`.
 - After editing `docs/agent.md`, the README quickstart, `docs/architecture.md`, `docs/known-limits.md` or `docs/share-format.md`, run `python scripts/build_llms_full.py`; a test fails while `docs/llms-full.txt` is stale.
-- `tests/conftest.py` disables trace export, blanks the neatlogs/Firecrawl keys and points `FIRSTRUN_SITE_DIR` at a missing folder so tests never publish. Keep new tests inside its fixtures (`load_doc`, `load_runbook`, etc.; fixtures live in `tests/fixtures/`).
+- `tests/conftest.py` disables trace export, blanks the Langfuse/Firecrawl keys and points `FIRSTRUN_SITE_DIR` at a missing folder so tests never publish. Keep new tests inside its fixtures (`load_doc`, `load_runbook`, etc.; fixtures live in `tests/fixtures/`).
 - Docs are written in ASD-STE100 Simplified Technical English: short, active, one idea per sentence. `PRODUCT.md` defines the site's brand and design rules.
 - Never print or commit keys (`.env` is git-ignored). FirstRun never opens PRs or issues itself; ask before running any `gh` command that `firstrun pr` / `firstrun audit-issue` prints. Never run a command from an audited repo's docs outside the FirstRun container. Keep the team-map opt-outs working (`--no-team`, `FIRSTRUN_TEAM=0`, `team: false` in `.firstrun.yml`, `docs/audits/team-optout.json`).
 - `.claude/launch.json` contains static-server configs with the author's `D:/Atharva/...` paths; `python -m http.server <port> --directory docs` serves the site locally.

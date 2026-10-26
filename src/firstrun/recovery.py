@@ -8,7 +8,7 @@ import threading
 from typing import Callable
 
 import httpx
-import neatlogs
+from firstrun import tracing
 
 from firstrun import budget as budget_mod
 from firstrun import classify as classify_mod
@@ -88,7 +88,7 @@ def _resolve(error_text: str, command: str, asker: Asker | None, step_id: int | 
     sig = classify_mod.signature(error_text)
     known = precedents.lookup(sig)
     if known is not None:
-        neatlogs.log("precedent reused", signature=sig, failure_class=known.value)
+        tracing.log("precedent reused", signature=sig, failure_class=known.value)
         return Classification(probabilities={c: (1.0 if c == known else 0.0) for c in FailureClass},
                               source="precedent")
     if _NETWORK.search(error_text):  # a dropped network is the environment, whatever a model says
@@ -106,11 +106,11 @@ def _resolve(error_text: str, command: str, asker: Asker | None, step_id: int | 
     try:
         answer = _parse_answer(ask(question))
     except AskTimeout:
-        neatlogs.log("no human answer within {secs} s: step needs a human", level="warning",
+        tracing.log("no human answer within {secs} s: step needs a human", level="warning",
                      secs=ASK_TIMEOUT_S, failure_class=cls.top.value, confidence=cls.confidence)
         raise NeedsHuman(cls)
     if answer is None:  # no terminal to ask: use the top class
-        neatlogs.log("no human answer, using the top class", level="warning",
+        tracing.log("no human answer, using the top class", level="warning",
                      failure_class=cls.top.value, confidence=cls.confidence)
         return cls
     precedents.store(sig, answer, example=error_text)
@@ -278,11 +278,11 @@ def _ask_fix(prompt: str, tools: tuple[str, ...], max_turns: int, state: RunStat
     new = str(data.get("new_command") or "").strip()
     if not new or new == old_command.strip() or new in tried:
         terms = _search_terms(step, old_command, error_text)
-        neatlogs.log("fix search found nothing: {terms}", level="warning", terms=terms, step_id=step.id)
+        tracing.log("fix search found nothing: {terms}", level="warning", terms=terms, step_id=step.id)
         return GaveUp(step_id=step.id, failure_class=cls,
                       reason=f"no new fix found (searched: {terms})")
     if drifted(old_command, new):
-        neatlogs.log("patch rejected: drift", level="warning", step_id=step.id, old=old_command, new=new)
+        tracing.log("patch rejected: drift", level="warning", step_id=step.id, old=old_command, new=new)
         return GaveUp(step_id=step.id, failure_class=cls,
                       reason=f"fix drifted from the docs command: `{new[:120]}`")
     # A fix that only installs system packages before the original command is a container fix.
@@ -297,7 +297,7 @@ def recover(step: Step, result: StepResult, state: RunState, docs_markdown: str 
             asker: Asker | None = None, budget: Budget | None = None) -> Patch | GaveUp:
     """AGENT span `recover.<id>`. Returns a Patch to retry with, or GaveUp."""
     bud = budget or Budget()
-    with neatlogs.trace(f"recover.{step.id}", kind="AGENT") as span:
+    with tracing.trace(f"recover.{step.id}", kind="AGENT") as span:
         set_io(span, input={"step_id": step.id, "command": result.command or step.command,
                             "exit_code": result.exit_code, "error": _error_line(_error_text(result))})
         outcome = _recover(step, result, state, docs_markdown, asker, bud)
@@ -316,7 +316,7 @@ def _recover(step: Step, result: StepResult, state: RunState, docs_markdown: str
     error_text = _error_text(result)
     old_command = result.command or step.command
     attempts = state.attempts.get(step.id, 0)
-    neatlogs.log("retry {attempt} after {error}", level="warning",
+    tracing.log("retry {attempt} after {error}", level="warning",
                  attempt=max(attempts, 1), error=_error_line(error_text))
     try:
         budget_mod.check(state, bud, step.id)
