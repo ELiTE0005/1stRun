@@ -78,7 +78,7 @@ def test_fixture_flag_and_trace_id(tmp_path):
 
 def test_share_link_base(monkeypatch):
     monkeypatch.delenv("ONESTRUN_SHARE_BASE", raising=False)
-    assert share.share_link("abc") == "https://1run.netlify.app/doc-test/#r=abc"
+    assert share.share_link("abc") == "https://1strun.rajbir.tech/doc-test/#r=abc"
     monkeypatch.setenv("ONESTRUN_SHARE_BASE", "http://localhost/run.html")
     assert share.share_link("abc") == "http://localhost/run.html#r=abc"
 
@@ -89,7 +89,7 @@ def test_cli_share_by_id_and_default(tmp_runs_dir):
         result = CliRunner().invoke(cli, args)
         assert result.exit_code == 0, result.output
         lines = result.output.splitlines()
-        assert lines[0].startswith("https://1run.netlify.app/doc-test/#r=")
+        assert lines[0].startswith("https://1strun.rajbir.tech/doc-test/#r=")
         code = lines[1].removeprefix("code: ")
         assert share.decode(code)["run_id"] == "run-verified"
         assert lines[2] == f"code length: {len(code)}"
@@ -103,7 +103,7 @@ def test_cli_share_unknown_id(tmp_runs_dir):
 def test_run_end_share_line(tmp_runs_dir, capsys):
     _copy(tmp_runs_dir, "run-verified")
     cli_mod._echo_share(tmp_runs_dir / "run-verified")
-    assert capsys.readouterr().out.startswith("share: https://1run.netlify.app/doc-test/#r=")
+    assert capsys.readouterr().out.startswith("share: https://1strun.rajbir.tech/doc-test/#r=")
 
 
 def test_run_end_share_failure_is_silent(tmp_path, capsys):

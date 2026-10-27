@@ -13,7 +13,7 @@ from onestrun import state as state_io
 from onestrun.models import RunState, Runbook
 from onestrun.redact import redact
 
-DEFAULT_BASE = "https://1run.netlify.app/doc-test/"
+DEFAULT_BASE = "https://1strun.rajbir.tech/doc-test/"
 ERROR_TAIL_MAX = 600
 DIFF_MAX = 4000
 PR_BODY_MAX = 3000

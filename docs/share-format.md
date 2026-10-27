@@ -7,7 +7,7 @@
 1. Build the JSON object below with `separators=(",", ":")`.
 2. Compress it with gzip (Python `gzip.compress`, level 9).
 3. Encode it as base64url without `=` padding.
-4. The link is `https://1run.netlify.app/run.html#r=<code>`.
+4. The link is `https://1strun.rajbir.tech/run.html#r=<code>`.
 
 The browser decodes with `atob` after mapping `-`→`+` and `_`→`/`, then `DecompressionStream("gzip")`.
 

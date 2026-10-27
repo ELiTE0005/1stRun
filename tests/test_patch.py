@@ -92,8 +92,8 @@ def test_pr_body_proof_links_are_public_only():
         {"kind": "trace", "label": "Langfuse trace", "url": "", "public": False},
         {"kind": "pr", "label": "this PR", "url": "https://github.com/a/b/pull/1", "public": True},
     ]
-    body = make_pr_body(make_state(), [DOCS_PATCH], replay_url="https://1run.netlify.app/run.html#r=abc", evidence=ev)
-    assert "[Replay this run step by step](https://1run.netlify.app/run.html#r=abc)" in body
+    body = make_pr_body(make_state(), [DOCS_PATCH], replay_url="https://1strun.rajbir.tech/run.html#r=abc", evidence=ev)
+    assert "[Replay this run step by step](https://1strun.rajbir.tech/run.html#r=abc)" in body
     assert "[Maintainer comment](https://github.com/a/b/issues/1#c1)" in body
     assert "Private note" not in body and "Langfuse trace" not in body and "pull/1" not in body
     assert body.index("Replay this run") > body.index("## Proof")
