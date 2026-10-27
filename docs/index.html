@@ -651,24 +651,52 @@ html.js .shot[href]:hover:after{opacity:1}
 .uses li{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:20px 22px;text-align:left}
 .uses img{display:block;width:auto;height:44px;max-width:72px;object-fit:contain;object-position:left;margin-bottom:12px}
 .uses img[src*="logo-alan"]{border-radius:10px}
-.uses.alan-flow{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:clamp(24px,3vw,36px);margin-bottom:clamp(20px,2.5vw,28px)}
-/* Alan AI flow: cards rise in one by one, then a beam and a badge ripple travel 1 > 2 > 3 > 4 on a slow loop */
-.alan-flow li{position:relative;overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease)}
-.alan-flow li:nth-child(1){--i:0}.alan-flow li:nth-child(2){--i:1}.alan-flow li:nth-child(3){--i:2}.alan-flow li:nth-child(4){--i:3}
-.alan-flow li::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--test),var(--audit));transform:scaleX(0);transform-origin:left;opacity:0}
-.alan-flow b{display:flex;align-items:center;gap:10px}
-.alan-flow b i{position:relative;flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 14px/1 Geist,sans-serif;font-style:normal;letter-spacing:0;color:#fff;background:linear-gradient(135deg,var(--test),var(--audit))}
-.alan-flow b i::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--test);opacity:0}
-.alan-flow li:hover{transform:translateY(-5px);border-color:oklch(80% .08 265);box-shadow:0 14px 34px -14px oklch(55% .19 262/.38)}
-.alan-flow li:hover::before{animation:none;transform:scaleX(1);opacity:1}
-html.js .alan-flow:not(.in) li{opacity:0;transform:translateY(20px) scale(.96)}
-html.js .alan-flow.in li{animation:af-in .8s var(--ease) calc(.14s*var(--i)) backwards}
-html.js .alan-flow.in li::before{animation:af-beam 7s var(--ease) calc(1.4s + 1.5s*var(--i)) infinite}
-html.js .alan-flow.in b i::after{animation:af-ping 7s ease-out calc(1.4s + 1.5s*var(--i)) infinite}
-@keyframes af-in{from{opacity:0;transform:translateY(20px) scale(.96)}}
-@keyframes af-beam{0%{transform:scaleX(0);opacity:1}14%,30%{transform:scaleX(1);opacity:1}42%{transform:scaleX(1);opacity:0}100%{transform:scaleX(0);opacity:0}}
-@keyframes af-ping{0%{transform:scale(1);opacity:.75}28%,100%{transform:scale(2);opacity:0}}
-@media(prefers-reduced-motion:reduce){html.js .alan-flow li{animation:none!important;opacity:1!important;transform:none!important}.alan-flow li::before,.alan-flow b i::after{animation:none!important}.alan-flow li:hover{transform:none}}
+/* Alan AI agent flow: a dark runtime stage. Steps light up 1 > 2 > 3 > 4 while data packets travel the connectors */
+.af-stage{position:relative;isolation:isolate;overflow:hidden;max-width:1060px;margin:clamp(28px,3.5vw,44px) auto clamp(26px,3vw,36px);padding:clamp(26px,3.6vw,44px);border-radius:28px;color:oklch(97% .01 265);background:oklch(18% .035 272);border:1px solid oklch(34% .06 275);box-shadow:0 34px 80px -36px oklch(30% .14 272/.75),inset 0 1px 0 oklch(100% 0 0/.09)}
+.af-stage::before{content:"";position:absolute;inset:-30%;z-index:-2;background:radial-gradient(40% 36% at 16% 20%,oklch(55% .2 256/.6),transparent 70%),radial-gradient(38% 34% at 84% 26%,oklch(52% .22 295/.55),transparent 70%),radial-gradient(34% 30% at 52% 94%,oklch(72% .14 200/.3),transparent 70%);filter:blur(26px);animation:af-drift 16s ease-in-out infinite alternate}
+.af-stage::after{content:"";position:absolute;inset:0;z-index:-1;background-image:radial-gradient(oklch(100% 0 0/.13) 1px,transparent 1.3px);background-size:22px 22px;-webkit-mask-image:radial-gradient(75% 80% at 50% 38%,#000,transparent);mask-image:radial-gradient(75% 80% at 50% 38%,#000,transparent)}
+.af-bar{display:flex;align-items:center;justify-content:center;gap:12px;flex-wrap:wrap;margin:0 0 clamp(24px,3vw,34px);font:500 13px/1.2 var(--mono);letter-spacing:.04em;text-transform:uppercase;color:oklch(86% .03 265)}
+.af-pill{display:inline-flex;align-items:center;gap:9px;padding:7px 14px 7px 8px;border-radius:99px;background:oklch(100% 0 0/.08);border:1px solid oklch(100% 0 0/.16);color:#fff;letter-spacing:.02em;text-transform:none;font-weight:600;font-size:14px}
+.af-pill img{width:24px;height:24px;border-radius:7px;object-fit:cover}
+.af-live{width:8px;height:8px;border-radius:50%;background:oklch(80% .19 155);box-shadow:0 0 0 0 oklch(80% .19 155/.7)}
+.af-flow{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,1fr);gap:30px}
+.af-node{position:relative;display:flex;flex-direction:column;align-items:flex-start;padding:22px 20px 20px;border-radius:20px;text-align:left;background:oklch(100% 0 0/.06);border:1px solid oklch(100% 0 0/.13);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);transition:transform .45s var(--ease),outline-color .45s var(--ease)}
+.af-node:nth-child(1){--i:0}.af-node:nth-child(2){--i:1}.af-node:nth-child(3){--i:2}.af-node:nth-child(4){--i:3}
+.af-node:hover{transform:translateY(-6px);outline:1px solid oklch(80% .13 262/.85);outline-offset:-1px}
+.af-n{position:absolute;top:16px;right:18px;font:600 13px/1 var(--mono);letter-spacing:.08em;color:oklch(100% 0 0/.3)}
+.af-ico{display:grid;place-items:center;width:46px;height:46px;margin-bottom:16px;border-radius:14px;color:#fff;background:linear-gradient(135deg,var(--test),var(--audit));box-shadow:0 8px 22px -8px oklch(60% .2 270/.9),inset 0 1px 0 oklch(100% 0 0/.35)}
+.af-ico svg,.af-proof svg{fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.af-ico svg{width:23px;height:23px}
+.af-node h3{margin:0;font-size:22px;line-height:1.15;letter-spacing:-.03em;font-weight:650;color:#fff}
+.af-node p{margin:8px 0 16px;font-size:15.5px;line-height:1.5;color:oklch(86% .02 265)}
+.af-tag{display:inline-block;margin-top:auto;padding:4px 10px;border-radius:99px;font:500 12px/1.2 var(--mono);letter-spacing:.02em;color:oklch(88% .07 250);background:oklch(60% .15 262/.18);border:1px solid oklch(70% .12 262/.28)}
+.af-node:not(:last-child)::after{content:"";position:absolute;left:100%;top:45px;width:30px;height:2px;background:repeating-linear-gradient(90deg,oklch(100% 0 0/.4) 0 5px,transparent 5px 10px)}
+.af-node:not(:last-child)::before{content:"";position:absolute;left:100%;top:41px;width:10px;height:10px;margin-left:-5px;border-radius:50%;background:oklch(88% .12 225);box-shadow:0 0 14px 4px oklch(75% .17 250/.85);opacity:0;z-index:1}
+.af-proof{position:relative;overflow:hidden;display:flex;align-items:center;gap:14px;margin-top:30px;padding:16px 20px;border-radius:18px;border:1px dashed oklch(78% .16 155/.55);background:oklch(70% .15 155/.1);color:oklch(92% .05 160)}
+.af-proof svg{flex:none;width:28px;height:28px;color:oklch(82% .18 155)}
+.af-proof p{margin:0;font-size:16px;line-height:1.5}
+.af-proof b{color:#fff;font-weight:650}
+.af-proof::after{content:"";position:absolute;inset:0;background:linear-gradient(100deg,transparent 30%,oklch(90% .12 155/.2) 50%,transparent 70%);transform:translateX(-100%)}
+html.js .af-stage.in .af-node{animation:af-in .9s var(--ease) calc(.15s*var(--i)) backwards,af-active 8s ease-in-out calc(1.6s + 1.6s*var(--i)) infinite}
+html.js .af-stage.in .af-ico{animation:af-ico 8s ease-in-out calc(1.6s + 1.6s*var(--i)) infinite}
+html.js .af-stage.in .af-node:not(:last-child)::after{animation:af-dash 1s linear infinite}
+html.js .af-stage.in .af-node:not(:last-child)::before{animation:af-dot 8s linear calc(1.6s + 1.6s*var(--i)) infinite}
+html.js .af-stage.in .af-live{animation:af-live 2s ease-out infinite}
+html.js .af-stage.in .af-proof{animation:af-in .9s var(--ease) .75s backwards}
+html.js .af-stage.in .af-proof::after{animation:af-scan 6s ease-in-out 2.4s infinite}
+@keyframes af-drift{to{transform:translate3d(4%,3%,0) rotate(6deg) scale(1.06)}}
+@keyframes af-in{from{opacity:0;transform:translateY(26px) scale(.96)}}
+@keyframes af-active{0%,24%,100%{box-shadow:0 0 0 0 transparent;background:oklch(100% 0 0/.06);border-color:oklch(100% 0 0/.13)}4%,16%{box-shadow:0 0 0 1px oklch(72% .15 262/.65),0 20px 48px -14px oklch(60% .2 270/.8);background:oklch(100% 0 0/.12);border-color:oklch(80% .13 262/.85)}}
+@keyframes af-ico{0%,24%,100%{transform:none}8%,14%{transform:scale(1.12) rotate(-4deg)}}
+@keyframes af-dash{to{background-position:10px 0}}
+@keyframes af-dot{0%,12%{opacity:0;transform:translateX(0)}14%{opacity:1}26%{opacity:1;transform:translateX(30px)}28%,100%{opacity:0;transform:translateX(30px)}}
+@keyframes af-live{to{box-shadow:0 0 0 9px oklch(80% .19 155/0)}}
+@keyframes af-scan{0%{transform:translateX(-100%)}45%,100%{transform:translateX(100%)}}
+@media(max-width:980px){.af-flow{grid-template-columns:1fr 1fr;gap:18px}.af-node::before,.af-node::after{display:none!important}}
+@media(max-width:560px){.af-flow{grid-template-columns:1fr;gap:36px}.af-node:not(:last-child)::after{display:block!important;left:45px;top:100%;width:2px;height:36px;background:repeating-linear-gradient(180deg,oklch(100% 0 0/.4) 0 5px,transparent 5px 10px)}.af-node:not(:last-child)::before{display:block!important;left:41px;top:100%;margin-left:0}html.js .af-stage.in .af-node:not(:last-child)::after{animation:af-dash-y 1s linear infinite}html.js .af-stage.in .af-node:not(:last-child)::before{animation-name:af-dot-y}}
+@keyframes af-dash-y{to{background-position:0 10px}}
+@keyframes af-dot-y{0%,12%{opacity:0;transform:translateY(0)}14%{opacity:1}26%{opacity:1;transform:translateY(36px)}28%,100%{opacity:0;transform:translateY(36px)}}
+@media(prefers-reduced-motion:reduce){.af-stage::before,.af-stage *,.af-stage *::before,.af-stage *::after{animation:none!important}.af-node:hover{transform:none}}
 .uses b{display:block;font-size:20px;letter-spacing:-.025em;line-height:1.2}
 .uses span{display:block;margin-top:8px;font-size:16px;line-height:1.45;color:var(--mut)}
 .allp{text-align:center;margin-top:clamp(36px,4.5vw,52px);font-size:17px;font-weight:600}
@@ -1102,13 +1130,16 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <div class="wrap wide">
 <h2 id="tools-h">Built With Alan AI, Claude, Docker and Langfuse</h2>
 <p class="edge"><a href="https://tryalan.ai">Alan AI</a> runs the agents that plan, run, repair and judge. Claude is the model behind them.</p>
-<ul class="uses alan-flow rv" aria-label="How Alan AI runs the agents">
-<li><b><i aria-hidden="true">1</i>Plan</b><span>An Alan AI agent reads the docs page and turns it into a list of shell steps.</span></li>
-<li><b><i aria-hidden="true">2</i>Run</b><span>It works through the steps one by one in a clean Docker container.</span></li>
-<li><b><i aria-hidden="true">3</i>Repair</b><span>When a step fails, it sorts the failure and repairs the docs step.</span></li>
-<li><b><i aria-hidden="true">4</i>Judge</b><span>In Doc-audit, it reads each stale page next to the code that changed and keeps only the real gaps.</span></li>
-</ul>
-<p class="edge">The proof is not an agent. A second clean container replays the repaired steps with model calls blocked, so the agent cannot talk its way to a pass.</p>
+<div class="af-stage rv">
+<div class="af-bar" aria-hidden="true"><span class="af-pill"><img src="assets/logo-alan.webp" alt="" width="24" height="24">Alan AI agents</span><span class="af-live"></span><span>running on</span><span class="af-pill"><img src="assets/logo-claude.webp" alt="" width="24" height="24">Claude</span></div>
+<ol class="af-flow" aria-label="How Alan AI runs the agents">
+<li class="af-node"><span class="af-n" aria-hidden="true">01</span><span class="af-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 3h7l4 4v14H7z"/><path d="M14 3v4h4M9.5 12h5M9.5 15.5h5"/></svg></span><h3>Plan</h3><p>An Alan AI agent reads the docs page and turns it into a list of shell steps.</p><span class="af-tag">docs &rarr; steps</span></li>
+<li class="af-node"><span class="af-n" aria-hidden="true">02</span><span class="af-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="4.5" width="18" height="15" rx="3"/><path d="M7.5 10l3 2.5-3 2.5M13 15h4"/></svg></span><h3>Run</h3><p>It works through the steps one by one in a clean Docker container.</p><span class="af-tag">clean container</span></li>
+<li class="af-node"><span class="af-n" aria-hidden="true">03</span><span class="af-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.7 6.3a4 4 0 0 0-5.2 5.2L4 17l3 3 5.5-5.5a4 4 0 0 0 5.2-5.2l-2.5 2.5-2.2-.5-.5-2.2z"/></svg></span><h3>Repair</h3><p>When a step fails, it sorts the failure and repairs the docs step.</p><span class="af-tag">first broken step</span></li>
+<li class="af-node"><span class="af-n" aria-hidden="true">04</span><span class="af-ico"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6"/><path d="M15 15l5 5M8 10.5l1.8 1.8L13 9"/></svg></span><h3>Judge</h3><p>In Doc-audit, it reads each stale page next to the code that changed and keeps only the real gaps.</p><span class="af-tag">Doc-audit</span></li>
+</ol>
+<div class="af-proof"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l7 3v5.5c0 4.2-2.8 7.6-7 9.5-4.2-1.9-7-5.3-7-9.5V6z"/><path d="M8.8 12l2.3 2.3 4.7-4.6"/></svg><p><b>The proof is not an agent.</b> A second clean container replays the repaired steps with model calls blocked, so the agent cannot talk its way to a pass.</p></div>
+</div>
 <ul class="uses rv" aria-label="What 1stRun uses">
 <li><img src="assets/logo-alan.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://tryalan.ai">Alan AI</a></b><span>Runs the agents. It plans the quickstart, works through each step, repairs the ones that break and judges stale pages in Doc-audit.</span></li>
 <li><img src="assets/logo-claude.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://claude.com/claude-code">Claude</a></b><span>The model behind the agents. It plans the runbook, repairs the first broken step and sorts each failure. It runs through the Claude Agent SDK.</span></li>
