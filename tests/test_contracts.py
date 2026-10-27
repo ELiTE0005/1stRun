@@ -1,4 +1,4 @@
-from firstrun.models import Classification, FailureClass, Runbook, RunState, Step
+from onestrun.models import Classification, FailureClass, Runbook, RunState, Step
 
 
 def test_runbook_round_trip():
@@ -13,7 +13,7 @@ def test_classification_top():
 
 
 def test_stubs_import():
-    import firstrun.budget, firstrun.classify, firstrun.cli, firstrun.executor, firstrun.patch  # noqa: F401
-    import firstrun.planner, firstrun.precedents, firstrun.recovery, firstrun.report  # noqa: F401
-    import firstrun.sandbox, firstrun.state, firstrun.verify  # noqa: F401
+    import onestrun.budget, onestrun.classify, onestrun.cli, onestrun.executor, onestrun.patch  # noqa: F401
+    import onestrun.planner, onestrun.precedents, onestrun.recovery, onestrun.report  # noqa: F401
+    import onestrun.sandbox, onestrun.state, onestrun.verify  # noqa: F401
     assert RunState(run_id="r", source_url="u").status.value == "running"

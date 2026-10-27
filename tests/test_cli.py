@@ -4,9 +4,9 @@ from __future__ import annotations
 
 from click.testing import CliRunner
 
-from firstrun import cli as cli_mod
-from firstrun.cli import cli, friendly
-from firstrun.models import RunState, RunStatus
+from onestrun import cli as cli_mod
+from onestrun.cli import cli, friendly
+from onestrun.models import RunState, RunStatus
 
 
 def _stub_run(monkeypatch):
@@ -48,7 +48,7 @@ def test_missing_token_is_one_sentence_exit_2(monkeypatch, tmp_runs_dir):
 
 
 def test_docker_exception_maps_to_exit_2(monkeypatch, tmp_runs_dir):
-    from firstrun.sandbox import DockerUnavailable
+    from onestrun.sandbox import DockerUnavailable
 
     def boom(*a, **k):
         raise DockerUnavailable("docker unavailable: nope")

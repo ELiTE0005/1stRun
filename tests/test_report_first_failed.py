@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-from firstrun import report
-from firstrun.models import GaveUp, RunState, RunStatus, Runbook, Step, StepResult, StepStatus
+from onestrun import report
+from onestrun.models import GaveUp, RunState, RunStatus, Runbook, Step, StepResult, StepStatus
 
 
 def _write(tmp_path, monkeypatch, state):

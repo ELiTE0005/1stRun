@@ -1,17 +1,15 @@
-"""Edge cases K3, K4, K6 (keys and network) and D1-D6 (demo day). Rows that only a human can do are skipped with a reason."""
+"""Edge cases K3, K4, K6 (keys and network), D2 (the report page) and D6 (no secret in git)."""
 
 from __future__ import annotations
 
 import re
 import subprocess
-import sys
 from pathlib import Path
 
-import httpx
 import pytest
 
-from firstrun import config, report_html, sandbox, tracing
-from firstrun.sandbox import Container
+from onestrun import config, report_html, sandbox, tracing
+from onestrun.sandbox import Container
 
 ROOT = Path(__file__).resolve().parent.parent
 FIX_RUNS = Path(__file__).parent / "fixtures_report"
@@ -42,7 +40,7 @@ def test_k4_missing_langfuse_key_warns_and_the_run_still_starts(monkeypatch, cap
     monkeypatch.setattr(tracing, "load_env", lambda: None)
     monkeypatch.delenv("LANGFUSE_PUBLIC_KEY", raising=False)
     monkeypatch.delenv("LANGFUSE_SECRET_KEY", raising=False)
-    monkeypatch.delenv("FIRSTRUN_NO_EXPORT", raising=False)
+    monkeypatch.delenv("ONESTRUN_NO_EXPORT", raising=False)
     tracing.init_tracing(["v1"])
     assert "LANGFUSE_PUBLIC_KEY or LANGFUSE_SECRET_KEY is missing" in capsys.readouterr().err
     assert not tracing.enabled()                           # no keys: tracing is off, nothing crashes
@@ -61,7 +59,7 @@ def test_k6_an_image_that_is_already_pulled_is_never_pulled_again(monkeypatch):
 
     monkeypatch.setattr(Container, "_docker", fake_docker)
     monkeypatch.setattr(sandbox, "remove_stale", lambda: [])
-    with Container("python:3.11-slim", name="firstrun-t7-k6"):
+    with Container("python:3.11-slim", name="1stRun-t7-k6"):
         pass
     assert "pull" not in seen and seen[0] == "image"
 
@@ -73,15 +71,6 @@ def test_k6_live_demo_images_are_already_pulled(image):
     assert out.returncode == 0, f"{image} is not pulled: pull it before the demo"
 
 
-# --- D1 ------------------------------------------------------------------------
-
-def test_d1_known_good_run_folder_is_kept_in_evidence():
-    runs = [p for p in (ROOT / "evidence").glob("*") if (p / "report.md").exists()] if (ROOT / "evidence").exists() else []
-    if not runs:
-        pytest.xfail("no evidence/<run_id>/report.md yet: the lead saves the best of 3 runs there")
-    assert any((p / "state.json").exists() for p in runs)
-
-
 # --- D2 ------------------------------------------------------------------------
 
 def test_d2_report_page_reads_runs_at_build_time_and_prints_the_build_time_at_the_top(tmp_path):
@@ -91,34 +80,6 @@ def test_d2_report_page_reads_runs_at_build_time_and_prints_the_build_time_at_th
     assert stamp, "the page has no build time"
     assert page.index(stamp.group(0)) < page.index("<main>")          # above the content
     assert "<b>3</b> quickstarts ran" in page                         # data comes from runs/, not from the template
-
-
-# --- D3, D4 --------------------------------------------------------------------
-
-@pytest.mark.skip(reason="rehearsal by hand: the X Submit button appears at 7:00 and only a human can see it")
-def test_d3_submit_button_fallback():
-    ...
-
-
-@pytest.mark.skip(reason="rehearsal by hand: video length is checked in the editor, cut Entire and cfo.ai first")
-def test_d4_video_is_under_three_minutes():
-    ...
-
-
-# --- D5 ------------------------------------------------------------------------
-
-def _readme_links() -> list[str]:
-    text = (ROOT / "README.md").read_text(encoding="utf-8")
-    urls = set(re.findall(r"https?://[^\s)>\]\"']+", text))
-    return sorted(u.rstrip(".,") for u in urls if "example.com" not in u and "localhost" not in u)
-
-
-@pytest.mark.live
-@pytest.mark.parametrize("url", _readme_links() or ["https://github.com"])
-def test_d5_live_readme_links_open_logged_out(url):
-    resp = httpx.get(url, follow_redirects=True, timeout=30, headers={"User-Agent": "firstrun-edge-test"})
-    assert resp.status_code < 400, f"{url} answers {resp.status_code} to a logged-out visitor"
-    assert "login" not in str(resp.url).lower() and "signin" not in str(resp.url).lower()
 
 
 # --- D6 ------------------------------------------------------------------------

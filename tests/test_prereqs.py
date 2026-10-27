@@ -6,8 +6,8 @@ import json
 
 import pytest
 
-from firstrun import config, prereqs
-from firstrun.models import FailureClass, GaveUp, Patch, Runbook, RunState, RunStatus, Step, StepResult
+from onestrun import config, prereqs
+from onestrun.models import FailureClass, GaveUp, Patch, Runbook, RunState, RunStatus, Step, StepResult
 
 
 def _res(sid, cmd, code=0, err="", out=""):
@@ -162,7 +162,7 @@ def _runner_needing(tool_by_step):
 @pytest.fixture
 def run_folder(tmp_path, monkeypatch):
     monkeypatch.setattr(config, "RUNS_DIR", tmp_path)
-    from firstrun import state as state_io
+    from onestrun import state as state_io
 
     def make(rb, st):
         (tmp_path / "r1").mkdir()
@@ -187,7 +187,7 @@ def test_prove_passes_and_writes_files(run_folder):
     out = prereqs.prove("r1", container_factory=_factory(log), run_step=_runner_needing({1: "curl"}))
     assert out["proof"]["proven"] and out["proof"]["rounds"] == 1
     assert out["proof"]["steps_passed"] == out["proof"]["steps_total"] == 2
-    assert log[0][0] == "start" and log[0][2].startswith("firstrun-prereq-")
+    assert log[0][0] == "start" and log[0][2].startswith("1stRun-prereq-")
     assert any("apt-get update" in e[1] and "curl" in e[1] for e in log if e[0] == "exec")
     saved = json.loads((folder / "prereqs.json").read_text(encoding="utf-8"))
     assert saved["proof"]["proven"] is True and saved["system_packages"] == ["curl"]
@@ -260,8 +260,8 @@ def test_prove_runs_original_commands_with_model_calls_blocked(run_folder):
     prereqs.prove("r1", container_factory=_factory([]), run_step=run)
     assert ran == ["curl x | sh"]  # the docs command as written, not the patch
     src = open(prereqs.__file__, encoding="utf-8").read()
-    for banned in ("from firstrun import planner", "from firstrun import recovery", "from firstrun import llm",
-                   "firstrun.planner", "firstrun.recovery", "firstrun.llm"):
+    for banned in ("from onestrun import planner", "from onestrun import recovery", "from onestrun import llm",
+                   "onestrun.planner", "onestrun.recovery", "onestrun.llm"):
         assert f"import {banned}" not in src and f"from {banned}" not in src
 
 

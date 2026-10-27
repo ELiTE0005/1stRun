@@ -6,11 +6,11 @@ brand
 
 ## Users
 
-Founders, developers and docs leads who have never heard of FirstRun. They land on the homepage cold, often from a link in a post. They read for about 10 seconds before they decide whether to stay. They are technical, but they are not here to read logs, traces or a financial model.
+Founders, developers and docs leads who have never heard of 1stRun. They land on the homepage cold, often from a link in a post. They read for about 10 seconds before they decide whether to stay. They are technical, but they are not here to read logs, traces or a financial model.
 
 ## Product Purpose
 
-FirstRun checks documentation by running it. Two tools:
+1stRun checks documentation by running it. Two tools:
 
 - **Doc-test** runs a quickstart in a clean container, finds the first step that breaks, fixes the docs and proves the fix in a second clean run. This is the main action. A visitor should paste a docs URL and run it.
 - **Doc-audit** reads a repo's history and lists which docs pages went stale and which shipped features have no docs.

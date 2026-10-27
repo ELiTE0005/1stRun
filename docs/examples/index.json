@@ -7,7 +7,7 @@
    "url": "https://help.altimate.ai/code/getting-started/quickstart/",
    "title": "Altimate Code quickstart",
    "name": "altimate-code",
-   "summary": "The install step passes in a clean container, and a probe shows the CLI starts and has the analyst agent and the --agent flag. The other 5 steps need a browser sign-in, the TUI or a Snowflake account, so FirstRun skips them.",
+   "summary": "The install step passes in a clean container, and a probe shows the CLI starts and has the analyst agent and the --agent flag. The other 5 steps need a browser sign-in, the TUI or a Snowflake account, so 1stRun skips them.",
    "date": "2026-10-10"
   },
   {
@@ -67,7 +67,7 @@
    "status": "verified",
    "date": "2026-10-10",
    "fixes": 4,
-   "summary": "Verified 10/10 after container fixes. The docs already cover both gaps FirstRun hit: install create-dagster first, and pip 25.1 for --group.",
+   "summary": "Verified 10/10 after container fixes. The docs already cover both gaps 1stRun hit: install create-dagster first, and pip 25.1 for --group.",
    "example": "dagster"
   },
   {
@@ -77,7 +77,7 @@
    "url": "https://docs.kleros.io/developers/quickstart",
    "title": "Kleros developer quickstart",
    "name": "kleros",
-   "summary": "Step 1, npm install @kleros/kleros-v2-contracts, timed out at 300 s in a clean container. FirstRun found no fix, so nothing was patched or verified.",
+   "summary": "Step 1, npm install @kleros/kleros-v2-contracts, timed out at 300 s in a clean container. 1stRun found no fix, so nothing was patched or verified.",
    "date": "2026-10-12"
   }
  ]

@@ -6,7 +6,7 @@ import re
 import shutil
 from pathlib import Path
 
-from firstrun.report_html import write_html
+from onestrun.report_html import write_html
 
 FIX = Path(__file__).parent / "fixtures_report"
 
@@ -41,21 +41,10 @@ def test_missing_shown_when_extras_absent(tmp_path):
     assert page.count("missing</span>") >= 6
 
 
-def test_extras_fill_panels(tmp_path):
-    extras = {
-        "trace_urls": {"run-verified": "https://app.neatlogs.com/t/abc"},
-        "entire_checkpoint_url": "https://entire.io/c/123",
-        "entire_checkpoints": 14,
-        "graph_stats": 2210,
-        "cfo_plan_url": "https://cfo.ai/share/xyz",
-        "cfo_cost_per_run": 0.04,
-    }
-    page = _render(tmp_path, extras)
-    assert "https://app.neatlogs.com/t/abc" in page
-    assert "https://entire.io/c/123" in page
-    assert "https://cfo.ai/share/xyz" in page
-    assert "2210" in page and "$0.0400" in page
-    assert "1 of 3" in page
+def test_a_trace_url_becomes_a_link_on_its_run(tmp_path):
+    page = _render(tmp_path, {"trace_urls": {"run-verified": "https://us.cloud.langfuse.com/project/p/traces/abc"}})
+    assert "https://us.cloud.langfuse.com/project/p/traces/abc" in page
+    assert "Open trace" in page
 
 
 def test_build_time_and_self_contained(tmp_path):

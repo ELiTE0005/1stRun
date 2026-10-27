@@ -7,7 +7,7 @@ import uuid
 
 import pytest
 
-from firstrun import econ, tracing
+from onestrun import econ, tracing
 
 
 @pytest.fixture
@@ -40,17 +40,17 @@ def _attr(span, key):
 
 
 def test_a_trace_nests_and_maps_kinds(exporter):
-    with tracing.trace("firstrun.run", kind="WORKFLOW", run_id="r1") as root:
+    with tracing.trace("onestrun.run", kind="WORKFLOW", run_id="r1") as root:
         root.set_attribute("step.exit_code", 3)
         with tracing.trace("step.1", kind="TOOL") as step:
             tracing.set_io(step, input={"command": "pip install x"}, output={"exit_code": 3})
             tracing.mark_error(step, "step 1 failed (exit 3)")
     tracing.close_tracing()
     spans = _spans(exporter)
-    assert spans["step.1"].parent.span_id == spans["firstrun.run"].context.span_id
-    assert spans["firstrun.run"].attributes["langfuse.observation.type"] == "chain"
+    assert spans["step.1"].parent.span_id == spans["onestrun.run"].context.span_id
+    assert spans["onestrun.run"].attributes["langfuse.observation.type"] == "chain"
     assert spans["step.1"].attributes["langfuse.observation.type"] == "tool"
-    root = spans["firstrun.run"]
+    root = spans["onestrun.run"]
     assert _attr(root, "langfuse.observation.metadata.run_id") == "r1"
     assert _attr(root, "langfuse.observation.metadata.step.exit_code") == 3
     step = spans["step.1"]
@@ -61,7 +61,7 @@ def test_a_trace_nests_and_maps_kinds(exporter):
 
 def test_session_user_and_tags_reach_every_span_of_the_trace(exporter, monkeypatch):
     monkeypatch.setattr(tracing, "_tags", ["v2"])
-    with tracing.trace("firstrun.run", kind="WORKFLOW", tags=["extra"],
+    with tracing.trace("onestrun.run", kind="WORKFLOW", tags=["extra"],
                        **tracing.session_attrs("docs.example.com", "run", variant="v2")):
         with tracing.trace("budget", kind="GUARDRAIL"):
             pass

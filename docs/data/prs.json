@@ -1,94 +1,20 @@
 [
  {
-  "repo": "dbt-labs/docs.getdbt.com",
-  "number": 10149,
-  "url": "https://github.com/dbt-labs/docs.getdbt.com/pull/10149",
-  "title": "Fix the jafgen command in the DuckDB quickstart",
-  "page": "https://docs.getdbt.com/guides/duckdb",
-  "fix": "jafgen --years 6 fails with No such option. The fix is jafgen 6.",
-  "state": "open",
-  "shot": "assets/pr-10149.webp",
-  "replay": "doc-test/?s=10#ex=dbt",
-  "kind": "pr"
+  "placeholder": true,
+  "kind": "pr",
+  "title": "IRL reports updating here soon",
+  "fix": "Real docs fixes from real runs will show up here."
  },
  {
-  "repo": "dbt-labs/docs.getdbt.com",
-  "number": 10150,
-  "url": "https://github.com/dbt-labs/docs.getdbt.com/pull/10150",
-  "title": "State the Python version the DuckDB quickstart needs",
-  "page": "https://docs.getdbt.com/guides/duckdb",
-  "fix": "The repo pins networkx 3.7, which needs Python 3.12. The guide named no version.",
-  "state": "open",
-  "shot": "assets/pr-10150.webp",
-  "replay": "doc-test/?s=3#ex=dbt",
-  "kind": "pr"
+  "placeholder": true,
+  "kind": "pr",
+  "title": "IRL reports updating here soon",
+  "fix": "Each one is proven in a second clean container before it is listed."
  },
  {
-  "repo": "entireio/cli",
-  "number": 2724,
-  "url": "https://github.com/entireio/cli/pull/2724",
-  "title": "Say where install.sh puts entire on Linux",
-  "page": "https://docs.entire.io/installation",
-  "fix": "After a good install, entire version says command not found. The page now names the PATH step.",
-  "state": "open",
-  "shot": "assets/pr-2724.webp",
-  "replay": "doc-test/?s=2#ex=entire",
-  "kind": "pr"
- },
- {
-  "repo": "accuknox/help",
-  "number": 671,
-  "url": "https://github.com/accuknox/help/pull/671",
-  "title": "knoxctl install: point at the latest release and list APT prerequisites",
-  "page": "https://help.accuknox.com/knoxctl/",
-  "fix": "The page named 0.9.0 as latest while the installer fetches 0.9.58, and skipped curl, gnupg and sudo.",
-  "state": "open",
-  "shot": "assets/pr-671.webp",
-  "replay": "doc-test/?s=2#ex=accuknox",
-  "kind": "pr"
- },
- {
-  "kind": "comment",
-  "repo": "dbt-labs/docs.getdbt.com",
-  "number": 10149,
-  "url": "https://github.com/dbt-labs/docs.getdbt.com/pull/10149#issuecomment-6096827074",
-  "title": "jafgen 0.4.6 dropped --years 11 months before the guide shipped",
-  "page": "https://docs.getdbt.com/guides/duckdb",
-  "fix": "A bisect across 5 jafgen releases, each in a fresh container, found the first bad release.",
-  "state": "",
-  "shot": "assets/bisect-10149.webp"
- },
- {
+  "placeholder": true,
   "kind": "issue",
-  "repo": "chroma-core/chroma",
-  "number": 7879,
-  "url": "https://github.com/chroma-core/chroma/issues/7879",
-  "title": "[Bug]: Migration link in chromadb/config.py error message returns 404",
-  "page": "https://docs.trychroma.com/deployment/migration",
-  "fix": "The error message links to a migration page that returns 404. The issue names the new URL.",
-  "state": "open",
-  "shot": "assets/issue-7879.webp"
- },
- {
-  "kind": "issue",
-  "repo": "pola-rs/polars",
-  "number": 29855,
-  "url": "https://github.com/pola-rs/polars/issues/29855",
-  "title": "Getting started: write_csv(\"docs/assets/data/output.csv\") fails outside the Polars repo",
-  "page": "https://docs.pola.rs/user-guide/getting-started/",
-  "fix": "The guide writes to a folder that exists only inside the Polars repo.",
-  "state": "open",
-  "shot": "assets/issue-29855.webp"
- },
- {
-  "kind": "discussion",
-  "repo": "encode/httpx",
-  "number": 3801,
-  "url": "https://github.com/encode/httpx/discussions/3801",
-  "title": "Quickstart sets r.encoding after r.text, which raises ValueError",
-  "page": "https://www.python-httpx.org/quickstart/",
-  "fix": "Run in order, the quickstart sets the encoding after it reads r.text, and httpx raises ValueError.",
-  "state": "open",
-  "shot": "assets/disc-3801.webp"
+  "title": "IRL reports updating here soon",
+  "fix": "Bug reports found by 1stRun will show up here too."
  }
 ]

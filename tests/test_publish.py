@@ -6,7 +6,7 @@ import json
 import shutil
 from pathlib import Path
 
-from firstrun import publish, share
+from onestrun import publish, share
 
 FIXTURES = Path(__file__).parent / "fixtures_report"
 
@@ -37,7 +37,7 @@ def test_publish_twice_keeps_one_row(tmp_path):
 
 
 def test_publish_off_site_is_a_no_op(tmp_path, monkeypatch):
-    monkeypatch.delenv("FIRSTRUN_SITE_DIR", raising=False)
+    monkeypatch.delenv("ONESTRUN_SITE_DIR", raising=False)
     monkeypatch.chdir(tmp_path)
     assert publish.publish_run(_run(tmp_path)) is None
 

@@ -15,7 +15,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
-from firstrun import audit as audit_mod, intake  # noqa: E402
+from onestrun import audit as audit_mod, config, intake, tracing  # noqa: E402
 
 SITE_DIR = Path(__file__).resolve().parents[1] / "docs" / "audits"
 
@@ -51,6 +51,16 @@ def from_gist(gid: str) -> dict:
 
 
 def main() -> int:
+    """Start tracing, then run the intake. The workflow passes the Langfuse keys; without them this is a no-op."""
+    config.load_env()
+    tracing.init_tracing(tags=["audit-intake"])
+    try:
+        return _intake()
+    finally:
+        tracing.close_tracing()
+
+
+def _intake() -> int:
     fields = intake.parse_issue(os.environ.get("ISSUE_BODY", ""))
     labels = {x.strip() for x in os.environ.get("ISSUE_LABELS", "").split(",") if x.strip()}
     event_label = os.environ.get("EVENT_LABEL", "")
@@ -79,12 +89,12 @@ def main() -> int:
         out(publish="no", message="The issue names no repo. Write it as owner/repo, for example fastapi/typer.")
         return 0
     try:
-        result = audit_mod.audit(repo, 180, use_jev=bool(os.environ.get("TYPESAFE_API_KEY")), team=fields["team"])
+        result = audit_mod.audit(repo, 180, use_judge=True, team=fields["team"])
     except (RuntimeError, ValueError) as e:
         msg = str(e)
         if "clone failed" in msg:
-            msg = (f"FirstRun could not clone `{repo}`. If it is private, run "
-                   f"`firstrun audit {repo}` on your machine, then `firstrun audit-submit` to offer it for the log.")
+            msg = (f"1stRun could not clone `{repo}`. If it is private, run "
+                   f"`1stRun audit {repo}` on your machine, then `1stRun audit-submit` to offer it for the log.")
         out(publish="no", message=f"The audit did not finish: {msg}")
         return 0
     audit_mod.publish(result, SITE_DIR)

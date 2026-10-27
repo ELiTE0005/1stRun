@@ -4,10 +4,10 @@ from __future__ import annotations
 
 import pytest
 
-from firstrun import cli, recovery, sandbox
-from firstrun.models import GaveUp, RunState, RunStatus, StepResult, StepStatus
-from firstrun.planner import SYSTEM_PROMPT
-from firstrun.report import reported_failed_step
+from onestrun import cli, recovery, sandbox
+from onestrun.models import GaveUp, RunState, RunStatus, StepResult, StepStatus
+from onestrun.planner import SYSTEM_PROMPT
+from onestrun.report import reported_failed_step
 
 
 def test_leading_cd_is_guarded_for_execution_only():
@@ -21,9 +21,9 @@ def test_leading_cd_is_guarded_for_execution_only():
 @pytest.mark.live
 def test_guarded_cd_runs_in_a_container_when_already_inside():
     """In a real container, a step that starts with cd <dir> works from inside <dir>."""
-    from firstrun.sandbox import Container
+    from onestrun.sandbox import Container
 
-    with Container(name="firstrun-t7-cdguard-test") as c:
+    with Container(name="1stRun-t7-cdguard-test") as c:
         assert c.exec("mkdir -p proj && cd proj").exit_code == 0
         r = c.exec("cd proj && echo ok")
         assert r.exit_code == 0 and "ok" in r.stdout
@@ -46,7 +46,7 @@ def test_drift_detection():
 
 
 def test_ask_fix_rejects_drift(monkeypatch):
-    from firstrun.models import Budget, FailureClass, Step
+    from onestrun.models import Budget, FailureClass, Step
 
     monkeypatch.setattr(recovery.llm, "ask_json", lambda *a, **k: (
         {"new_command": "dagster project from-example --name x", "reason": "r", "source": "s"}, {}))
@@ -73,7 +73,7 @@ def test_exec_applies_the_cd_guard(monkeypatch):
     """The guard must run inside Container.exec, not only as a helper."""
     import subprocess
 
-    from firstrun import sandbox
+    from onestrun import sandbox
 
     seen = {}
 
@@ -86,7 +86,7 @@ def test_exec_applies_the_cd_guard(monkeypatch):
 
     monkeypatch.setattr(subprocess, "Popen", lambda *a, **k: FakeProc())
     c = sandbox.Container.__new__(sandbox.Container)
-    c.name = "firstrun-t-test"
+    c.name = "1stRun-t-test"
     c.exec("cd proj && ls", timeout_s=5)
     assert sandbox.guard_leading_cd("cd proj && ls") in seen["script"]
 
@@ -98,9 +98,9 @@ def test_prefix_defines_cd_noop_when_already_inside():
 @pytest.mark.live
 def test_mid_command_cd_works_from_inside_the_folder():
     """A patch can put cd in the middle of a chain. The cd function must cover that too."""
-    from firstrun.sandbox import Container
+    from onestrun.sandbox import Container
 
-    with Container(name="firstrun-t7-cdmid-test") as c:
+    with Container(name="1stRun-t7-cdmid-test") as c:
         c.exec("mkdir -p proj && cd proj")
         r = c.exec("echo start && cd proj && echo ok")
         assert r.exit_code == 0 and "ok" in r.stdout

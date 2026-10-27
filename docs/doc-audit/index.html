@@ -3,14 +3,14 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Doc-audit | FirstRun</title>
+<title>Doc-audit | 1stRun</title>
 <meta name="description" content="Which docs pages are stale, which shipped features have no docs, and what your docs team should ship next. Built from the git history.">
 <meta name="color-scheme" content="light">
 <link rel="icon" href="../assets/logo.svg" type="image/svg+xml">
 <link rel="stylesheet" href="../assets/site-nav.css">
 <link rel="stylesheet" href="/assets/site-footer.css">
 <link rel="stylesheet" href="/assets/type.css">
-<link rel="alternate" type="text/markdown" href="/agent.md" title="FirstRun agent quickstart">
+<link rel="alternate" type="text/markdown" href="/agent.md" title="1stRun agent quickstart">
 <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -515,7 +515,7 @@ pre.draft{white-space:pre-wrap;font:13px/1.55 var(--mono);background:var(--sunk)
 <table class="sr" id="tm-tab"></table>
 </div>
 <ul class="tm-facts" id="tm-facts"></ul>
-<p class="tm-note">Built from public commits in the last 12 months. Suggestions, not assignments: anyone can pick up any task. <a href="https://github.com/HighnessAtharva/firstrun#team-map-and-privacy" target="_blank" rel="noopener">How this works and how to opt out</a></p>
+<p class="tm-note">Built from public commits in the last 12 months. Suggestions, not assignments: anyone can pick up any task. <a href="https://github.com/ELiTE0005/1stRun#team-map-and-privacy" target="_blank" rel="noopener">How this works and how to opt out</a></p>
 </div>
 </section>
 
@@ -542,11 +542,11 @@ pre.draft{white-space:pre-wrap;font:13px/1.55 var(--mono);background:var(--sunk)
 <p class="lede" id="r-foot" style="font-size:13px;margin-top:16px"></p>
 </section>
 </main>
-<p class="page-note">Run your own: <code>firstrun audit owner/repo</code>. The data lives in <a href="https://github.com/HighnessAtharva/firstrun/tree/main/docs/audits">docs/audits</a> in the public repo.</p>
+<p class="page-note">Run your own: <code>1stRun audit owner/repo</code>. The data lives in <a href="https://github.com/ELiTE0005/1stRun/tree/main/docs/audits">docs/audits</a> in the public repo.</p>
 <footer class="sf"><div class="sf-in">
-<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">FirstRun</a>
-<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/HighnessAtharva/firstrun">GitHub</a><a href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/README.md">Evidence</a></nav></div>
-<p class="sf-cred"><a href="https://atharvashah.com">Atharva Shah</a> built FirstRun for <a href="https://neatlogs.com/hackathon">neatHack 2026</a>. <a href="https://neatlogs.com">neatlogs</a> traces each run, <a href="https://cfo.ai">cfo.ai</a> prices it, and <a href="https://entire.io">Entire</a> records the build. Follow <a href="https://x.com/cultist_dev">@cultist_dev</a> on X.</p>
+<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">1stRun</a>
+<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/ELiTE0005/1stRun">GitHub</a><a href="https://github.com/ELiTE0005/1stRun/blob/main/evidence/README.md">Evidence</a></nav></div>
+<p class="sf-cred"><a href="https://rajbir.tech">Rajbir Biswas</a> built 1stRun with <a href="https://tryalan.ai">Alan AI</a>. Follow <a href="https://x.com/rangoliagt">@rangoliagt</a> on X.</p>
 </div></footer>
 
 <div class="scrim" id="scrim"></div>
@@ -573,7 +573,7 @@ function owner(repo){return String(repo||"").split("/")[0].replace(/[^\w.-]/g,""
 function avatar(img,repo){img.src="https://github.com/"+owner(repo)+".png?size=80";img.onerror=function(){img.style.visibility="hidden"}}
 var ST=["stale","unchecked","quiet","aging","fresh"];
 var STL={stale:"stale",unchecked:"unchecked",quiet:"quiet",aging:"aging",fresh:"fresh"};
-var STT={stale:"Code on its topic moved after the last edit, and Jev expects the page is now wrong.",unchecked:"Code on its topic moved. Jev did not read this page.",quiet:"Old, but no code on its topic moved.",aging:"Edited in the last year.",fresh:"Edited in the last 90 days."};
+var STT={stale:"Code on its topic moved after the last edit, and the judge expects the page is now wrong.",unchecked:"Code on its topic moved. The judge did not read this page.",quiet:"Old, but no code on its topic moved.",aging:"Edited in the last year.",fresh:"Edited in the last 90 days."};
 var KL={document:"Document this",refresh:"Refresh this page",feature:"Feature this",content:"Create content",automate:"Ready for you",quickstart:"Prove it runs",highlights:"Ready for you"};
 /* ranked items: kind -> label and the tile color class it borrows */
 var NK={document:{l:"Document",t:"document"},refresh:{l:"Update page",t:"refresh"},release:{l:"Release notes",t:"automate"},announce:{l:"Announce",t:"feature"},quickstart:{l:"Prove it runs",t:"quickstart"}};
@@ -583,7 +583,7 @@ var HUE=[295,256,195,150,78,35,340,220,120,10,270,170];
 
 /* start view */
 function repoOf(v){v=String(v||"").trim().replace(/^(?:https?:\/\/)?(?:www\.)?github\.com\//i,"");var m=/^([\w.-]+)\/([\w.-]+)/.exec(v);return m?m[1]+"/"+m[2].replace(/\.git$/i,""):""}
-var MODE="pub",AUD=[],LOG="https://github.com/HighnessAtharva/firstrun/issues/new";
+var MODE="pub",AUD=[],LOG="https://github.com/ELiTE0005/1stRun/issues/new";
 var HINT={pub:"Public repos are audited on GitHub Actions in about 2 minutes. The board link lands on the request issue.",
   priv:"Private repos are audited on your machine with your own git login. Nothing leaves it unless you choose to submit."};
 function reqUrl(r){return LOG+"?template=audit-request.yml&title="+encodeURIComponent("Audit request: "+r)+"&repo="+encodeURIComponent(r)}
@@ -597,7 +597,7 @@ function step(n,title,sub,code,opt){var li=el("li","panel");li.appendChild(el("s
 function link(href,label,icon,pri){var a=el("a","btn"+(pri?" pri":""));a.href=href;if(/^https:/.test(href)){a.target="_blank";a.rel="noopener"}a.appendChild(ic(icon));a.appendChild(document.createTextNode(label));return a}
 function acts(){var w=el("div","dw-acts");for(var i=0;i<arguments.length;i++)w.appendChild(arguments[i]);return w}
 /* the prompt for a coding agent: agent.md first, then the task */
-function agentPrompt(r){return "Read https://firstrun.atharvashah.com/agent.md and follow it.\nAudit the GitHub repo "+r+" with Doc-audit (Recipe B). Tell me the top 3 tasks and the suggested owner of each. Ask me before you open any PR or issue."}
+function agentPrompt(r){return "Read https://1strun.rajbir.tech/agent.md and follow it.\nAudit the GitHub repo "+r+" with Doc-audit (Recipe B). Tell me the top 3 tasks and the suggested owner of each. Ask me before you open any PR or issue."}
 function agentStep(n,r){var li=step(n,"Or hand it to your coding agent","Claude Code, Cursor or Codex reads agent.md and runs the audit for you.",null,true);
   var b=el("button","btn");b.type="button";b.appendChild(ic("copy"));b.appendChild(document.createTextNode("Copy the agent prompt"));
   b.addEventListener("click",function(){copy(agentPrompt(r),"Prompt copied")});li.appendChild(acts(b));return li}
@@ -611,9 +611,9 @@ $("f").addEventListener("submit",function(e){e.preventDefault();var r=repoOf($("
     S.appendChild(step(3,"The board link lands on the issue","The audit also joins the list below."));
     S.appendChild(agentStep(4,r));
   }else{
-    S.appendChild(step(1,"Install FirstRun","Python 3.11 or newer.","pip install git+https://github.com/HighnessAtharva/firstrun"));
-    S.appendChild(step(2,"Audit it on your machine","Uses your own git login. The report stays in runs/ on your disk.","firstrun audit "+r));
-    S.appendChild(step(3,"Add it to this board","Uploads audit.json to a secret gist and opens the request. A maintainer reviews it before it goes live. Needs the GitHub CLI.","firstrun audit-submit --open",true));
+    S.appendChild(step(1,"Install 1stRun","Python 3.11 or newer.","pip install git+https://github.com/ELiTE0005/1stRun"));
+    S.appendChild(step(2,"Audit it on your machine","Uses your own git login. The report stays in runs/ on your disk.","1stRun audit "+r));
+    S.appendChild(step(3,"Add it to this board","Uploads audit.json to a secret gist and opens the request. A maintainer reviews it before it goes live. Needs the GitHub CLI.","1stRun audit-submit --open",true));
     S.appendChild(agentStep(4,r));
   }
 });
@@ -989,7 +989,7 @@ function filterNext(){
 $("nx-all").addEventListener("click",function(){SHOWALL=true;filterNext();var r=$("r-nx").querySelector("li:nth-child(11) .nx-open");if(r)r.focus()});
 
 /* ---------- GitHub issues: prefilled new-issue links. The visitor submits on GitHub; this page sends nothing ---------- */
-var SITE="https://firstrun.atharvashah.com/doc-audit/",GH_MAX=7500,GHOK=false,OPENED={};
+var SITE="https://1strun.rajbir.tech/doc-audit/",GH_MAX=7500,GHOK=false,OPENED={};
 var IMPL={high:"High",medium:"Medium",low:"Low"};
 function ghRepo(u){var m=/^https:\/\/github\.com\/([\w.-]+)\/([\w.-]+?)(?:\.git)?\/?$/i.exec(u||"");return m?m[1]+"/"+m[2]:""}
 /* impact comes from the ranker's reader-impact part: 0.75 and up is high, under 0.5 is low */
@@ -1028,7 +1028,7 @@ function issueBody(x,k,nEv,cut){
   if(total){L.push("**Evidence** ("+total+(total===1?" commit)":" commits)"));
     evLines(x,nEv,trim).forEach(function(l){L.push(l)});
     var more=total-Math.min(nEv,x.evidence.length);if(more>0)L.push("- +"+more+" more");L.push("")}
-  L.push("---","Generated by an automated audit, FirstRun Doc-audit, and may be wrong: "+SITE+"?id="+encodeURIComponent(A.id||"")+"#c="+k);
+  L.push("---","Generated by an automated audit, 1stRun Doc-audit, and may be wrong: "+SITE+"?id="+encodeURIComponent(A.id||"")+"#c="+k);
   return L.join("\n")}
 function issueUrl(x,k){
   var base="https://github.com/"+issueRepo(x)+"/issues/new?title="+encodeURIComponent(askOf(x))+"&labels=documentation&body=",u;
@@ -1095,7 +1095,7 @@ function paintPages(){
     var tr=el("tr"),td=el("td","path"),u=fileUrl(p.path),a=el(u?"a":"span",0,p.path);
     if(u){a.href=safeUrl(u);a.target="_blank";a.rel="noopener"}td.appendChild(a);
     if(p.title&&p.title!==p.path)td.appendChild(el("small",0,p.title));tr.appendChild(td);
-    var s=el("td");s.appendChild(chip(p.status,STL[p.status]||p.status));if(p.judge==="jev"&&p.stale_p!=null){var j=el("small","jv","Jev "+Math.round(p.stale_p*100)+"% likely wrong");s.appendChild(j)}tr.appendChild(s);
+    var s=el("td");s.appendChild(chip(p.status,STL[p.status]||p.status));if((p.judge==="judge"||p.judge==="jev")&&p.stale_p!=null){var j=el("small","jv","Judge "+Math.round(p.stale_p*100)+"% likely wrong");s.appendChild(j)}tr.appendChild(s);
     var ag=el("td"),w=el("div","age"),bar=el("i");bar.style.width=Math.round(60*p.age_days/max)+"px";
     w.appendChild(bar);w.appendChild(document.createTextNode(fmt(p.last_touched)));ag.appendChild(w);tr.appendChild(ag);
     var ch=el("td","hide-sm",p.relevant_since?String(p.relevant_since):(A.mode==="sitemap"?"n/a":"0"));
@@ -1110,7 +1110,7 @@ function paintPages(){
 var OPENI=-1,LAST=null;
 function evList(evs){var ul=el("ul","evl");evs.forEach(function(e){var u=e.pr?prUrl(e.pr):commitUrl(e.sha),li=el("li"),a=el(u?"a":"span",u?null:"r");if(u){a.href=safeUrl(u);a.target="_blank";a.rel="noopener"}
   a.appendChild(ic(e.pr?"pr":"commit"));a.appendChild(el("b",null,e.subject));a.appendChild(el("small",null,(e.pr?"#"+e.pr:e.sha)+"  "+fmt(e.date)));li.appendChild(a);ul.appendChild(li)});return ul}
-var PARTS=[["impact","Reader impact"],["urgency","Urgency"],["evidence","Evidence"],["judged","Checked by Jev"],["ease","Effort"]];
+var PARTS=[["impact","Reader impact"],["urgency","Urgency"],["evidence","Evidence"],["judged","Checked by the judge"],["ease","Effort"]];
 function paintNextDrawer(B,x){
   B.appendChild(el("h3",null,x.title));B.lastChild.id="dw-t";
   if(x.rationale)B.appendChild(el("p","why",x.rationale));
@@ -1218,7 +1218,7 @@ function render(a){
   NX=nextItems(a);
   GHOK=!!ghRepo(safeUrl(a.url));ghLoad();
   paintTeam(a);paintNext();paintReady();paintPages();
-  $("r-foot").textContent=a.jev?"Jev read each stale page against the commits and sorted commits that have no conventional prefix.":"Commits were sorted by their subject line. Set TYPESAFE_API_KEY to let Jev read the pages.";
+  $("r-foot").textContent=(a.judge||a.jev)?"The judge read each stale page against the commits and sorted commits that have no conventional prefix.":"Commits were sorted by their subject line. Set CLAUDE_CODE_OAUTH_TOKEN, or run a local Ollama, to let the judge read the pages.";
   var h=/#(who|area)=([pa]\d{1,4})\b/.exec(location.hash);
   if(h&&T&&(h[1]==="who"?T.byId[h[2]]:T.aById[h[2]]))togglePin({t:h[1]==="who"?"p":"a",id:h[2]});
   var vw=/#view=(list|board)\b/.exec(location.hash);if(vw)setNxView(vw[1],false);

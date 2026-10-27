@@ -2,9 +2,9 @@
 
 import pytest
 
-from firstrun import budget, classify, llm, precedents, recovery
-from firstrun.budget import BudgetExceeded
-from firstrun.models import Budget, FailureClass as FC, GaveUp, Patch, RunState, Step, StepResult
+from onestrun import budget, classify, llm, precedents, recovery
+from onestrun.budget import BudgetExceeded
+from onestrun.models import Budget, FailureClass as FC, GaveUp, Patch, RunState, Step, StepResult
 
 PIP_ERR = "ERROR: No matching distribution found for chromadb==0.3"
 
@@ -34,7 +34,8 @@ def _no_net(monkeypatch):
 # --- ask once ---------------------------------------------------------------
 
 def test_ask_once_then_reuse(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.DOCS_BUG, 0.4))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG, 0.4))
     questions = []
 
     def asker(q):
@@ -51,20 +52,23 @@ def test_ask_once_then_reuse(tmp_precedents, monkeypatch):
 
 
 def test_confident_answer_asks_nothing(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.DOCS_BUG, 0.8))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG, 0.8))
     cls, src = recovery.resolve_class("err", "c", asker=lambda q: pytest.fail("asked"))
-    assert (cls, src) == (FC.DOCS_BUG, "jev")
+    assert (cls, src) == (FC.DOCS_BUG, "judge")
     assert precedents.lookup(classify.signature("err")) is None  # 0.8 is below the store bar
 
 
 def test_very_confident_answer_is_stored(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.DOCS_BUG, 0.95))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG, 0.95))
     recovery.resolve_class("err", "c")
     assert precedents.lookup(classify.signature("err")) == FC.DOCS_BUG
 
 
 def test_no_tty_no_asker_uses_top_class(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.PRODUCT_BUG, 0.4))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.PRODUCT_BUG, 0.4))
     monkeypatch.setattr("sys.stdin", None)
     assert recovery.resolve_class("err", "c")[0] == FC.PRODUCT_BUG
     assert precedents.lookup(classify.signature("err")) is None
@@ -96,7 +100,8 @@ def test_budget_trips_on_cost_and_attempts():
 # --- recover ----------------------------------------------------------------
 
 def test_recover_docs_bug_returns_patch(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.DOCS_BUG))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG))
     seen = {}
 
     def fake(prompt, system="", tools=(), max_turns=1):
@@ -117,7 +122,8 @@ def test_recover_docs_bug_returns_patch(tmp_precedents, monkeypatch):
 
 
 def test_recover_gives_up_when_model_repeats_earlier_patch(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.DOCS_BUG))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG))
     monkeypatch.setattr(llm, "ask_json", lambda *a, **k: ({"new_command": "pip install chromadb==0.5.0"}, {}))
     s = _state()
     s.patches.append(Patch(step_id=2, old_command="x", new_command="pip install chromadb==0.5.0", reason="r"))
@@ -126,7 +132,8 @@ def test_recover_gives_up_when_model_repeats_earlier_patch(tmp_precedents, monke
 
 
 def test_recover_environment_curl_patch_needs_no_model(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.ENVIRONMENT))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.ENVIRONMENT))
     monkeypatch.setattr(llm, "ask_json", lambda *a, **k: pytest.fail("no model needed"))
     out = recovery.recover(_step("curl -sSL x | sh"), _result("curl -sSL x | sh", "sh: 1: curl: not found", 127), _state())
     assert isinstance(out, Patch) and out.failure_class == FC.ENVIRONMENT
@@ -134,7 +141,8 @@ def test_recover_environment_curl_patch_needs_no_model(tmp_precedents, monkeypat
 
 
 def test_recover_product_bug_gives_up(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.PRODUCT_BUG))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.PRODUCT_BUG))
     out = recovery.recover(_step("tool run"), _result("tool run", "panic: runtime error"), _state())
     assert isinstance(out, GaveUp) and out.reason.startswith("product bug:")
     assert out.failure_class == FC.PRODUCT_BUG
@@ -144,9 +152,10 @@ def test_recover_needs_secret_uses_allowlist(tmp_path, tmp_precedents, monkeypat
     allow = tmp_path / "secrets.allowlist"
     allow.write_text("DEMO_API_KEY=test-value\n")
     monkeypatch.setattr(recovery.config, "SECRETS_ALLOWLIST", allow)
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.NEEDS_SECRET))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.NEEDS_SECRET))
     out = recovery.recover(_step("tool run"), _result("tool run", "Error: DEMO_API_KEY is not set"), _state())
-    # The key was already in the container, so FirstRun stops instead of retrying the same command.
+    # The key was already in the container, so 1stRun stops instead of retrying the same command.
     assert isinstance(out, GaveUp) and "DEMO_API_KEY" in out.reason
     assert "test-value" not in out.model_dump_json()  # the secret value never leaks
     out2 = recovery.recover(_step("tool run"), _result("tool run", "Error: OTHER_API_KEY is not set"), _state())
@@ -154,7 +163,8 @@ def test_recover_needs_secret_uses_allowlist(tmp_path, tmp_precedents, monkeypat
 
 
 def test_recover_stops_when_budget_is_spent(tmp_precedents, monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.DOCS_BUG))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)  # the judge answers, so Claude must not run
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG))
     monkeypatch.setattr(llm, "ask_json", lambda *a, **k: pytest.fail("budget must block the call"))
     s = _state()
     s.usage.tool_calls = 25
@@ -176,7 +186,7 @@ def test_terminal_asker_returns_none_on_eof(monkeypatch):
     import builtins
     import io
 
-    from firstrun import recovery
+    from onestrun import recovery
 
     class TtyIn(io.StringIO):
         def isatty(self):
@@ -191,7 +201,7 @@ def test_terminal_asker_returns_none_on_eof(monkeypatch):
 
 
 def test_short_reason_ends_on_a_sentence():
-    from firstrun.recovery import _short_reason
+    from onestrun.recovery import _short_reason
 
     text = "First sentence is here. " * 30
     out = _short_reason(text)
@@ -200,8 +210,8 @@ def test_short_reason_ends_on_a_sentence():
 
 
 def test_error_text_drops_pip_noise_and_keeps_the_real_error():
-    from firstrun.models import StepResult
-    from firstrun.recovery import _error_text
+    from onestrun.models import StepResult
+    from onestrun.recovery import _error_text
 
     noise = "\n".join(f"Collecting pkg{i}" for i in range(400)) + "\nSuccessfully installed openai-0.28.1"
     r = StepResult(step_id=5, command="python quickstart.py", exit_code=1, stdout=noise,
@@ -211,7 +221,7 @@ def test_error_text_drops_pip_noise_and_keeps_the_real_error():
 
 
 def test_apt_only_fix_counts_as_environment():
-    from firstrun.recovery import _APT
+    from onestrun.recovery import _APT
 
     assert _APT.search("apt-get update -qq && apt-get install -y -qq curl && entire version")
     assert not _APT.search("pip install chromadb")

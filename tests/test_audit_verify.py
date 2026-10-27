@@ -7,7 +7,7 @@ import subprocess
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
-from firstrun import audit, nextup
+from onestrun import audit, nextup
 
 NOW = datetime.now(timezone.utc)
 
@@ -155,7 +155,7 @@ def test_f3_every_markdown_file_counts_as_coverage(tmp_path):
             "CHANGELOG.md": "- add `--csv` flag\n"}, "initial", 100)
     commit({"src/export.py": "x=2\n"}, "feat: add `--format` flag to export", 5)
     commit({"src/export.py": "x=3\n"}, "feat: add `--csv` flag to export", 4)
-    feats = {f["term"]: f for f in audit.audit(str(r), use_jev=False, team=False)["features"]}
+    feats = {f["term"]: f for f in audit.audit(str(r), use_judge=False, team=False)["features"]}
     assert feats["--format"]["covered"] is True   # a contributing guide documents it
     assert feats["--csv"]["covered"] is False     # the changelog restates the commit and proves nothing
 
@@ -185,14 +185,14 @@ def _release_repo(tmp_path, changelog: str) -> Path:
 
 
 def test_f4_release_item_skipped_when_the_changelog_names_the_release(tmp_path):
-    a = audit.audit(str(_release_repo(tmp_path, "# Changelog\n\n## v0.11.4\n- fixes\n")), use_jev=False, team=False)
+    a = audit.audit(str(_release_repo(tmp_path, "# Changelog\n\n## v0.11.4\n- fixes\n")), use_judge=False, team=False)
     assert a["release"]["in_changelog"] is True
     assert not [c for c in a["cards"] if c["kind"] == "automate"]
     assert not [i for i in a["next"]["items"] if i["kind"] == "release"]
 
 
 def test_f4_release_item_stays_when_the_changelog_lacks_the_release(tmp_path):
-    a = audit.audit(str(_release_repo(tmp_path, "# Changelog\n\n## v0.11.3\n- old\n")), use_jev=False, team=False)
+    a = audit.audit(str(_release_repo(tmp_path, "# Changelog\n\n## v0.11.3\n- old\n")), use_judge=False, team=False)
     assert a["release"]["in_changelog"] is False
     assert [i for i in a["next"]["items"] if i["kind"] == "release"]
 

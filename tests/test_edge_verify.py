@@ -5,14 +5,14 @@ from __future__ import annotations
 import pytest
 
 from _edge_fakes import FakeContainer, factory_for, make_runbook
-from firstrun import classify, config, executor, llm, patch, verify as verify_mod
-from firstrun import state as state_io
-from firstrun.models import Expected, Patch, Runbook, RunState, RunStatus, Step, StepResult
-from firstrun.sandbox import Container
+from onestrun import classify, config, executor, llm, patch, verify as verify_mod
+from onestrun import state as state_io
+from onestrun.models import Expected, Patch, Runbook, RunState, RunStatus, Step, StepResult
+from onestrun.sandbox import Container
 
 
 def _live(tag):
-    return lambda image, name=None: Container(image, name=f"firstrun-t7-{tag}")
+    return lambda image, name=None: Container(image, name=f"1stRun-t7-{tag}")
 
 
 @pytest.fixture
@@ -20,7 +20,7 @@ def t7_cleanup():
     import subprocess
 
     yield
-    ids = subprocess.run([*config.DOCKER_CMD, "ps", "-aq", "--filter", "name=firstrun-t7-"],
+    ids = subprocess.run([*config.DOCKER_CMD, "ps", "-aq", "--filter", "name=1stRun-t7-"],
                          capture_output=True).stdout.decode().split()
     if ids:
         subprocess.run([*config.DOCKER_CMD, "rm", "-f", *ids], capture_output=True)
@@ -38,7 +38,7 @@ def test_v1_live_patch_that_only_works_in_the_recovery_run_is_unverified(tmp_run
         return Patch(step_id=step.id, old_command=step.command, new_command="test -e /work/m", reason="leftover")
 
     state = executor.run(
-        rb, run_id="v1", recover=recover, container_factory=lambda image=None, **kw: Container(image, name="firstrun-t7-v1a"),
+        rb, run_id="v1", recover=recover, container_factory=lambda image=None, **kw: Container(image, name="1stRun-t7-v1a"),
         verify=lambda r, s: verify_mod.verify(r, s.patches, container_factory=_live("v1b")),
     )
     assert state.step_status[1].value == "passed"          # it passed in the recovery run
@@ -65,7 +65,7 @@ def test_v2_a_model_call_during_verification_is_blocked_and_unverified(monkeypat
     assert config._blocked == 0                            # the block is lifted afterwards
 
 
-def test_v2_jev_classification_is_blocked_too():
+def test_v2_judge_classification_is_blocked_too():
     with config.block_model_calls():
         with pytest.raises(config.ModelCallBlocked):
             classify.classify("err", "cmd")
@@ -108,7 +108,7 @@ def test_v3_live_recovery_versions_are_captured_and_pinned_in_the_clean_run(tmp_
         return verify_mod.verify(r, s.patches, container_factory=_live("v3b"), pins=pins)
 
     state = executor.run(rb, run_id="v3", recover=recover, verify=verify,
-                         container_factory=lambda image=None, **kw: Container(image, name="firstrun-t7-v3a"))
+                         container_factory=lambda image=None, **kw: Container(image, name="1stRun-t7-v3a"))
     assert state.status == RunStatus.VERIFIED
 
 

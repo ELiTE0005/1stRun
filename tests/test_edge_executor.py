@@ -1,6 +1,6 @@
 """Edge cases E1-E10 (executor and sandbox). Unit rows run offline. Live rows need Docker in WSL.
 
-Every live container is named firstrun-t7-* and removed when the test ends.
+Every live container is named 1stRun-t7-* and removed when the test ends.
 """
 
 from __future__ import annotations
@@ -14,11 +14,11 @@ import pytest
 from click.testing import CliRunner
 
 from _edge_fakes import FakeContainer, factory_for, make_runbook
-from firstrun import config, executor, recovery, sandbox
-from firstrun import state as state_io
-from firstrun.cli import cli
-from firstrun.models import Budget, Expected, FileSpec, FailureClass, Runbook, RunStatus, Step, StepResult, StepStatus
-from firstrun.sandbox import Container, DockerUnavailable
+from onestrun import config, executor, recovery, sandbox
+from onestrun import state as state_io
+from onestrun.cli import cli
+from onestrun.models import Budget, Expected, FileSpec, FailureClass, Runbook, RunStatus, Step, StepResult, StepStatus
+from onestrun.sandbox import Container, DockerUnavailable
 
 
 def _docker(*args, timeout=120):
@@ -27,16 +27,16 @@ def _docker(*args, timeout=120):
 
 @pytest.fixture
 def t7_cleanup():
-    """Remove every firstrun-t7-* container after a live test."""
+    """Remove every 1stRun-t7-* container after a live test."""
     yield
-    listing = _docker("ps", "-aq", "--filter", "name=firstrun-t7-")
+    listing = _docker("ps", "-aq", "--filter", "name=1stRun-t7-")
     ids = listing.stdout.decode().split()
     if ids:
         _docker("rm", "-f", *ids)
 
 
 def live_factory(tag: str, container_cls=Container):
-    return lambda image=None, **kw: container_cls(image or "python:3.11-slim", name=f"firstrun-t7-{tag}")
+    return lambda image=None, **kw: container_cls(image or "python:3.11-slim", name=f"1stRun-t7-{tag}")
 
 
 def live_runbook(*steps) -> Runbook:
@@ -47,7 +47,7 @@ def live_runbook(*steps) -> Runbook:
 # --- E1 ------------------------------------------------------------------------
 
 def test_e1_docker_program_missing_stops_before_step_1(tmp_runs_dir, monkeypatch):
-    monkeypatch.setattr(config, "DOCKER_CMD", ["firstrun-no-such-program"])
+    monkeypatch.setattr(config, "DOCKER_CMD", ["1stRun-no-such-program"])
     state = executor.run(make_runbook("echo hi"), run_id="e1a")
     assert state.status == RunStatus.FAILED
     assert state.stop_reason.startswith("docker unavailable")
@@ -56,7 +56,7 @@ def test_e1_docker_program_missing_stops_before_step_1(tmp_runs_dir, monkeypatch
 
 
 def test_e1_cli_exit_code_is_2_for_docker_unavailable(tmp_runs_dir, monkeypatch, tmp_path):
-    monkeypatch.setattr(config, "DOCKER_CMD", ["firstrun-no-such-program"])
+    monkeypatch.setattr(config, "DOCKER_CMD", ["1stRun-no-such-program"])
     doc = tmp_path / "d.md"
     doc.write_text("# D\n\n```bash\necho hi\n```\n", encoding="utf-8")
     result = CliRunner().invoke(cli, ["run", str(doc), "--offline", "--no-verify"])
@@ -67,7 +67,7 @@ def test_e1_cli_exit_code_is_2_for_docker_unavailable(tmp_runs_dir, monkeypatch,
 
 @pytest.mark.live
 def test_e1_live_docker_daemon_down_stops_before_step_1(tmp_runs_dir, monkeypatch):
-    monkeypatch.setattr(config, "DOCKER_CMD", [*config.DOCKER_CMD, "-H", "unix:///nonexistent/firstrun-t7.sock"])
+    monkeypatch.setattr(config, "DOCKER_CMD", [*config.DOCKER_CMD, "-H", "unix:///nonexistent/1stRun-t7.sock"])
     state = executor.run(make_runbook("echo hi", "echo two"), run_id="e1b")
     assert state.status == RunStatus.FAILED
     assert "docker unavailable" in state.stop_reason
@@ -89,7 +89,7 @@ def test_e2_live_hung_step_is_killed_and_marked_failed(tmp_runs_dir, t7_cleanup)
 
 
 def test_e2_timeout_is_classified_environment_and_not_retried(tmp_precedents):
-    from firstrun.models import RunState
+    from onestrun.models import RunState
 
     state = RunState(run_id="r", source_url="u")
     step = Step(id=1, intent="x", command="sleep 600")
@@ -120,7 +120,7 @@ def test_e3_exec_cuts_both_streams_and_the_run_continues(monkeypatch):
             return b"o" * (50 * 1024 * 1024), b"e" * (50 * 1024 * 1024)
 
     monkeypatch.setattr(sandbox.subprocess, "Popen", Proc)
-    res = Container("python:3.11-slim", name="firstrun-t7-fake").exec("yes")
+    res = Container("python:3.11-slim", name="1stRun-t7-fake").exec("yes")
     assert res.exit_code == 0
     assert "output truncated" in res.stdout and "output truncated" in res.stderr
     assert len(res.stdout) < sandbox.OUTPUT_CAP + 200
@@ -227,7 +227,7 @@ def test_e8_two_runs_in_one_second_get_distinct_run_folders(tmp_runs_dir):
 
 def test_e8_default_container_names_are_unique():
     names = {Container("python:3.11-slim").name for _ in range(20)}
-    assert len(names) == 20 and all(n.startswith("firstrun-") for n in names)
+    assert len(names) == 20 and all(n.startswith("1stRun-") for n in names)
 
 
 @pytest.mark.live
@@ -250,15 +250,15 @@ def test_e8_live_two_runs_at_once(tmp_runs_dir, t7_cleanup):
 
 def test_e10_is_stale_rules(monkeypatch):
     dead = 2_000_000_001
-    assert not sandbox.is_stale(f"firstrun-run-{os.getpid()}-abcdef", "3 hours ago")   # owner alive
-    assert sandbox.is_stale(f"firstrun-run-{dead}-abcdef", "2 seconds ago")            # owner gone
-    assert not sandbox.is_stale("firstrun-verify-1a2b3c4d", "About a minute ago")      # young, no pid
-    assert sandbox.is_stale("firstrun-verify-1a2b3c4d", "3 hours ago")                 # old, no pid
+    assert not sandbox.is_stale(f"1stRun-run-{os.getpid()}-abcdef", "3 hours ago")   # owner alive
+    assert sandbox.is_stale(f"1stRun-run-{dead}-abcdef", "2 seconds ago")            # owner gone
+    assert not sandbox.is_stale("1stRun-verify-1a2b3c4d", "About a minute ago")      # young, no pid
+    assert sandbox.is_stale("1stRun-verify-1a2b3c4d", "3 hours ago")                 # old, no pid
 
 
 @pytest.mark.live
 def test_e10_live_next_run_removes_a_container_a_crash_left_behind(tmp_runs_dir, t7_cleanup):
-    stale = "firstrun-t7-stale-2000000001-abcdef"        # the owner process 2000000001 does not exist
+    stale = "1stRun-t7-stale-2000000001-abcdef"        # the owner process 2000000001 does not exist
     made = _docker("run", "-d", "--name", stale, "python:3.11-slim", "sleep", "infinity")
     assert made.returncode == 0, made.stderr
     state = executor.run(live_runbook("echo hi"), run_id="e10", container_factory=live_factory("e10"))

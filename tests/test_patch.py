@@ -1,5 +1,5 @@
-from firstrun.models import FailureClass, Patch, Runbook, RunState, RunStatus, Step, StepResult
-from firstrun.patch import make_diff, make_pr_body, write_outputs
+from onestrun.models import FailureClass, Patch, Runbook, RunState, RunStatus, Step, StepResult
+from onestrun.patch import make_diff, make_pr_body, write_outputs
 
 DOCS = "# Quickstart\n\n```bash\n$ pip install foo\npython old.py\n```\n\nDone.\n"
 
@@ -56,13 +56,13 @@ def test_diff_notes_missing_step():
 
 
 def test_pr_body_verified():
-    body = make_pr_body(make_state(), [DOCS_PATCH], trace_url="https://t/1", checkpoint_url="https://c/1")
+    body = make_pr_body(make_state(), [DOCS_PATCH], trace_url="https://t/1")
     assert "Verified: a fresh python:3.11-slim container ran all 2 steps" in body
     assert "no model calls during verification" in body
     assert "python old.py" in body and "FileNotFoundError: old.py" in body
-    assert "https://t/1" in body and "https://c/1" in body
+    assert "https://t/1" in body
     assert "42 seconds" in body
-    assert body.strip().endswith("Found by FirstRun, an agent that runs quickstarts in a clean container.")
+    assert body.strip().endswith("Found by 1stRun, an agent that runs quickstarts in a clean container.")
 
 
 def test_pr_body_never_claims_verified_when_unverified():
@@ -87,15 +87,15 @@ def test_write_outputs_nothing_when_unverified_or_no_docs_patch(tmp_path):
 
 def test_pr_body_proof_links_are_public_only():
     ev = [
-        {"kind": "session", "label": "Entire session", "url": "https://entire.io/s/1", "public": True},
-        {"kind": "trail", "label": "Trail 6", "url": "https://entire.io/t/6", "public": False},
-        {"kind": "trace", "label": "neatlogs trace", "url": "", "public": False},
+        {"kind": "comment", "label": "Maintainer comment", "url": "https://github.com/a/b/issues/1#c1", "public": True},
+        {"kind": "comment", "label": "Private note", "url": "https://example.test/n/6", "public": False},
+        {"kind": "trace", "label": "Langfuse trace", "url": "", "public": False},
         {"kind": "pr", "label": "this PR", "url": "https://github.com/a/b/pull/1", "public": True},
     ]
     body = make_pr_body(make_state(), [DOCS_PATCH], replay_url="https://1run.netlify.app/run.html#r=abc", evidence=ev)
     assert "[Replay this run step by step](https://1run.netlify.app/run.html#r=abc)" in body
-    assert "[Entire session](https://entire.io/s/1)" in body
-    assert "Trail 6" not in body and "neatlogs trace" not in body and "pull/1" not in body
+    assert "[Maintainer comment](https://github.com/a/b/issues/1#c1)" in body
+    assert "Private note" not in body and "Langfuse trace" not in body and "pull/1" not in body
     assert body.index("Replay this run") > body.index("## Proof")
 
 

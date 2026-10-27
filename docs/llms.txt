@@ -1,33 +1,33 @@
-# FirstRun
+# 1stRun
 
-> FirstRun checks docs by running them: Doc-test runs a quickstart in a clean container and proves the fix, and Doc-audit reads a repo's whole git history, ranks its stale docs and maps who works on which part of the code.
+> 1stRun checks docs by running them: Doc-test runs a quickstart in a clean container and proves the fix, and Doc-audit reads a repo's whole git history, ranks its stale docs and maps who works on which part of the code.
 
 An agent starts with agent.md. It holds the preflight, the install, the commands with `--json` output, the error codes and the safety rules.
 
 ## Read agent.md First to Run Either Tool
 
-- [agent.md](https://firstrun.atharvashah.com/agent.md): The agent quickstart lists every step. Read it and follow it.
-- [llms-full.txt](https://firstrun.atharvashah.com/llms-full.txt): agent.md, the README quickstart, the architecture, the known limits and the share format in one file.
-- [README](https://github.com/HighnessAtharva/firstrun/blob/main/README.md): What each tool does, the real results and the 5-minute quickstart for a human.
-- [AGENTS.md](https://github.com/HighnessAtharva/firstrun/blob/main/AGENTS.md): How to build and test the FirstRun repo itself.
-- [Agent Skill](https://github.com/HighnessAtharva/firstrun/tree/main/skills/firstrun): A SKILL.md folder to copy into `.claude/skills/`.
+- [agent.md](https://1strun.rajbir.tech/agent.md): The agent quickstart lists every step. Read it and follow it.
+- [llms-full.txt](https://1strun.rajbir.tech/llms-full.txt): agent.md, the README quickstart, the architecture, the known limits and the share format in one file.
+- [README](https://github.com/ELiTE0005/1stRun/blob/main/README.md): What each tool does, the real results and the 5-minute quickstart for a human.
+- [AGENTS.md](https://github.com/ELiTE0005/1stRun/blob/main/AGENTS.md): How to build and test the 1stRun repo itself.
+- [Agent Skill](https://github.com/ELiTE0005/1stRun/tree/main/skills/1strun): A SKILL.md folder to copy into `.claude/skills/`.
 
 ## Read the Design in Three Docs
 
-- [Architecture](https://firstrun.atharvashah.com/architecture.md): Run statuses, failure classes, budgets and the neatlogs spans.
-- [Known limits](https://firstrun.atharvashah.com/known-limits.md): What FirstRun does not do yet.
-- [Share format](https://firstrun.atharvashah.com/share-format.md): How a run becomes a share code, and the JSON inside it.
+- [Architecture](https://1strun.rajbir.tech/architecture.md): Run statuses, failure classes, budgets and the trace spans.
+- [Known limits](https://1strun.rajbir.tech/known-limits.md): What 1stRun does not do yet.
+- [Share format](https://1strun.rajbir.tech/share-format.md): How a run becomes a share code, and the JSON inside it.
 
 ## Fetch the Public Data as JSON
 
-- [audits/index.json](https://firstrun.atharvashah.com/audits/index.json): One row per published Doc-audit board.
-- [audits/<audit_id>.json](https://firstrun.atharvashah.com/audits/audit-20261010-163257-fastapi-typer.json): One full board, with the ranked tasks in `next.items`.
-- [runs/index.json](https://firstrun.atharvashah.com/runs/index.json): One row per published Doc-test run.
-- [runs/<run_id>.txt](https://firstrun.atharvashah.com/runs/20261010-174858-docs-litestar-dev.txt): One run as a share code.
-- [receipts/<receipt_id>.json](https://firstrun.atharvashah.com/receipts/FR-20261010-091740-help-accuknox-com.json): One priced receipt with its hash.
+- [audits/index.json](https://1strun.rajbir.tech/audits/index.json): One row per published Doc-audit board.
+- [audits/<audit_id>.json](https://1strun.rajbir.tech/audits/audit-20261010-163257-fastapi-typer.json): One full board, with the ranked tasks in `next.items`.
+- [runs/index.json](https://1strun.rajbir.tech/runs/index.json): One row per published Doc-test run.
+- [runs/<run_id>.txt](https://1strun.rajbir.tech/runs/20261010-174858-docs-litestar-dev.txt): One run as a share code.
+- [receipts/<receipt_id>.json](https://1strun.rajbir.tech/receipts/FR-20261010-091740-help-accuknox-com.json): One priced receipt with its hash.
 
 ## Optional
 
-- [Doc-test page](https://firstrun.atharvashah.com/doc-test/): The run log and the replay viewer.
-- [Doc-audit page](https://firstrun.atharvashah.com/doc-audit/): The audit boards. `?id=<audit_id>` opens one board.
-- [For judges](https://firstrun.atharvashah.com/judges/): Every claim with its proof.
+- [Doc-test page](https://1strun.rajbir.tech/doc-test/): The run log and the replay viewer.
+- [Doc-audit page](https://1strun.rajbir.tech/doc-audit/): The audit boards. `?id=<audit_id>` opens one board.
+- [For judges](https://1strun.rajbir.tech/judges/): Every claim with its proof.

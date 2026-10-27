@@ -6,11 +6,11 @@ import json
 
 import pytest
 
-from firstrun import config, executor, report, state as state_io
-from firstrun.models import (
+from onestrun import config, executor, report, state as state_io
+from onestrun.models import (
     Budget, Expected, FileSpec, GaveUp, Patch, Runbook, RunStatus, Step, StepResult, StepStatus,
 )
-from firstrun.sandbox import Container
+from onestrun.sandbox import Container
 
 
 class FakeContainer:
@@ -213,14 +213,14 @@ def test_live_two_step_runbook(runs):
     rb.steps[1].expected = Expected(output_contains="2")
     st = executor.run(
         rb, run_id="live1",
-        container_factory=lambda image=None, **kw: Container(image or "python:3.11-slim", name="firstrun-t2-live1"),
+        container_factory=lambda image=None, **kw: Container(image or "python:3.11-slim", name="1stRun-t2-live1"),
     )
     assert st.status == RunStatus.PASSED, st.results
 
 
 @pytest.mark.live
 def test_live_state_persists_and_timeout_and_files():
-    with Container(name="firstrun-t2-state") as c:
+    with Container(name="1stRun-t2-state") as c:
         c.write_files([FileSpec(path="sub/dir/a.txt", content="hi there")])
         assert c.exec("mkdir -p proj && cd proj && export FOO='a b'").exit_code == 0
         r = c.exec("pwd; echo $FOO; cat ../sub/dir/a.txt 2>/dev/null || cat /work/sub/dir/a.txt")
@@ -238,7 +238,7 @@ def test_live_state_persists_and_timeout_and_files():
 def test_live_crash_and_resume(runs):
     rb = make_runbook("mkdir -p /work/p && cd /work/p && echo one > f.txt", "cat f.txt", "echo three")
     rb.steps[1].expected = Expected(output_contains="one")
-    mk = lambda tag: (lambda image=None, **kw: Container(image or "python:3.11-slim", name=f"firstrun-t2-resume-{tag}"))
+    mk = lambda tag: (lambda image=None, **kw: Container(image or "python:3.11-slim", name=f"1stRun-t2-resume-{tag}"))
 
     class Boom(Container):
         def exec(self, command, timeout_s=300):
@@ -247,15 +247,15 @@ def test_live_crash_and_resume(runs):
             return super().exec(command, timeout_s)
 
     with pytest.raises(KeyboardInterrupt):
-        executor.run(rb, run_id="live2", container_factory=lambda image=None, **kw: Boom(image, name="firstrun-t2-resume-a"))
+        executor.run(rb, run_id="live2", container_factory=lambda image=None, **kw: Boom(image, name="1stRun-t2-resume-a"))
     assert state_io.load_state("live2").last_good_step == 2
     st = executor.run(rb, run_id="live2", resume=True, container_factory=mk("b"))
     assert st.status == RunStatus.PASSED
 
 
 def test_dev_server_step_passes_once_it_is_listening():
-    from firstrun import executor
-    from firstrun.models import Step, StepResult
+    from onestrun import executor
+    from onestrun.models import Step, StepResult
 
     assert executor.is_server_command("pip install flask && flask --app hello run")
     assert executor.is_server_command("uvicorn main:app --reload")
@@ -271,7 +271,7 @@ def test_dev_server_step_passes_once_it_is_listening():
 
 
 def test_install_step_naming_a_server_package_keeps_the_full_timeout():
-    from firstrun import executor
+    from onestrun import executor
 
     # The server name is a package here, so the 90 s server window must not cap a slow install.
     assert not executor.is_server_command("pip install fastapi uvicorn")

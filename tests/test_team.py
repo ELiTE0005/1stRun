@@ -12,7 +12,7 @@ from pathlib import Path
 
 import pytest
 
-from firstrun import audit, intake, nextup, team
+from onestrun import audit, intake, nextup, team
 
 ROOT = Path(__file__).resolve().parents[1]
 AS_OF = datetime(2026, 10, 10, 12, 0, tzinfo=timezone.utc)
@@ -200,7 +200,7 @@ def test_area_metrics_shares_bus_single_and_quiet():
 # ----------------------------------------------------------------------------- (9), (10), (11) people and privacy
 
 def test_one_person_repo_is_one_person_who_holds_every_area(repo_one):
-    a = audit.audit(str(repo_one), use_jev=False)
+    a = audit.audit(str(repo_one), use_judge=False)
     t = a["team"]
     assert len(t["people"]) == 1 and t["others"] is None
     assert all(ar["single"] and [o["p"] for o in ar["owners"]] == ["p1"] for ar in t["areas"])
@@ -229,7 +229,7 @@ def test_300_authors_fit_the_budget():
 
 
 def test_no_email_reaches_the_board(team_repo):
-    a = audit.audit(str(team_repo), use_jev=False)
+    a = audit.audit(str(team_repo), use_judge=False)
     text = json.dumps({"team": a["team"], "next": a["next"]}, ensure_ascii=False)
     assert EMAIL.search(text) is None and "noreply" not in text.lower()
     assert all("[bot]" not in p["name"] for p in a["team"]["people"]) and a["team"]["bots_skipped"] == 1
@@ -237,7 +237,7 @@ def test_no_email_reaches_the_board(team_repo):
 
 # ----------------------------------------------------------------------------- (12) to (15) the ranked list
 
-def _refresh_board(path: str, evidence: list[dict], status: str = "stale", judge: str = "jev") -> dict:
+def _refresh_board(path: str, evidence: list[dict], status: str = "stale", judge: str = "judge") -> dict:
     page = {"path": path, "title": "Use cases", "status": status, "judge": judge, "relevant_since": len(evidence),
             "age_days": 400, "ancient": False, "last_touched": "2025-09-05", "evidence": evidence}
     return {"cards": [{"kind": "refresh", "title": f"Refresh {path}", "action": "Re-read it.", "evidence": evidence}],
@@ -345,23 +345,23 @@ def test_a_failed_github_lookup_still_finishes_the_audit(team_repo, monkeypatch)
         raise RuntimeError("GitHub is down")
 
     monkeypatch.setattr(team, "github_logins", boom)
-    a = audit.audit(str(team_repo), use_jev=False)
+    a = audit.audit(str(team_repo), use_judge=False)
     assert calls and a["team"]["source"] == "git" and a["team"]["people"]
 
 
 def test_team_math_that_raises_leaves_next_without_owners(team_repo, monkeypatch):
     monkeypatch.setattr(team, "build_team", lambda *a, **k: 1 / 0)
-    a = audit.audit(str(team_repo), use_jev=False)
+    a = audit.audit(str(team_repo), use_judge=False)
     assert "team" not in a and a["next"]["items"] and all(i["owner"] is None for i in a["next"]["items"])
 
 
 @pytest.mark.parametrize("how", ["flag", "env", "repo"])
 def test_every_opt_out_turns_the_map_off(team_repo, monkeypatch, how):
     if how == "env":
-        monkeypatch.setenv("FIRSTRUN_TEAM", "0")
+        monkeypatch.setenv("ONESTRUN_TEAM", "0")
     if how == "repo":
-        _commit(team_repo, {".github/firstrun.yml": "audit:\n  team: false\n"}, "chore: opt out", 1)
-    a = audit.audit(str(team_repo), use_jev=False, team=how != "flag")
+        _commit(team_repo, {".github/1stRun.yml": "audit:\n  team: false\n"}, "chore: opt out", 1)
+    a = audit.audit(str(team_repo), use_judge=False, team=how != "flag")
     assert a["team"] == {"v": 1, "disabled": how}
     assert a["next"]["items"] and all(i["owner"] is None and i["runner_up"] is None for i in a["next"]["items"])
 
@@ -390,7 +390,7 @@ def _backfill():
 
 
 def test_backfill_adds_only_team_and_next(team_repo):
-    board = audit.audit(str(team_repo), use_jev=False)
+    board = audit.audit(str(team_repo), use_judge=False)
     old = {k: v for k, v in board.items() if k not in ("team", "next")}
     b2 = _backfill().backfill_board(json.loads(json.dumps(old, default=str)), team_repo, github=False)
     assert set(b2) - set(old) == {"team", "next"}

@@ -9,7 +9,6 @@ secrets.allowlist
 *.egg-info/
 .pytest_cache/
 !docs/runs/
-business/.buyers_cache.json
 spans_raw_optimized.log
 
 # the site page /plan/ is public, unlike the private plan/ folder at the root
@@ -17,3 +16,5 @@ spans_raw_optimized.log
 
 # Claude Code agent worktrees
 .claude/worktrees/
+
+CLAUDE.md

@@ -2,7 +2,7 @@
 
 Each board in docs/audits/audit-*.json gets two new keys, `team` and `next`, built from the repo's git history at the
 commit the audit read (history.head, or the last commit before generated_at). Nothing else in the board changes: not
-the cards, not the summary, not index.json, not the receipts. No Jev call is made, so no count moves.
+the cards, not the summary, not index.json, not the receipts. No judge call is made, so no count moves.
 
     python scripts/audit_team_backfill.py                 # dry run: print what each board would get
     python scripts/audit_team_backfill.py --out <dir>     # dry run, and write <id>.team-next.json per board to <dir>
@@ -10,7 +10,7 @@ the cards, not the summary, not index.json, not the receipts. No Jev call is mad
     python scripts/audit_team_backfill.py --apply --only <id> --force   # redo one board, for example after an opt-out
 
 Needs git and network. GITHUB_TOKEN, GH_TOKEN or `gh auth token` adds GitHub logins and avatars; --no-github skips that.
-Do not run --apply while scripts/audit_cost_estimates.py --apply runs: both rewrite whole board files.
+
 """
 
 from __future__ import annotations
@@ -28,7 +28,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "src"))
 
-from firstrun import audit as audit_mod, team as team_mod  # noqa: E402
+from onestrun import audit as audit_mod, team as team_mod  # noqa: E402
 
 SITE = ROOT / "docs" / "audits"
 NEW = {"team", "next"}
@@ -117,7 +117,7 @@ def main() -> int:
         todo.append((p, board))
     failed = 0
     for p, board in todo:
-        tmp = Path(tempfile.mkdtemp(prefix="firstrun-backfill-"))
+        tmp = Path(tempfile.mkdtemp(prefix="1stRun-backfill-"))
         try:
             repo = audit_mod.clone(audit_mod.resolve_target(board["repo"])[0], tmp / "repo")
             docs = audit_mod.clone(audit_mod.resolve_target(board["docs_repo"])[0], tmp / "docs") if board.get("docs_repo") else None

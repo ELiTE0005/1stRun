@@ -1,4 +1,4 @@
-<!-- FIXTURE: hand-written known-broken quickstart for FirstRun tests. Not real docs. -->
+<!-- FIXTURE: hand-written known-broken quickstart for 1stRun tests. Not real docs. -->
 # Demo Quickstart
 
 This guide sets up a small Python project. Follow each step in order.

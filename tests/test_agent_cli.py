@@ -1,4 +1,4 @@
-"""--json output and `firstrun doctor`, the parts an agent reads instead of prose. Offline."""
+"""--json output and `1stRun doctor`, the parts an agent reads instead of prose. Offline."""
 
 from __future__ import annotations
 
@@ -6,9 +6,9 @@ import json
 
 from click.testing import CliRunner
 
-from firstrun import cli as cli_mod, doctor, state as state_io
-from firstrun.cli import cli, error_code
-from firstrun.models import Runbook, RunState, RunStatus, Step, StepResult, StepStatus
+from onestrun import cli as cli_mod, doctor, state as state_io
+from onestrun.cli import cli, error_code
+from onestrun.models import Runbook, RunState, RunStatus, Step, StepResult, StepStatus
 
 
 def _one_json(result) -> dict:
@@ -67,7 +67,7 @@ def test_run_json_failed_step_lifts_the_error(monkeypatch, tmp_runs_dir):
 def test_run_json_cached_hit(monkeypatch, tmp_runs_dir):
     _fake_run(monkeypatch)
     CliRunner().invoke(cli, ["run", "https://docs.example.com/qs", "--offline", "--fresh"])
-    from firstrun import cache
+    from onestrun import cache
 
     monkeypatch.setattr(cache, "find_recent", lambda u, *a, **k: "20990101-000000-docs-example-com")
     res = CliRunner().invoke(cli, ["run", "https://docs.example.com/qs", "--json"])
@@ -86,7 +86,7 @@ def test_run_json_missing_token(monkeypatch, tmp_runs_dir):
 
 
 def test_run_json_docker_missing(monkeypatch, tmp_runs_dir):
-    from firstrun.sandbox import DockerUnavailable
+    from onestrun.sandbox import DockerUnavailable
 
     def boom(*a, **k):
         raise DockerUnavailable("docker unavailable: nope")
@@ -108,7 +108,7 @@ AUDIT = {
     "id": "audit-20990101-000000-o-r", "repo": "o/r", "url": "https://github.com/o/r", "docs_repo": "", "mode": "repo",
     "summary": {"pages": 3, "fresh": 1, "aging": 0, "stale": 1, "quiet": 1, "unchecked": 0, "oldest_days": 400,
                 "median_age_days": 90, "features": 2, "uncovered": 1, "cards": 2},
-    "jev": False, "cost": {"jev_calls": 0, "jev_input_tokens": 0, "jev_usd": 0.0},
+    "judge": False, "cost": {"judge_calls": 0, "judge_input_tokens": 0, "judge_usd": 0.0},
     "team": {"people": [{"id": "p1", "name": "Ada L", "login": "ada"}]},
     "next": {"items": [{"rank": i, "kind": "refresh", "title": f"Task {i}", "path": f"docs/{i}.md", "score": 90 - i,
                         "effort": "S", "action": "Edit it.", "rationale": "Code moved.",
@@ -118,7 +118,7 @@ AUDIT = {
 
 
 def _fake_audit(monkeypatch, tmp_path, fail: str = ""):
-    from firstrun import audit as audit_mod
+    from onestrun import audit as audit_mod
 
     def fake(target, *a, **k):
         print("cloning")  # must go to stderr in --json mode
@@ -158,7 +158,7 @@ def test_audit_json_clone_failure(monkeypatch, tmp_runs_dir):
 
 
 def _receipt_file(tmp_path, edit: bool = False):
-    from firstrun import receipt
+    from onestrun import receipt
 
     r = {"kind": "audit", "receipt_id": "FR-x", "price": {"usd": 0.0001}, "proof": {"cards": 1},
          "audit": {"audit_id": "x", "evidence_sha256": {}}}
@@ -185,7 +185,7 @@ def test_receipt_check_json_edited(tmp_runs_dir):
 
 
 def test_receipt_check_hash_only_for_a_site_receipt(tmp_runs_dir):
-    from firstrun import receipt
+    from onestrun import receipt
 
     r = {"receipt_id": "FR-x", "price": {"model_cost_usd": 0.01}, "proof": {"verified": True},
          "audit": {"run_id": "gone", "evidence_sha256": {"state.json": "sha256:00"}}}
@@ -211,8 +211,8 @@ def _doctor_env(monkeypatch, docker_ok=True, token=True, net_ok=True):
     monkeypatch.setattr(doctor.config, "load_env", lambda *a, **k: None)
     monkeypatch.setattr(doctor, "probe_docker", lambda: (docker_ok, "docker info"))
     monkeypatch.setattr(doctor, "probe_url", lambda url: (net_ok, url))
-    monkeypatch.setattr("firstrun.team._token", lambda: "")
-    for k in ("TYPESAFE_API_KEY", "LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "GITHUB_TOKEN", "GH_TOKEN"):
+    monkeypatch.setattr("onestrun.team._token", lambda: "")
+    for k in ("LANGFUSE_PUBLIC_KEY", "LANGFUSE_SECRET_KEY", "GITHUB_TOKEN", "GH_TOKEN"):
         monkeypatch.delenv(k, raising=False)
     if token:
         monkeypatch.setenv("CLAUDE_CODE_OAUTH_TOKEN", "test-value-not-a-real-token")
@@ -227,7 +227,7 @@ def test_doctor_json_ready_and_never_prints_a_value(monkeypatch):
     out = _one_json(res)
     assert out["can_run"] == {"doc_test": True, "doc_audit": True, "hosted_audit": True, "read_public_data": True}
     checks = {c["name"]: c for c in out["checks"]}
-    assert checks["TYPESAFE_API_KEY"]["status"] == "warn" and checks["CLAUDE_CODE_OAUTH_TOKEN"]["status"] == "pass"
+    assert checks["judge"]["status"] == "warn" and checks["CLAUDE_CODE_OAUTH_TOKEN"]["status"] == "pass"
     assert "test-value-not-a-real-token" not in res.stdout + res.stderr
 
 
@@ -273,7 +273,7 @@ def test_probe_url_retries_one_timeout(monkeypatch):
 
 
 def test_prereqs_json_no_prove(monkeypatch, tmp_runs_dir):
-    from firstrun import prereqs
+    from onestrun import prereqs
 
     rid = "20990101-000000-docs-example-com"
     state_io.save_runbook(rid, Runbook(source_url="https://docs.example.com", steps=[Step(id=1, intent="i", command="c")]))

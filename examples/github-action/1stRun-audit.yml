@@ -1,0 +1,47 @@
+# Weekly docs audit. Copy this file to .github/workflows/1stRun-audit.yml in your repo.
+# Every Monday it audits the docs against the git history and keeps one issue up to date:
+# stale pages with the commits behind them, features with no docs, and drafted release notes.
+# It needs no model key. Add TYPESAFE_API_KEY as a secret to let Jev judge doc coverage.
+name: 1stRun docs audit
+
+on:
+  schedule:
+    - cron: "0 6 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Install 1stRun
+        run: pip install git+https://github.com/ELiTE0005/1stRun
+      - name: Audit the docs
+        env:
+          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
+          # Lets the team map match commits to GitHub logins. Add --no-team to leave the map out.
+          GH_TOKEN: ${{ github.token }}
+          ONESTRUN_NO_EXPORT: "1"
+        # Add --docs-repo owner/docs-repo when the docs site lives in another repo.
+        run: 1stRun audit ${{ github.repository }} --no-publish
+      - name: Write the issue body
+        run: 1stRun audit-issue --json > audit-issue.json
+      - name: Open or update the tracking issue
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          title=$(jq -r .title audit-issue.json)
+          jq -r .body audit-issue.json > body.md
+          gh label create 1stRun-audit --color 0A66D6 --description "Weekly 1stRun docs audit" 2>/dev/null || true
+          number=$(gh issue list --label 1stRun-audit --state open --json number --jq '.[0].number')
+          if [ -n "$number" ]; then
+            gh issue edit "$number" --title "$title" --body-file body.md
+          else
+            gh issue create --title "$title" --body-file body.md --label 1stRun-audit
+          fi

@@ -2,7 +2,7 @@
   "source_url": "file://tests/fixtures/docs/broken_quickstart_FIXTURE.md",
   "title": "Demo Quickstart",
   "image": "python:3.11-slim",
-  "docs_markdown": "<!-- FIXTURE: hand-written known-broken quickstart for FirstRun tests. Not real docs. -->\n# Demo Quickstart\n\nThis guide sets up a small Python project. Follow each step in order.\nStep 3 pins a version of chromadb that does not exist on PyPI.\n\n## 1. Upgrade pip\n\n```bash\npip install --upgrade pip\n```\n\n## 2. Install requests\n\n```bash\npip install requests==2.31.0\n```\n\n## 3. Install chromadb\n\n```bash\npip install chromadb==0.3\n```\n\n## 4. Check the install\n\n```bash\npython -c \"import requests; print(requests.__version__)\"\n```\n",
+  "docs_markdown": "<!-- FIXTURE: hand-written known-broken quickstart for 1stRun tests. Not real docs. -->\n# Demo Quickstart\n\nThis guide sets up a small Python project. Follow each step in order.\nStep 3 pins a version of chromadb that does not exist on PyPI.\n\n## 1. Upgrade pip\n\n```bash\npip install --upgrade pip\n```\n\n## 2. Install requests\n\n```bash\npip install requests==2.31.0\n```\n\n## 3. Install chromadb\n\n```bash\npip install chromadb==0.3\n```\n\n## 4. Check the install\n\n```bash\npython -c \"import requests; print(requests.__version__)\"\n```\n",
   "steps": [
     {
       "id": 1,

@@ -4,8 +4,8 @@ from __future__ import annotations
 
 import json
 
-from firstrun import receipt
-from firstrun.models import Patch, RunState, RunStatus, StepStatus, Usage
+from onestrun import receipt
+from onestrun.models import Patch, RunState, RunStatus, StepStatus, Usage
 
 ECON = {
     "generated_at": "2026-10-11T00:00:00Z",
@@ -84,14 +84,14 @@ def _audit(cost=True) -> dict:
         "history": {"commits": 120, "since": "2026-01-01", "capped": False, "head": "abcdef1234567"},
         "summary": {"pages": 4, "fresh": 3, "aging": 0, "stale": 1, "quiet": 0, "features": 2, "uncovered": 1},
         "cards": [{"kind": "document", "evidence": [{"sha": "abc"}]}, {"kind": "automate", "evidence": []}],
-        "jev": True,
+        "judge": True,
     }
     if cost:
-        a["cost"] = {"jev_calls": 2, "jev_input_tokens": 10_000, "jev_usd": 0.00042, "basis": "list price"}
+        a["cost"] = {"judge_calls": 2, "judge_input_tokens": 10_000, "judge_usd": 0.00042, "basis": "list price"}
     return a
 
 
-def test_audit_receipt_prices_the_jev_calls_and_counts_cited_cards(tmp_path):
+def test_audit_receipt_prices_the_judge_calls_and_counts_cited_cards(tmp_path):
     (tmp_path / "audit.json").write_text("{}", encoding="utf-8")
     r = receipt.build_audit(_audit(), tmp_path)
     assert r["price"]["recorded"] and r["price"]["usd"] == 0.00042
@@ -111,15 +111,14 @@ def test_an_audit_without_cost_says_it_was_not_recorded(tmp_path):
     assert "Not recorded" in receipt.render_audit_html(r)
 
 
-def test_jev_usage_counts_answered_calls_only():
-    from firstrun import audit
+def test_judge_usage_is_counted_and_costs_nothing():
+    from onestrun import audit
 
-    audit._JEV_USE.update(calls=0, input_tokens=0)
-    audit._note_jev({"usage": {"input_tokens": 1000}})
-    audit._note_jev({"answers": {}})
-    c = audit.jev_cost()
-    assert c["jev_calls"] == 2 and c["jev_input_tokens"] == 1000
-    assert c["jev_usd"] == round(1000 * 0.042 / 1_000_000, 6)
+    audit._JUDGE_USE.update(calls=2, input_tokens=1000)
+    c = audit.judge_cost()
+    assert c["judge_calls"] == 2 and c["judge_input_tokens"] == 1000
+    assert c["judge_usd"] == 0.0 and "free" in c["basis"]
+    audit._JUDGE_USE.update(calls=0, input_tokens=0)
 
 
 # ----------------------------------------------------------------------------- the bill and the site copy
@@ -135,7 +134,7 @@ def test_bill_total_adds_model_usage_and_compute(tmp_path):
     page = receipt.render_html(r)
     assert "$0.0453" in page and "$0.0020" in page and "$0.0473" in page
     assert "Verified" in page and "Billed tier" in page and "over cap" in page
-    assert "firstrun receipt --check docs/receipts/FR-20261011-000000-example.json" in page
+    assert "1stRun receipt --check docs/receipts/FR-20261011-000000-example.json" in page
     assert "—" not in page and "–" not in page
 
 
@@ -153,7 +152,7 @@ def test_bill_renders_when_optional_fields_are_missing():
     assert "Not recorded" in audit_page
 
 
-def test_audit_bill_total_is_the_jev_cost_or_not_recorded():
+def test_audit_bill_total_is_the_judge_cost_or_not_recorded():
     r = receipt.build_audit(_audit(), None)
     assert r["audit"]["evidence_sha256"] == {}
     assert receipt.total_usd(r) == 0.00042
@@ -202,7 +201,7 @@ def test_publish_all_covers_every_listed_run_and_audit(tmp_path):
 
 
 def test_check_finds_the_evidence_in_the_run_folder(tmp_path, monkeypatch):
-    from firstrun import config
+    from onestrun import config
 
     runs = tmp_path / "runs"
     runs.mkdir()
@@ -216,7 +215,7 @@ def test_check_finds_the_evidence_in_the_run_folder(tmp_path, monkeypatch):
 
 
 def test_publishing_an_audit_writes_its_receipt(tmp_path):
-    from firstrun import audit
+    from onestrun import audit
 
     a = _audit()
     a.update({"summary": {**a["summary"], "oldest_days": 1, "median_age_days": 1, "cards": 2}, "release": {"name": ""}})
@@ -236,3 +235,13 @@ def test_an_estimated_audit_cost_is_labeled_everywhere(tmp_path):
     assert "(estimated)" in receipt.render_audit_md(r)
     measured = receipt.build_audit(_audit(), tmp_path)
     assert measured["price"]["estimated"] is False and "receipt_est" not in receipt.index_fields(measured)
+
+
+def test_a_receipt_issued_with_the_old_jev_keys_still_renders():
+    old = {"work": {"repo": "a/b", "judged_by_jev": True}, "price": {"recorded": True, "usd": 0.00042, "jev_calls": 2,
+           "jev_input_tokens": 10000, "basis": "list price"},
+           "limits": {"jev_stale_pages_max": 200, "jev_commit_sorts_max": 80, "jev_batch_size": 40}}
+    new = receipt.upgrade_keys(old)
+    assert new["price"]["judge_calls"] == 2 and new["work"]["judged_by_judge"] is True
+    assert new["limits"]["judge_batch_size"] == 40
+    assert "jev_calls" in old["price"]  # the stored receipt is untouched

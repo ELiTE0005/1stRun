@@ -5,8 +5,8 @@ from pathlib import Path
 import pytest
 from click.testing import CliRunner
 
-from firstrun import config, docs_source, pr
-from firstrun.cli import cli
+from onestrun import config, docs_source, pr
+from onestrun.cli import cli
 
 FIX = Path(__file__).parent / "fixtures_report"
 DIFF = "--- a/local.md\n+++ b/local.md\n@@ -1,2 +1,2 @@\n-pip install x==0.3\n+pip install x\n y\n"
@@ -38,7 +38,7 @@ def test_known_site_and_unknown():
     got = docs_source.find("https://docs.getdbt.com/guides/duckdb?step=1", "")
     assert got["repo"] == "dbt-labs/docs.getdbt.com" and got["how"] == "known-site"
     assert docs_source.find("https://www.mkdocs.org/getting-started/", "")["path"] == "docs/getting-started.md"
-    assert docs_source.find("https://docs.entire.io/anything", "")["repo"] == "entireio/cli"
+    assert docs_source.find("https://docs.dagster.io/getting-started/quickstart", "")["repo"] == "dagster-io/dagster"
     assert docs_source.find("https://nowhere.example/x", "")["how"] == "unknown"
     typer = docs_source.find("https://typer.tiangolo.com/tutorial/first-steps/", "")
     assert (typer["repo"], typer["branch"]) == ("fastapi/typer", "master")
@@ -72,11 +72,21 @@ def test_plan_unknown_uses_placeholders(tmp_path):
 
 
 def test_json_mode(tmp_path, monkeypatch):
-    d = _run(tmp_path, source="https://docs.entire.io/start")
+    d = _run(tmp_path, source="https://www.mkdocs.org/getting-started/")
     monkeypatch.setattr(config, "RUNS_DIR", tmp_path)
     res = CliRunner().invoke(cli, ["pr", d.name, "--json"])
     assert res.exit_code == 0, res.output
     data = json.loads(res.output)
     assert set(data) == {"repo", "path", "branch", "diff", "pr_body", "commands"}
-    assert data["repo"] == "entireio/cli" and data["path"] == "README.md"
+    assert data["repo"] == "mkdocs/mkdocs" and data["path"] == "docs/getting-started.md"
     assert any(c.startswith("gh pr create") for c in data["commands"])
+
+
+def test_json_error_is_the_documented_object(tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "RUNS_DIR", tmp_path)
+    res = CliRunner().invoke(cli, ["pr", "--json"])
+    assert res.exit_code == 1
+    out = json.loads(res.output)
+    assert out["ok"] is False and out["command"] == "pr" and out["error"]["code"] == "not_found"
+    plain = CliRunner().invoke(cli, ["pr"])
+    assert plain.exit_code == 1 and plain.output.startswith("✗ ")

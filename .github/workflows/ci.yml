@@ -18,5 +18,5 @@ jobs:
       - run: pip install -e ".[dev]"
       - run: python -m pytest -q -p no:cacheprovider
         env:
-          FIRSTRUN_NO_EXPORT: "1"
-          FIRSTRUN_ENV_FILE: /dev/null
+          ONESTRUN_NO_EXPORT: "1"
+          ONESTRUN_ENV_FILE: /dev/null

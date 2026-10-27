@@ -3,7 +3,7 @@ import os
 
 import pytest
 
-from firstrun import planner
+from onestrun import planner
 
 MD = """# Quickstart
 
@@ -85,17 +85,17 @@ def test_read_docs_file_url(tmp_path):
 def test_plan_offline_and_fallback(tmp_path, monkeypatch):
     f = tmp_path / "d.md"
     f.write_text(MD, encoding="utf-8")
-    monkeypatch.setenv("FIRSTRUN_OFFLINE", "1")
+    monkeypatch.setenv("ONESTRUN_OFFLINE", "1")
     assert len(planner.plan(f.as_uri()).steps) == 3
-    monkeypatch.delenv("FIRSTRUN_OFFLINE")
+    monkeypatch.delenv("ONESTRUN_OFFLINE")
     with pytest.raises(planner.PlanError, match="planner failed"):  # no silent heuristic after a model failure
         planner.plan(f.as_uri(), llm=lambda p: "garbage")
 
 
 @pytest.mark.live
-@pytest.mark.skipif(os.environ.get("FIRSTRUN_LIVE") != "1", reason="set FIRSTRUN_LIVE=1")
+@pytest.mark.skipif(os.environ.get("ONESTRUN_LIVE") != "1", reason="set ONESTRUN_LIVE=1")
 def test_live_neatlogs_plan():
-    from firstrun.tracing import close_tracing, init_tracing
+    from onestrun.tracing import close_tracing, init_tracing
 
     init_tracing(tags=["dev"], disable_export=False)
     rb = planner.plan("https://docs.neatlogs.com/sdk/python")

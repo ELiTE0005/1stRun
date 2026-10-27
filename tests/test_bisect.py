@@ -9,9 +9,9 @@ from pathlib import Path
 import pytest
 from click.testing import CliRunner
 
-from firstrun import bisect as bisect_mod, config, state as state_io
-from firstrun.cli import cli
-from firstrun.models import FileSpec, Patch, Runbook, RunState, RunStatus, Step, StepResult, StepStatus
+from onestrun import bisect as bisect_mod, config, state as state_io
+from onestrun.cli import cli
+from onestrun.models import FileSpec, Patch, Runbook, RunState, RunStatus, Step, StepResult, StepStatus
 
 
 def _file(date: str, requires: str | None = None, yanked: bool = False) -> dict:
@@ -152,7 +152,7 @@ def test_probe_pins_release_and_names_container(fake_run):
                                fake_steps(0, ["0.3.0"]))
     c = FakeContainer.created[-1]
     assert not ok and "No such option: --years" in err
-    assert c.name == "firstrun-bisect-jafgen-0.3.0"
+    assert c.name == "1stRun-bisect-jafgen-0.3.0"
     assert c.pinned() == "jafgen==0.3.0"
     assert c.env["PIP_CONSTRAINT"] == "/tmp/constraints.txt"
 
@@ -270,7 +270,7 @@ def test_cli_bisect_is_a_command_not_a_url(tmp_runs_dir):
 
 
 def test_share_payload_carries_bisect_block(fake_run):
-    from firstrun import share
+    from onestrun import share
 
     run_fake(fake_run, releases_list(6), first_bad=3)
     payload = share.build_payload(state_io.run_dir(fake_run))

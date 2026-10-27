@@ -1,6 +1,6 @@
 # Share Format v1
 
-`firstrun share` turns one run folder into a share code. The web viewer at `run.html` turns the code back into the run. No server stores anything: the code travels in the URL fragment, after `#`, which browsers never send to a server.
+`1stRun share` turns one run folder into a share code. The web viewer at `run.html` turns the code back into the run. No server stores anything: the code travels in the URL fragment, after `#`, which browsers never send to a server.
 
 ## Encoding Is JSON, Then Gzip, Then Base64url
 
@@ -44,7 +44,7 @@ The browser decodes with `atob` after mapping `-`→`+` and `_`→`/`, then `Dec
     }
   ],
   "classifications": {
-    "10": {"source": "jev", "probabilities": {"docs_bug": 0.91, "environment": 0.05, "product_bug": 0.03, "needs_secret": 0.01}}
+    "10": {"source": "judge", "probabilities": {"docs_bug": 0.91, "environment": 0.05, "product_bug": 0.03, "needs_secret": 0.01}}
   },
   "patches": [
     {"step_id": 10, "old_command": "jafgen --years 6", "new_command": "jafgen 6",
@@ -72,12 +72,10 @@ The viewer draws a graph from the docs page to the fresh-container proof. Codes 
 
 - `steps[].quote` is the docs sentence the planner copied the command from, at most 240 characters.
 - `steps[].tries` lists the last 5 attempts of the step in order, each as `{"command", "exit_code", "passed"}`. A step that failed and then passed shows as "Failed as written" with its rerun.
-- `evidence` lists links from `evidence.json` in the run folder. Each item is `{"kind", "label", "url", "public", "step_id"}`. `kind` is one of `trace`, `checkpoint`, `session`, `trail`, `pr`, `comment`. The encoder drops any URL that does not start with `https://`. `public: false` makes the viewer label the link as needing a login. A `step_id` ties a PR or comment to the step it fixes.
+- `evidence` lists links from `evidence.json` in the run folder. Each item is `{"kind", "label", "url", "public", "step_id"}`. `kind` is one of `trace`, `pr`, `comment`. The encoder drops any URL that does not start with `https://`. `public: false` makes the viewer label the link as needing a login. A `step_id` ties a PR or comment to the step it fixes.
 
 ```json
 [
-  {"kind": "checkpoint", "label": "Entire checkpoint 01M4JMXVN32G62ZTSB7X5SMV1T", "url": "https://entire.io/gh/HighnessAtharva/firstrun/commit/f227fc3...", "public": true},
-  {"kind": "trail", "label": "Trail 6", "url": "https://entire.io/gh/HighnessAtharva/firstrun/trails/6", "public": false},
   {"kind": "pr", "label": "dbt-labs/docs.getdbt.com#10149", "url": "https://github.com/dbt-labs/docs.getdbt.com/pull/10149", "step_id": 10}
 ]
 ```

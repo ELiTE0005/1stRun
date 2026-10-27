@@ -35,9 +35,11 @@ jobs:
           ISSUE_LABELS: ${{ join(github.event.issue.labels.*.name, ',') }}
           EVENT_LABEL: ${{ github.event.label.name }}
           GH_TOKEN: ${{ github.token }}
-          TYPESAFE_API_KEY: ${{ secrets.TYPESAFE_API_KEY }}
-          NEATLOGS_API_KEY: ${{ secrets.NEATLOGS_API_KEY }}
-          FIRSTRUN_ENV_FILE: /dev/null
+          CLAUDE_CODE_OAUTH_TOKEN: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          LANGFUSE_PUBLIC_KEY: ${{ secrets.LANGFUSE_PUBLIC_KEY }}
+          LANGFUSE_SECRET_KEY: ${{ secrets.LANGFUSE_SECRET_KEY }}
+          LANGFUSE_BASE_URL: ${{ secrets.LANGFUSE_BASE_URL }}
+          ONESTRUN_ENV_FILE: /dev/null
       - if: steps.intake.outputs.publish == 'yes'
         env:
           REPO: ${{ steps.intake.outputs.repo }}

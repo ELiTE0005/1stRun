@@ -1,6 +1,25 @@
 {
  "runs": [
   {
+   "id": "20261026-185702-docs-neatlogs-com",
+   "ts": "2026-10-26T18:57:25+00:00",
+   "target": "docs.neatlogs.com",
+   "title": "Neatlogs Python SDK quickstart",
+   "url": "https://docs.neatlogs.com/sdk/python",
+   "status": "passed",
+   "passed": 3,
+   "total": 3,
+   "runnable": 3,
+   "skipped": 0,
+   "fixes": 0,
+   "seconds": 71,
+   "cost": 0.059,
+   "fixture": false,
+   "summary": "3 of 3 runnable steps passed.",
+   "receipt": "FR-20261026-185702-docs-neatlogs-com",
+   "receipt_usd": 0.061
+  },
+  {
    "id": "20261012-063402-docs-kleros-io",
    "ts": "2026-10-12T06:34:27+00:00",
    "target": "docs.kleros.io",
@@ -650,7 +669,7 @@
    "id": "20261010-112611-raw-githubusercontent-com",
    "ts": "2026-10-10T11:26:34+00:00",
    "target": "raw.githubusercontent.com",
-   "title": "FirstRun quickstart",
+   "title": "1stRun quickstart",
    "url": "https://raw.githubusercontent.com/HighnessAtharva/firstrun/main/README.md",
    "status": "failed",
    "passed": 1,
@@ -661,7 +680,7 @@
    "seconds": 0,
    "cost": 0.0309,
    "fixture": false,
-   "summary": "Step 2 broke: Run FirstRun on a quickstart URL (needs CLAUDE_CODE_OAUTH_TOKEN and Docker).",
+   "summary": "Step 2 broke: Run 1stRun on a quickstart URL (needs CLAUDE_CODE_OAUTH_TOKEN and Docker).",
    "receipt": "FR-20261010-112611-raw-githubusercontent-com",
    "receipt_usd": 0.0329
   },

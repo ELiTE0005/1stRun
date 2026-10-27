@@ -6,8 +6,8 @@ body:
   - type: markdown
     attributes:
       value: |
-        A public repo needs only its name. A GitHub Action clones it, runs `firstrun audit`, and posts the board link here in about 2 minutes.
-        A private repo is audited on your machine. Run `firstrun audit owner/repo`, then `firstrun audit-submit`. That command fills in the gist link below.
+        A public repo needs only its name. A GitHub Action clones it, runs `1stRun audit`, and posts the board link here in about 2 minutes.
+        A private repo is audited on your machine. Run `1stRun audit owner/repo`, then `1stRun audit-submit`. That command fills in the gist link below.
   - type: input
     id: repo
     attributes:

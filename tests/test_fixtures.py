@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pytest
 
-from firstrun.models import Runbook
+from onestrun.models import Runbook
 
 FIX = Path(__file__).parent / "fixtures"
 DOCS = sorted((FIX / "docs").glob("*.md"))
@@ -42,4 +42,4 @@ def test_fixtures_via_conftest(load_doc, load_runbook, fake_llm, tmp_runs_dir, t
 
 @pytest.mark.live
 def test_live_skipped_by_default():
-    raise AssertionError("must be skipped unless FIRSTRUN_LIVE=1")
+    raise AssertionError("must be skipped unless ONESTRUN_LIVE=1")

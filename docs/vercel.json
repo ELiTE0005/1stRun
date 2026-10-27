@@ -1,0 +1,141 @@
+{
+    "$schema":  "https://openapi.vercel.sh/vercel.json",
+    "framework":  null,
+    "buildCommand":  "",
+    "redirects":  [
+                      {
+                          "source":  "/run.html",
+                          "destination":  "/doc-test/",
+                          "statusCode":  301
+                      },
+                      {
+                          "source":  "/runs",
+                          "destination":  "/doc-test/",
+                          "statusCode":  301
+                      },
+                      {
+                          "source":  "/audit.html",
+                          "destination":  "/doc-audit/",
+                          "statusCode":  301
+                      }
+                  ],
+    "headers":  [
+                    {
+                        "source":  "/agent.md",
+                        "headers":  [
+                                        {
+                                            "key":  "Content-Type",
+                                            "value":  "text/markdown; charset=utf-8"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        },
+                                        {
+                                            "key":  "Cache-Control",
+                                            "value":  "public, max-age=300, must-revalidate"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/llms.txt",
+                        "headers":  [
+                                        {
+                                            "key":  "Content-Type",
+                                            "value":  "text/plain; charset=utf-8"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        },
+                                        {
+                                            "key":  "Cache-Control",
+                                            "value":  "public, max-age=300, must-revalidate"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/llms-full.txt",
+                        "headers":  [
+                                        {
+                                            "key":  "Content-Type",
+                                            "value":  "text/plain; charset=utf-8"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        },
+                                        {
+                                            "key":  "Cache-Control",
+                                            "value":  "public, max-age=300, must-revalidate"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/architecture.md",
+                        "headers":  [
+                                        {
+                                            "key":  "Content-Type",
+                                            "value":  "text/markdown; charset=utf-8"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/known-limits.md",
+                        "headers":  [
+                                        {
+                                            "key":  "Content-Type",
+                                            "value":  "text/markdown; charset=utf-8"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/share-format.md",
+                        "headers":  [
+                                        {
+                                            "key":  "Content-Type",
+                                            "value":  "text/markdown; charset=utf-8"
+                                        },
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/audits/(.*)",
+                        "headers":  [
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/runs/(.*)",
+                        "headers":  [
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        }
+                                    ]
+                    },
+                    {
+                        "source":  "/receipts/(.*)",
+                        "headers":  [
+                                        {
+                                            "key":  "Access-Control-Allow-Origin",
+                                            "value":  "*"
+                                        }
+                                    ]
+                    }
+                ]
+}

@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import contextlib
 
-from firstrun.models import Runbook, Step, StepResult
+from onestrun.models import Runbook, Step, StepResult
 
 
 class FakeContainer:
@@ -64,7 +64,7 @@ class Recorder:
 
 
 def install_recorder(monkeypatch) -> Recorder:
-    from firstrun import tracing
+    from onestrun import tracing
 
     rec = Recorder()
     real_trace, real_log = tracing.trace, tracing.log

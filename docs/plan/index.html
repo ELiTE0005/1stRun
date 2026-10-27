@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Plan | FirstRun</title>
-<meta name="description" content="The cfo.ai plan sets what one doc-test run may spend. FirstRun enforces the cap, and neatlogs alerts when real runs drift past it.">
+<title>Plan | 1stRun</title>
+<meta name="description" content="A cost cap per run keeps each plan tier profitable. 1stRun measures every doc-test run, stops a run at its cap and prints the cost on the receipt.">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Plan | FirstRun">
-<meta property="og:description" content="The cfo.ai plan sets what one doc-test run may spend. FirstRun enforces the cap, and neatlogs alerts when real runs drift past it.">
+<meta property="og:title" content="Plan | 1stRun">
+<meta property="og:description" content="A cost cap per run keeps each plan tier profitable. 1stRun measures every doc-test run, stops a run at its cap and prints the cost on the receipt.">
 <meta property="og:image" content="../assets/og-card-1200x630.jpg">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="color-scheme" content="light">
@@ -113,13 +113,13 @@ td.num{font-family:var(--mono);font-size:13px}
 <main>
 <div class="lh-top"><span class="ptile" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16"/><path d="M7 15l4-4 3 3 5-6"/></svg></span>
 <div><h1>The Plan Sets What a Run May Spend</h1>
-<p class="lede">neatlogs measures every doc-test run. cfo.ai turns those costs into tier prices and a cost cap per run. FirstRun stops a run at that cap, and a neatlogs alert fires when real runs drift past it.</p></div></div>
+<p class="lede">1stRun measures what every doc-test run costs. Each plan tier gets a cost cap per run, and 1stRun stops a run at that cap.</p></div></div>
 
 <ol class="loop panel" id="loop" aria-label="The cost loop">
-<li><div class="who"><img src="../assets/logo-neatlogs.webp" alt="">neatlogs measures<span class="n">1</span></div><b id="l1">Every run's cost</b><p id="l1s">Read from the firstrun.run traces.</p></li>
-<li><div class="who"><img src="../assets/logo-cfoai.webp" alt="">cfo.ai plans<span class="n">2</span></div><b id="l2">Prices and caps</b><p id="l2s">18 months, 6 Scenarios.</p><a id="l2a" href="https://cfo.ai/s/_u5lbrHIl9KX_JQE" target="_blank" rel="noopener">Open the model</a></li>
-<li><div class="who"><img src="../assets/logo.svg" alt="">FirstRun enforces<span class="n">3</span></div><b id="l3">A cap per run</b><p id="l3s"><code>firstrun run --tier scale</code></p></li>
-<li class="hot"><div class="who"><img src="../assets/logo-neatlogs.webp" alt="">neatlogs watches<span class="n">4</span></div><b id="l4">An alert on drift</b><p id="l4s">p95 run cost above the Scale cap.</p></li>
+<li><div class="who"><img src="../assets/logo.svg" alt="">1stRun measures<span class="n">1</span></div><b id="l1">Every run's cost</b><p id="l1s">Read from the cost record of each run.</p></li>
+<li><div class="who"><img src="../assets/logo.svg" alt="">The plan prices<span class="n">2</span></div><b id="l2">Three tiers</b><p id="l2s">Free, Team and Scale.</p></li>
+<li><div class="who"><img src="../assets/logo.svg" alt="">1stRun enforces<span class="n">3</span></div><b id="l3">A cap per run</b><p id="l3s"><code>1stRun run --tier scale</code></p></li>
+<li class="hot"><div class="who"><img src="../assets/logo.svg" alt="">1stRun checks<span class="n">4</span></div><b id="l4">Runs over the cap</b><p id="l4s">Share of measured runs that cost more than the Scale cap.</p></li>
 </ol>
 
 <section class="sec" aria-labelledby="t-h">
@@ -129,32 +129,26 @@ td.num{font-family:var(--mono);font-size:13px}
 <script>(function(){var x=document.querySelector(".twx");if(!x)return;var t=x.firstElementChild;function u(){x.classList.toggle("more",t.scrollLeft+t.clientWidth<t.scrollWidth-2)}t.addEventListener("scroll",u,{passive:true});addEventListener("resize",u);addEventListener("load",u);new MutationObserver(u).observe(t,{childList:true,subtree:true});u()})()</script>
 <p class="note" id="t-src"></p>
 <p class="note" id="t-note"></p>
-<div class="biz panel"><h3>How FirstRun Makes Money</h3><ul><li>The buyer is a DevRel or docs team at a dev-tool company.</li><li>Teams pay a monthly tier: Free $0, Team $49, Scale $299.</li><li>Plan, no paying customers yet.</li></ul></div>
+<div class="biz panel"><h3>How 1stRun Makes Money</h3><ul><li>The buyer is a DevRel or docs team at a dev-tool company.</li><li>Teams pay a monthly tier: Free $0, Team $49, Scale $299.</li><li>Plan, no paying customers yet.</li></ul></div>
 </section>
 
-<section class="sec two" aria-label="Charts">
+<section class="sec" aria-label="Chart">
 <div class="chart panel"><h3>Measured Cost per Run Against the Caps</h3><p class="s" id="h-sub">Each bar counts published doc-test runs in a cost band.</p><svg class="c" id="hist" viewBox="0 0 560 230" role="img"></svg><div class="legend" id="h-leg"></div></div>
-<div class="chart panel"><h3>Cash on Hand Through April 2028</h3><p class="s">cfo.ai Scenarios with the same customers. Only the cap or the Scale price changes.</p><svg class="c" id="cash" viewBox="0 0 520 230" role="img"></svg><div class="legend" id="c-leg"></div></div>
 </section>
 
 <section class="sec" aria-labelledby="g-h">
-<div class="sec-h"><h2 id="g-h">The Guardrails Fired 3 Times in 2 Days</h2></div>
-<ol class="log panel" id="log"></ol>
-<p class="note">neatlogs alert history, read with the CLI</p>
-<p class="note" id="g-note"></p>
+<div class="sec-h"><h2 id="g-h">The Data Behind the Caps</h2></div>
+<p class="note" id="g-note">A cap is the most one run may spend. When real runs cost more than the plan expects, refresh the numbers with <code>1stRun econ</code>.</p>
 <div class="links">
-<a class="btn pri" href="https://cfo.ai/s/_u5lbrHIl9KX_JQE" target="_blank" rel="noopener"><img src="../assets/logo-cfoai.webp" alt="">Open the cfo.ai model</a>
-<a class="btn" href="https://github.com/HighnessAtharva/firstrun/blob/main/business/drivers.csv" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>drivers.csv</a>
-<a class="btn" href="https://github.com/HighnessAtharva/firstrun/blob/main/business/BUSINESS_PLAN.md" target="_blank" rel="noopener"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>Business plan</a>
-<a class="btn" href="../data/plan.json"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>plan.json</a>
+<a class="btn pri" href="../data/plan.json"><svg class="i" aria-hidden="true"><use href="#i-file"/></svg>plan.json</a>
 </div>
 </section>
 </main>
-<p class="page-note">Refresh it with <code>firstrun econ</code>. Model costs are list price, not billed.</p>
+<p class="page-note">Refresh it with <code>1stRun econ</code>. Model costs are list price, not billed.</p>
 <footer class="sf"><div class="sf-in">
-<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">FirstRun</a>
-<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/HighnessAtharva/firstrun">GitHub</a><a href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/README.md">Evidence</a></nav></div>
-<p class="sf-cred"><a href="https://atharvashah.com">Atharva Shah</a> built FirstRun for <a href="https://neatlogs.com/hackathon">neatHack 2026</a>. <a href="https://neatlogs.com">neatlogs</a> traces each run, <a href="https://cfo.ai">cfo.ai</a> prices it, and <a href="https://entire.io">Entire</a> records the build. Follow <a href="https://x.com/cultist_dev">@cultist_dev</a> on X.</p>
+<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">1stRun</a>
+<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/ELiTE0005/1stRun">GitHub</a></nav></div>
+<p class="sf-cred"><a href="https://rajbir.tech">Rajbir Biswas</a> built 1stRun with <a href="https://tryalan.ai">Alan AI</a>. Follow <a href="https://x.com/rangoliagt">@rangoliagt</a> on X.</p>
 </div></footer>
 
 <script>
@@ -169,17 +163,16 @@ function money(v){return (v<0?"-$":"$")+Math.abs(Math.round(v)).toLocaleString("
 function when(ts){var d=new Date(ts);return isNaN(d)?ts:d.toISOString().slice(0,16).replace("T"," ")+" UTC"}
 var CAPC={Free:"oklch(68% .01 255)",Team:"oklch(55% .19 256)",Scale:"oklch(55% .11 190)"};
 
-Promise.all([fetch("../data/plan.json").then(function(r){return r.json()}),fetch("../runs/index.json").then(function(r){return r.json()}),fetch("../data/cfo-model.json").then(function(r){return r.json()})]).then(function(v){
-  var P=v[0],R=(v[1].runs||[]).filter(function(r){return !r.fixture&&+r.cost>0}),C=v[2],d=P.drivers,T=P.tiers,floor=P.margin_floor;
+Promise.all([fetch("../data/plan.json").then(function(r){return r.json()}),fetch("../runs/index.json").then(function(r){return r.json()})]).then(function(v){
+  var P=v[0],R=(v[1].runs||[]).filter(function(r){return !r.fixture&&+r.cost>0}),d=P.drivers,T=P.tiers,floor=P.margin_floor;
   /* loop */
   $("l1").textContent=d.traces+" runs, mean "+usd(d.cost_mean)+", p95 "+usd(d.cost_p95.usd);
-  $("l1s").textContent="Read from the firstrun.run traces on "+P.econ_generated_at.slice(0,10)+".";
-  $("l2").textContent="Base Scenario ends April 2028 with "+money(P.cfo.cash_last_month.Base);
-  $("l2s").textContent="The old $0.50 cap ends at "+money(P.cfo.cash_last_month["Old cap"])+". Same customers, same prices.";
+  $("l1s").textContent="Measured on "+P.econ_generated_at.slice(0,10)+".";
+  $("l2").textContent="Free $0, Team $"+T.Team.price_usd_month+", Scale $"+T.Scale.price_usd_month;
+  $("l2s").textContent="Per month. Each price sets that tier's cap.";
   $("l3").textContent="Scale stops at "+usd(T.Scale.cap_usd_per_run)+", Team at "+usd(T.Team.cap_usd_per_run);
-  var fires=(P.alerts||[]).length;
-  $("l4").textContent=fires+" guardrail fires since Oct 10";
-  $("l4s").textContent=T.Scale.measured_runs_over_cap_pct+"% of measured runs cost more than the Scale cap.";
+  $("l4").textContent=T.Scale.measured_runs_over_cap_pct+"% of runs go over the Scale cap";
+  $("l4s").textContent="The cap stops those runs before they cost more.";
   /* tiers */
   var tb=$("tiers");
   Object.keys(T).forEach(function(n){var t=T[n],tr=el("tr");
@@ -188,9 +181,9 @@ Promise.all([fetch("../data/plan.json").then(function(r){return r.json()}),fetch
     tr.appendChild(el("td","num",t.measured_runs_over_cap_pct+"%"));
     function m(x){var td=el("td");if(x==null){td.appendChild(el("span","chip","no revenue"));return td}var c=el("span","chip "+(x>=floor*100?"c-ok":x>=50?"c-warn":"c-bad"),x+"%");td.appendChild(c);return td}
     tr.appendChild(m(t.margin_at_mean_pct));tr.appendChild(m(t.margin_at_p95_pct));tb.appendChild(tr)});
-  $("t-src").textContent="cfo.ai drivers from "+d.traces+" neatlogs traces";
+  $("t-src").textContent="Costs from "+d.traces+" measured runs, at list price.";
   var need=T.Scale.price_for_p95_at_floor;
-  $("t-note").textContent="Without the cap, a Scale customer's p95 run keeps "+T.Scale.margin_at_p95_pct+"% margin, under the 70% floor. Holding 70% at p95 needs a Scale price of $"+Math.round(need)+" a month. The closest cfo.ai Scenario prices Scale at $529 and ends April 2028 with "+money(P.cfo.cash_last_month["Scale at $529"])+".";
+  $("t-note").textContent="Without the cap, a Scale customer's p95 run keeps "+T.Scale.margin_at_p95_pct+"% margin, under the 70% floor. Holding 70% at p95 needs a Scale price of $"+Math.round(need)+" a month.";
   /* histogram */
   var H=$("hist"),W=560,Hh=230,pl=36,pr=10,pt=12,pb=34,max=0.11,bins=22,cnt=new Array(bins).fill(0);
   R.forEach(function(r){var b=Math.min(bins-1,Math.floor(+r.cost/max*bins));cnt[b]++});
@@ -204,23 +197,6 @@ Promise.all([fetch("../data/plan.json").then(function(r){return r.json()}),fetch
     var li=el("span");var i=el("i");i.style.background=CAPC[n];li.appendChild(i);li.appendChild(document.createTextNode(n+" cap "+usd(c)));L.appendChild(li)});
   H.setAttribute("aria-label",R.length+" runs. "+T.Scale.measured_runs_over_cap_pct+"% cost more than the Scale cap of "+usd(T.Scale.cap_usd_per_run));
   $("h-sub").textContent=R.length+" published doc-test runs with a cost, list price. Runs right of a line would stop at that tier's cap.";
-  /* cash */
-  var S=$("cash"),CW=520,CH=230,cl=48,cr=70,ct=12,cb=28,keys=[["Base","oklch(55% .19 256)"],["Old cap","oklch(58% .17 40)"],["Scale at $529","oklch(55% .11 190)"]];
-  var all=[];keys.forEach(function(k){all=all.concat(C.scenarios[k[0]].cash)});
-  var mn=Math.min.apply(null,all),mx=Math.max.apply(null,all),n=C.months.length,cx=function(i){return cl+i/(n-1)*(CW-cl-cr)},cy=function(v){return ct+(1-(v-mn)/(mx-mn))*(CH-ct-cb)};
-  [-10000,0,10000,20000].forEach(function(g){if(g<mn||g>mx)return;s("line",{x1:cl,x2:CW-cr,y1:cy(g),y2:cy(g),stroke:g===0?"oklch(68% .01 255)":"oklch(94.6% .005 255)"},S);var tx=s("text",{x:cl-6,y:cy(g)+4,"text-anchor":"end","font-size":11,fill:"oklch(50% .013 255)"},S);tx.textContent=(g<0?"-$":"$")+Math.abs(g/1000)+"k"});
-  [0,6,12,17].forEach(function(i){var tx=s("text",{x:cx(i),y:CH-8,"text-anchor":"middle","font-size":11,fill:"oklch(50% .013 255)"},S);var m=C.months[i];tx.textContent=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"][+m.slice(5)-1]+" "+m.slice(0,4)});
-  var CL=$("c-leg");
-  keys.forEach(function(k){var a=C.scenarios[k[0]].cash,pts=a.map(function(v,i){return cx(i)+","+cy(v)}).join(" ");s("polyline",{points:pts,fill:"none",stroke:k[1],"stroke-width":2.2,"stroke-linejoin":"round"},S);
-    var last=a[a.length-1],tx=s("text",{x:cx(n-1)+6,y:cy(last)+4,"font-size":11.5,"font-weight":600,fill:k[1]},S);tx.textContent=money(last);
-    var li=el("span"),i=el("i");i.style.background=k[1];li.appendChild(i);li.appendChild(document.createTextNode(k[0]==="Old cap"?"Old $0.50 cap":k[0]));CL.appendChild(li)});
-  S.setAttribute("aria-label","Cash in April 2028: Base "+money(C.scenarios.Base.cash[n-1])+", old cap "+money(C.scenarios["Old cap"].cash[n-1])+", Scale at $529 "+money(C.scenarios["Scale at $529"].cash[n-1]));
-  /* guardrail log */
-  var G=$("log");(P.alerts||[]).forEach(function(a){var li=el("li"),dot=el("span","dot");dot.innerHTML='<svg class="i" aria-hidden="true"><use href="#i-alert"/></svg>';li.appendChild(dot);
-    li.appendChild(el("b",null,a.rule));li.appendChild(el("span",null,a.trace_id?"The run stopped at its cap. neatlogs trace "+a.trace_id:"Rolling "+(a.window_minutes/60)+" h window over every firstrun.run trace"));
-    var t=el("time",null,when(a.fired_at));t.setAttribute("datetime",a.fired_at);li.appendChild(t);G.appendChild(li)});
-  if(!(P.alerts||[]).length)G.appendChild(el("li",null,"No guardrail fire in the snapshot."));
-  $("g-note").textContent="The p95 alert uses the Scale cap from cfo.ai as its threshold. When it fires, the plan is out of date or a run got expensive, so the next step is firstrun econ and a new cfo.ai read.";
 }).catch(function(){$("t-note").textContent="The plan data did not load."});
 })();
 </script>

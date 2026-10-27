@@ -3,29 +3,32 @@ from pathlib import Path
 
 import pytest
 
-# Tests never export traces. Set FIRSTRUN_EXPORT_TESTS=1 to turn that off on purpose.
-if os.environ.get("FIRSTRUN_EXPORT_TESTS") != "1":
-    os.environ["FIRSTRUN_NO_EXPORT"] = "1"
+# Tests never export traces. Set ONESTRUN_EXPORT_TESTS=1 to turn that off on purpose.
+if os.environ.get("ONESTRUN_EXPORT_TESTS") != "1":
+    os.environ["ONESTRUN_NO_EXPORT"] = "1"
     # Empty values block config.load_env from reading the real keys out of .env.
     os.environ["LANGFUSE_PUBLIC_KEY"] = ""
     os.environ["LANGFUSE_SECRET_KEY"] = ""
-    # An empty value also keeps config from calling the author's Firecrawl key rotator in every test.
+    # An empty value also keeps a real Firecrawl key in .env out of every test.
     os.environ.setdefault("FIRECRAWL_API_KEY", "")
 
-# Tests never write the public site log in docs/runs or docs/audits. A missing folder turns publishing off.
-os.environ["FIRSTRUN_SITE_DIR"] = str(Path(__file__).parent / "_no_site" / "runs")
+# No test reaches a real judge model, even on a machine that runs Ollama. A test that wants one sets its URL.
+os.environ.setdefault("ONESTRUN_JUDGE", "off")
 
-from firstrun import config  # noqa: E402
-from firstrun.models import Runbook  # noqa: E402
+# Tests never write the public site log in docs/runs or docs/audits. A missing folder turns publishing off.
+os.environ["ONESTRUN_SITE_DIR"] = str(Path(__file__).parent / "_no_site" / "runs")
+
+from onestrun import config  # noqa: E402
+from onestrun.models import Runbook  # noqa: E402
 
 FIXTURES = Path(__file__).parent / "fixtures"
 
 
 def pytest_collection_modifyitems(config, items):
-    """Skip tests marked live unless FIRSTRUN_LIVE=1."""
-    if os.environ.get("FIRSTRUN_LIVE") == "1":
+    """Skip tests marked live unless ONESTRUN_LIVE=1."""
+    if os.environ.get("ONESTRUN_LIVE") == "1":
         return
-    skip = pytest.mark.skip(reason="live test: set FIRSTRUN_LIVE=1 to run")
+    skip = pytest.mark.skip(reason="live test: set ONESTRUN_LIVE=1 to run")
     for item in items:
         if "live" in item.keywords:
             item.add_marker(skip)
@@ -59,7 +62,7 @@ def load_runbook():
 
 @pytest.fixture
 def tmp_runs_dir(tmp_path, monkeypatch):
-    monkeypatch.setenv("FIRSTRUN_RUNS_DIR", str(tmp_path))
+    monkeypatch.setenv("ONESTRUN_RUNS_DIR", str(tmp_path))
     monkeypatch.setattr(config, "RUNS_DIR", tmp_path)
     return tmp_path
 
@@ -67,7 +70,7 @@ def tmp_runs_dir(tmp_path, monkeypatch):
 @pytest.fixture
 def tmp_precedents(tmp_path, monkeypatch):
     path = tmp_path / "precedents.json"
-    monkeypatch.setenv("FIRSTRUN_PRECEDENTS", str(path))
+    monkeypatch.setenv("ONESTRUN_PRECEDENTS", str(path))
     monkeypatch.setattr(config, "PRECEDENTS_FILE", path)
     return path
 
@@ -93,10 +96,10 @@ def fake_llm():
 @pytest.fixture(scope="session", autouse=True)
 def _tracing_never_exports():
     """Mark tracing started with export off, so no tracing.log or span in a test leaves the machine."""
-    if os.environ.get("FIRSTRUN_EXPORT_TESTS") == "1":
+    if os.environ.get("ONESTRUN_EXPORT_TESTS") == "1":
         yield
         return
-    from firstrun import tracing
+    from onestrun import tracing
 
     tracing._ready = True  # init_tracing must not start a Langfuse client. With no client every call is a no-op.
     yield

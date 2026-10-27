@@ -4,8 +4,8 @@ import json
 
 import pytest
 
-from firstrun import classify, llm, precedents
-from firstrun.models import FailureClass as FC
+from onestrun import classify, llm, precedents
+from onestrun.models import FailureClass as FC
 
 PIP_ERR = "ERROR: Could not find a version that satisfies the requirement chromadb==0.3\nERROR: No matching distribution found for chromadb==0.3"
 
@@ -29,15 +29,15 @@ def test_signature_has_readable_prefix_and_short_hash():
     assert len(sig.rsplit("-", 1)[1]) == 12
 
 
-def test_jev_wins_when_it_answers(monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(FC.DOCS_BUG))
-    monkeypatch.setattr(llm, "ask_json", lambda *a, **k: pytest.fail("claude must not run"))
+def test_judge_is_the_backup_when_claude_is_down(monkeypatch):
+    monkeypatch.setattr(llm, "ask_json", lambda *a, **k: (_ for _ in ()).throw(RuntimeError("down")))
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG))
     cls = classify.classify(PIP_ERR, "pip install chromadb==0.3")
-    assert cls.source == "jev" and cls.top == FC.DOCS_BUG
+    assert cls.source == "judge" and cls.top == FC.DOCS_BUG
 
 
-def test_claude_is_the_fallback(monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: None)
+def test_claude_decides_first(monkeypatch):
+    monkeypatch.setattr(classify, "_judge", lambda e, c: pytest.fail("the judge must not run when Claude answers"))
     reply = {"docs_bug": 0.1, "environment": 0.7, "product_bug": 0.1, "needs_secret": 0.1}
     monkeypatch.setattr(llm, "ask_json", lambda *a, **k: (reply, {"cost_usd": 0.001}))
     cls = classify.classify("boom", "x")
@@ -45,7 +45,7 @@ def test_claude_is_the_fallback(monkeypatch):
 
 
 def test_heuristic_is_the_last_fallback(monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: None)
+    monkeypatch.setattr(classify, "_judge", lambda e, c: None)
 
     def boom(*a, **k):
         raise RuntimeError("down")
@@ -68,8 +68,8 @@ def test_precedent_store_and_lookup(tmp_precedents):
 
 
 @pytest.mark.live
-def test_live_jev_classifies_pip_version_as_docs_bug():
-    probs = classify._jev(PIP_ERR, "pip install chromadb==0.3")
-    print("jev returned:", probs)
+def test_live_judge_classifies_pip_version_as_docs_bug():
+    probs = classify._judge(PIP_ERR, "pip install chromadb==0.3")
+    print("judge returned:", probs)
     assert probs is not None
     assert max(probs, key=probs.get) == FC.DOCS_BUG

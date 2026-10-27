@@ -7,7 +7,7 @@ import re
 import tomllib
 from pathlib import Path
 
-from firstrun.cli import ERROR_CODES
+from onestrun.cli import ERROR_CODES
 
 ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / "docs"
@@ -33,7 +33,7 @@ def test_llms_txt_follows_the_convention():
     text = (DOCS / "llms.txt").read_text(encoding="utf-8")
     lines = text.splitlines()
     assert lines[0].startswith("# ") and lines[2].startswith("> ")
-    assert "https://firstrun.atharvashah.com/agent.md" in text.split("## ")[1]  # agent.md is the first link
+    assert "https://1strun.rajbir.tech/agent.md" in text.split("## ")[1]  # agent.md is the first link
 
 
 def test_netlify_serves_agent_files_as_utf8_with_cors():
@@ -51,11 +51,11 @@ def test_pages_point_agents_at_agent_md():
         assert '<link rel="alternate" type="text/markdown" href="/agent.md"' in html, page
     for page in ("doc-test/index.html", "doc-audit/index.html"):
         html = (DOCS / page).read_text(encoding="utf-8")
-        assert "Read https://firstrun.atharvashah.com/agent.md and follow it." in html, page
+        assert "Read https://1strun.rajbir.tech/agent.md and follow it." in html, page
     assert '<a href="/agent.md">For agents</a>' in (DOCS / "index.html").read_text(encoding="utf-8")
 
 
 def test_skill_frontmatter():
-    text = (ROOT / "skills" / "firstrun" / "SKILL.md").read_text(encoding="utf-8")
+    text = (ROOT / "skills" / "1strun" / "SKILL.md").read_text(encoding="utf-8")
     m = re.match(r"---\nname: (\S+)\ndescription: (.+?)\n---\n", text, re.S)
-    assert m and m.group(1) == "firstrun" and len(m.group(2)) <= 1024
+    assert m and m.group(1) == "1strun" and len(m.group(2)) <= 1024

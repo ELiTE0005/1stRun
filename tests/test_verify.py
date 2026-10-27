@@ -3,9 +3,9 @@ from pathlib import Path
 
 import pytest
 
-from firstrun import verify as verify_mod
-from firstrun.models import Patch, Runbook, RunStatus, Step, StepResult
-from firstrun.verify import apply_patches, verify, verify_details
+from onestrun import verify as verify_mod
+from onestrun.models import Patch, Runbook, RunStatus, Step, StepResult
+from onestrun.verify import apply_patches, verify, verify_details
 
 
 class FakeContainer:
@@ -64,7 +64,7 @@ def test_all_pass_is_verified():
     status = verify(make_runbook(), [PATCH], factory_with_log(created), make_runner(set(), seen), out=details)
     assert status == RunStatus.VERIFIED
     assert seen == ["pip install foo", "python new.py", "python check.py"]
-    assert created[0][1].startswith("firstrun-verify-")
+    assert created[0][1].startswith("1stRun-verify-")
     assert [s["passed"] for s in details["steps"]] == [True, True, True]
     assert details["steps"][0]["duration_s"] == 0.5
 
@@ -102,10 +102,10 @@ def test_verify_source_imports_no_model_module():
 
 @pytest.mark.live
 def test_live_verify_real_container():
-    from firstrun.sandbox import Container
+    from onestrun.sandbox import Container
 
     try:
-        Container(image="python:3.11-slim", name="firstrun-verify-probe")
+        Container(image="python:3.11-slim", name="1stRun-verify-probe")
     except NotImplementedError:
         pytest.skip("sandbox.Container is not implemented yet")
     rb = Runbook(source_url="https://example.com", steps=[Step(id=1, intent="echo", command="echo hi")])

@@ -3,18 +3,17 @@
 from __future__ import annotations
 
 import json
-import subprocess
 
 import httpx
 import pytest
 from click.testing import CliRunner
 
 from _edge_fakes import FakeContainer, factory_for, install_recorder, make_runbook
-from firstrun import executor, llm, planner
-from firstrun import state as state_io
-from firstrun.cli import cli
-from firstrun.models import RunStatus, StepStatus
-from firstrun.sandbox import Container
+from onestrun import executor, llm, planner
+from onestrun import state as state_io
+from onestrun.cli import cli
+from onestrun.models import RunStatus, StepStatus
+from onestrun.sandbox import Container
 
 GOOD_STEP = {"id": 1, "intent": "install", "command": "pip install x", "files": [],
              "expected": {"exit_code": 0}, "source_line": "pip install x"}
@@ -30,7 +29,7 @@ def no_container(monkeypatch):
 
 @pytest.fixture
 def online(monkeypatch):
-    monkeypatch.delenv("FIRSTRUN_OFFLINE", raising=False)
+    monkeypatch.delenv("ONESTRUN_OFFLINE", raising=False)
     # A dummy token gets past the CLI's missing-token check, so CI with no keys reaches the planner.
     monkeypatch.setenv("CLAUDE_CODE_OAUTH_TOKEN", "test-token")
 
@@ -100,7 +99,7 @@ def test_p4_more_than_ten_steps_is_out_of_scope(tmp_runs_dir, tmp_path, no_conta
 
 
 def test_p4_ten_steps_is_allowed(tmp_path, monkeypatch):
-    monkeypatch.setenv("FIRSTRUN_OFFLINE", "1")
+    monkeypatch.setenv("ONESTRUN_OFFLINE", "1")
     lines = "\n".join(f"echo step{i}" for i in range(10))
     doc = _doc(tmp_path, f"# Ten\n\n```bash\n{lines}\n```\n")
     assert len(planner.plan(str(doc)).steps) == 10
@@ -209,32 +208,6 @@ def test_e9_planner_rewrites_commands_before_the_container_sees_them(fake_llm):
     assert rb.steps[0].source_line == "pip install x"          # the docs line is not rewritten
 
 
-# --- K1 ------------------------------------------------------------------------
-
-def test_k1_insufficient_credits_activates_a_key_and_retries_once(monkeypatch, tmp_path):
-    keys = tmp_path / "keys.py"
-    keys.write_text("# stand-in", encoding="utf-8")
-    monkeypatch.setattr(planner, "KEYS_SCRIPT", str(keys))
-    calls = {"scrape": 0, "activate": 0}
-
-    def scrape(exe, url):
-        calls["scrape"] += 1
-        if calls["scrape"] == 1:
-            return subprocess.CompletedProcess([], 1, stdout="", stderr="Insufficient credits")
-        return subprocess.CompletedProcess([], 0, stdout="# docs", stderr="")
-
-    def run(cmd, **kw):
-        assert cmd[-1] == "activate"
-        calls["activate"] += 1
-        return subprocess.CompletedProcess(cmd, 0)
-
-    monkeypatch.setattr(planner.shutil, "which", lambda name: "firecrawl")
-    monkeypatch.setattr(planner, "_run_firecrawl", scrape)
-    monkeypatch.setattr(planner.subprocess, "run", run)
-    assert planner._firecrawl_scrape("https://docs.example.com") == "# docs"
-    assert calls == {"scrape": 2, "activate": 1}
-
-
 # --- K2 ------------------------------------------------------------------------
 
 def test_k2_expired_token_stops_the_run_with_model_auth_failed(monkeypatch):
@@ -261,7 +234,7 @@ def test_k2_run_report_says_model_auth_failed(tmp_runs_dir, tmp_path, monkeypatc
 # --- K5 ------------------------------------------------------------------------
 
 def test_k5_saved_fixture_is_labeled_a_fixture_in_the_report(tmp_runs_dir, fixtures_dir):
-    from firstrun import report
+    from onestrun import report
 
     source = (fixtures_dir / "docs" / "openai_v0_FIXTURE.md").as_uri()
     rb = make_runbook("echo hi", source_url=source)
@@ -272,7 +245,7 @@ def test_k5_saved_fixture_is_labeled_a_fixture_in_the_report(tmp_runs_dir, fixtu
 
 
 def test_k5_wayback_url_is_labeled_too():
-    from firstrun import report
+    from onestrun import report
 
     assert report.is_fixture("https://web.archive.org/web/20230802050711/https://github.com/openai/openai-python")
     assert not report.is_fixture("https://docs.neatlogs.com/sdk/python")

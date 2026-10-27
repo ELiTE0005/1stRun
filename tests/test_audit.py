@@ -10,7 +10,7 @@ from pathlib import Path
 
 import pytest
 
-from firstrun import audit
+from onestrun import audit
 
 NOW = datetime.now(timezone.utc)
 
@@ -104,7 +104,7 @@ def test_stale_page_has_product_evidence_and_quiet_page_does_not(repo):
 
 
 def test_features_coverage_momentum_and_cards(repo):
-    a = audit.audit(str(repo), use_jev=False)
+    a = audit.audit(str(repo), use_judge=False)
     feats = {f["term"]: f for f in a["features"]}
     assert feats["--format"]["covered"] is False
     kinds = {c["kind"] for c in a["cards"]}
@@ -120,7 +120,7 @@ def test_features_coverage_momentum_and_cards(repo):
 
 
 def test_save_and_publish_upsert_one_row(repo, tmp_path):
-    a = audit.audit(str(repo), use_jev=False)
+    a = audit.audit(str(repo), use_judge=False)
     md = audit.save(a, tmp_path / "out")
     assert md.read_text(encoding="utf-8").startswith("# Docs audit")
     site = tmp_path / "audits"
@@ -131,10 +131,18 @@ def test_save_and_publish_upsert_one_row(repo, tmp_path):
     assert json.loads((site / f"{a['id']}.json").read_text(encoding="utf-8"))["repo"] == a["repo"]
 
 
-def test_jev_sort_without_key_is_empty(monkeypatch):
-    monkeypatch.delenv("TYPESAFE_API_KEY", raising=False)
-    monkeypatch.setattr(audit.config, "load_env", lambda *a, **k: None)
-    assert audit.jev_sort(["something"]) == {}
+def test_judge_sort_without_a_judge_is_empty(monkeypatch):
+    monkeypatch.setattr(audit.judge, "available", lambda: False)
+    assert audit.judge_sort(["something"]) == {}
+
+
+def test_judge_sort_keeps_only_a_confident_answer(monkeypatch):
+    monkeypatch.setattr(audit.judge, "available", lambda: True)
+    monkeypatch.setattr(audit.judge, "ask", lambda items, q, timeout=0: [
+        {"kind": {"feature": 0.9, "fix": 0.05, "docs": 0.03, "internal": 0.02}},
+        {"kind": {"feature": 0.4, "fix": 0.3, "docs": 0.2, "internal": 0.1}},
+        None])
+    assert audit.judge_sort(["a", "b", "c"]) == {0: "feature"}
 
 
 def test_title_skips_html_and_falls_back_to_the_file_name():
@@ -164,7 +172,7 @@ def test_release_range_skips_nightly_tags():
 
 
 def test_issue_lists_cards_and_never_opens_anything(repo):
-    a = audit.audit(str(repo), use_jev=False)
+    a = audit.audit(str(repo), use_judge=False)
     a["url"] = "https://github.com/acme/proj"
     a["repo"] = "acme/proj"
     data = audit.issue(a)
@@ -176,7 +184,7 @@ def test_issue_lists_cards_and_never_opens_anything(repo):
 
 def test_publish_keeps_one_audit_per_repo(repo, tmp_path):
     site = tmp_path / "audits"
-    a1 = audit.audit(str(repo), use_jev=False)
+    a1 = audit.audit(str(repo), use_judge=False)
     audit.publish(a1, site)
     a2 = dict(a1, id=a1["id"] + "-b")
     audit.publish(a2, site)
@@ -188,7 +196,7 @@ def test_publish_keeps_one_audit_per_repo(repo, tmp_path):
 def test_undocumented_features_in_one_area_become_one_card():
     feats = [{"sha": f"s{i}", "date": "2026-10-0" + str(i + 1), "subject": f"feat(workspace): thing {i}", "pr": None,
               "author": "a", "term": "thing", "area": "workspace", "area_src": "scope", "covered": False,
-              "judge": "jev", "closest_page": "docs/cli.md"} for i in range(4)]
+              "judge": "judge", "closest_page": "docs/cli.md"} for i in range(4)]
     rel = {"name": "v1", "previous": "v0", "date": "2026-10-05", "commits": []}
     cards = audit.build_cards("acme/proj", [], feats, {"workspace": {"commits": 4, "authors": 2}}, rel, "", False, 180)
     docs = [c for c in cards if c["kind"] == "document"]
@@ -217,37 +225,21 @@ def test_blog_and_contributing_are_not_docs_pages():
     assert not audit.is_doc_path("docs/contributing/how.md")
 
 
-def test_jev_clears_a_stale_page_the_commits_do_not_touch(monkeypatch):
-    class R:
-        def raise_for_status(self):
-            pass
-
-        def json(self):
-            return {"answers": {"s0": {"noul": 0.1}, "s1": {"noul": 0.9}}}
-
-    monkeypatch.setenv("TYPESAFE_API_KEY", "test")
-    monkeypatch.setattr(audit.config, "load_env", lambda *a, **k: None)
-    monkeypatch.setattr(audit.httpx, "post", lambda *a, **k: R())
+def test_judge_clears_a_stale_page_the_commits_do_not_touch(monkeypatch):
+    monkeypatch.setattr(audit.judge, "available", lambda: True)
+    monkeypatch.setattr(audit.judge, "ask", lambda items, q, timeout=0: [{"stale": 0.1}, {"stale": 0.9}])
     pages = [{"path": "a.md", "status": "stale", "evidence": [{"subject": "x"}]},
              {"path": "b.md", "status": "stale", "evidence": [{"subject": "y"}]}]
-    assert audit.jev_stale(pages, {}) == 1
-    assert pages[0]["status"] == "quiet" and pages[1]["status"] == "stale" and pages[1]["judge"] == "jev"
+    assert audit.judge_stale(pages, {}) == 1
+    assert pages[0]["status"] == "quiet" and pages[1]["status"] == "stale" and pages[1]["judge"] == "judge"
 
 
-def test_pages_jev_never_read_become_unchecked(monkeypatch):
-    class R:
-        def raise_for_status(self):
-            pass
-
-        def json(self):
-            return {"answers": {f"s{i}": {"noul": 0.9} for i in range(40)}}
-
-    monkeypatch.setenv("TYPESAFE_API_KEY", "test")
-    monkeypatch.setattr(audit.config, "load_env", lambda *a, **k: None)
-    monkeypatch.setattr(audit.httpx, "post", lambda *a, **k: R())
-    monkeypatch.setattr(audit, "JEV_STALE_MAX", 40)
+def test_pages_judge_never_read_become_unchecked(monkeypatch):
+    monkeypatch.setattr(audit.judge, "available", lambda: True)
+    monkeypatch.setattr(audit.judge, "ask", lambda items, q, timeout=0: [{"stale": 0.9} for _ in items])
+    monkeypatch.setattr(audit, "JUDGE_STALE_MAX", 40)
     pages = [{"path": f"p{i}.md", "status": "stale", "relevant_since": 100 - i, "evidence": []} for i in range(45)]
-    audit.jev_stale(pages, {})
+    audit.judge_stale(pages, {})
     assert sum(p["status"] == "stale" for p in pages) == 40
     assert sum(p["status"] == "unchecked" for p in pages) == 5
 
@@ -255,7 +247,7 @@ def test_pages_jev_never_read_become_unchecked(monkeypatch):
 def test_area_card_points_at_the_existing_page():
     feats = [{"sha": f"s{i}", "date": "2026-10-0" + str(i + 1), "subject": f"feat(databricks): thing {i}", "pr": None,
               "author": "a", "term": "thing", "area": "databricks", "area_src": "scope", "covered": False,
-              "judge": "jev", "closest_page": "docs/x.md"} for i in range(3)]
+              "judge": "judge", "closest_page": "docs/x.md"} for i in range(3)]
     pages = [{"path": "docs/reference/databricks-configs.md", "status": "fresh", "ancient": False}]
     rel = {"name": "v1", "previous": "v0", "date": "2026-10-05", "commits": []}
     card = [c for c in audit.build_cards("acme/proj", pages, feats, {}, rel, "", False, 180) if c["kind"] == "document"][0]

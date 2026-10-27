@@ -2,18 +2,17 @@
 
 from __future__ import annotations
 
-import csv
 import json
 
 import pytest
 from click.testing import CliRunner
 
-from firstrun import econ
-from firstrun.cli import _recover_fn, cli
+from onestrun import econ
+from onestrun.cli import _recover_fn, cli
 
 COSTS = [0.01, 0.02, 0.03, 0.04, 0.10]
 TRACES = json.dumps({"data": {"traces": [
-    *({"traceName": "firstrun.run", "traceId": f"t{i}", "totalCostUsd": c, "durationMs": 180000}
+    *({"traceName": "onestrun.run", "traceId": f"t{i}", "totalCostUsd": c, "durationMs": 180000}
       for i, c in enumerate(COSTS)),
     {"traceName": "doctor.probe.root", "traceId": "z", "totalCostUsd": 9.0, "durationMs": 1},
 ]}})
@@ -59,10 +58,9 @@ def test_no_traces_is_an_error():
 
 def test_write_and_budget_for_tier(tmp_path):
     econ.write(econ.build(TRACES, INPUTS), tmp_path)
-    rows = {r["driver"]: r for r in csv.DictReader((tmp_path / "drivers.csv").open(encoding="utf-8"))}
-    assert rows["cost_per_run_max"]["source"] == "run t4"
-    assert rows["cost_per_run_mean"]["measured"] == "yes"
-    assert rows["team_cost_cap_per_run"]["measured"] == "no"
+    saved = json.loads((tmp_path / "unit_economics.json").read_text(encoding="utf-8"))
+    assert saved["drivers"]["cost_max"] == {"usd": 0.1, "trace_id": "t4"}
+    assert not (tmp_path / "drivers.csv").exists()
     budget = econ.budget_for_tier("team", tmp_path / "unit_economics.json")
     assert budget.cost_usd_per_run == pytest.approx(0.028)
     with pytest.raises(econ.EconError):
@@ -83,11 +81,11 @@ def test_econ_command_offline(tmp_path, monkeypatch):
     res = CliRunner().invoke(cli, ["econ", "--traces", str(traces)])
     assert res.exit_code == 0, res.output
     assert "Team: cap $0.0280 per run, 60.0% of runs over it" in res.output
-    assert (tmp_path / "drivers.csv").exists()
+    assert (tmp_path / "unit_economics.json").exists()
 
 
 def test_run_rejects_unknown_tier(tmp_path, monkeypatch):
     monkeypatch.setattr(econ, "BUSINESS", tmp_path)
     res = CliRunner().invoke(cli, ["run", "https://example.com", "--tier", "team"])
     assert res.exit_code != 0
-    assert "Run `firstrun econ` first" in res.output
+    assert "Run `1stRun econ` first" in res.output

@@ -1,4 +1,4 @@
-/* FirstRun team map core, shared by the Doc-audit board and the home page.
+/* 1stRun team map core, shared by the Doc-audit board and the home page.
    model() validates an audit's untrusted "team" block, avSrc() builds an avatar URL only from a
    validated GitHub id or login, and ribbons() draws the people-to-area ribbons as inline SVG.
    No libraries. Each page keeps its own hover, pin and copy logic. */

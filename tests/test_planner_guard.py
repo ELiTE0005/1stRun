@@ -4,7 +4,7 @@ import json
 
 import pytest
 
-from firstrun import planner
+from onestrun import planner
 
 DOCS = """# Quickstart
 
@@ -90,7 +90,7 @@ def test_guard_logs_and_counts_drops(monkeypatch):
 
 
 def test_cache_gives_the_same_runbook_twice(tmp_runs_dir, monkeypatch):
-    monkeypatch.delenv("FIRSTRUN_REPLAN", raising=False)
+    monkeypatch.delenv("ONESTRUN_REPLAN", raising=False)
     replies = [json.dumps({"title": "t", "steps": [_step(1, "pip install chromadb")]}),
                json.dumps({"title": "t", "steps": [_step(1, "pip install chromadb"), _step(2, "export OPENAI_API_KEY='sk-...'")]})]
     calls = []
@@ -103,7 +103,7 @@ def test_cache_gives_the_same_runbook_twice(tmp_runs_dir, monkeypatch):
 
 
 def test_replan_env_var_bypasses_the_cache(tmp_runs_dir, monkeypatch):
-    monkeypatch.setenv("FIRSTRUN_REPLAN", "1")
+    monkeypatch.setenv("ONESTRUN_REPLAN", "1")
     calls = []
     reply = json.dumps({"title": "t", "steps": [_step(1, "pip install chromadb")]})
     monkeypatch.setattr(planner, "ask_claude", lambda prompt, system: (calls.append(1) or reply, {}))

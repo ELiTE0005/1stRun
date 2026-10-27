@@ -1,6 +1,6 @@
-# FirstRun Compared With the Alternatives
+# 1stRun Compared With the Alternatives
 
-| Feature | FirstRun | Claude Code | GitHub Actions | GitHub Agents | Custom workflow |
+| Feature | 1stRun | Claude Code | GitHub Actions | GitHub Agents | Custom workflow |
 |---|---|---|---|---|---|
 | Runs the quickstart as a new developer | Every step runs in a fresh Docker container | Runs on your machine. An optional OS sandbox limits files and network | A fresh runner per job, but you script every step | Works in its own Actions-powered VM, on your repo, not a new-user setup | Only as clean as the environment you build |
 | Plans steps from a docs URL | The planner writes one step per command | When you prompt it with the page | You write each step | Starts from an issue or task, not a docs page | You write the parser |
@@ -11,9 +11,9 @@
 | Ease of use | Paste a docs URL, then paste the prompt into your coding agent | One prompt, but you define the test and the clean setup | A YAML file per quickstart | Assign an issue to Copilot | Highest effort |
 | Proof in public repos | 4 upstream PRs, all open (see the record above) | Not specific to docs | Not specific to docs | Not specific to docs | Depends on your build |
 
-FirstRun reads a docs quickstart and runs every step in a clean container, the way a new developer would. It stops at the first failure and classifies it. It tries a fix up to 3 times, then proves the fix with a second clean run. It asks once before it opens a PR.
+1stRun reads a docs quickstart and runs every step in a clean container, the way a new developer would. It stops at the first failure and classifies it. It tries a fix up to 3 times, then proves the fix with a second clean run. It asks once before it opens a PR.
 
-FirstRun opened 4 upstream docs PRs, and all are open today. The dbt DuckDB quickstart had a broken `jafgen` command (#10149) and no stated Python version (#10150). The Entire CLI installer put `entire` on a path that a clean shell lacks (entireio/cli#2724). The AccuKnox `knoxctl` page named 0.9.0 as the latest release while its installer fetched 0.9.58, and its APT steps assume `curl`, `gnupg` and `sudo` (accuknox/help#671). MkDocs and Dagster passed with no docs change, so a run also shows when docs hold up.
+1stRun opened 4 upstream docs PRs, and all are open today. The dbt DuckDB quickstart had a broken `jafgen` command (#10149) and no stated Python version (#10150). The Entire CLI installer put `entire` on a path that a clean shell lacks (entireio/cli#2724). The AccuKnox `knoxctl` page named 0.9.0 as the latest release while its installer fetched 0.9.58, and its APT steps assume `curl`, `gnupg` and `sudo` (accuknox/help#671). MkDocs and Dagster passed with no docs change, so a run also shows when docs hold up.
 
 Every run is a neatlogs trace, so a bad run has a readable cause. A docs bug surfaces in a run instead of in a reader who leaves without filing an issue. The four PRs now wait for maintainer review.
 

@@ -7,9 +7,9 @@ from pathlib import Path
 
 from click.testing import CliRunner
 
-from firstrun import cli as cli_mod
-from firstrun import share
-from firstrun.cli import cli
+from onestrun import cli as cli_mod
+from onestrun import share
+from onestrun.cli import cli
 
 FIXTURE = Path(__file__).parent / "fixtures_report" / "run-verified"
 FAKE_KEY = "sk-ABCDEF0123456789abcdef"
@@ -77,9 +77,9 @@ def test_fixture_flag_and_trace_id(tmp_path):
 
 
 def test_share_link_base(monkeypatch):
-    monkeypatch.delenv("FIRSTRUN_SHARE_BASE", raising=False)
+    monkeypatch.delenv("ONESTRUN_SHARE_BASE", raising=False)
     assert share.share_link("abc") == "https://1run.netlify.app/doc-test/#r=abc"
-    monkeypatch.setenv("FIRSTRUN_SHARE_BASE", "http://localhost/run.html")
+    monkeypatch.setenv("ONESTRUN_SHARE_BASE", "http://localhost/run.html")
     assert share.share_link("abc") == "http://localhost/run.html#r=abc"
 
 
@@ -123,16 +123,16 @@ def test_evidence_keeps_known_https_links_only(tmp_path):
 
     run = _copy(tmp_path)
     (run / "evidence.json").write_text(json.dumps([
-        {"kind": "checkpoint", "label": "Entire checkpoint", "url": "https://entire.io/x"},
-        {"kind": "trail", "label": "Trail 6", "url": "https://entire.io/t/6", "public": False},
+        {"kind": "checkpoint", "label": "Old Entire checkpoint", "url": "https://entire.io/x"},
+        {"kind": "comment", "label": "Note", "url": "https://github.com/a/b/issues/1#c1", "public": False},
         {"kind": "pr", "label": "PR", "url": "https://github.com/a/b/pull/1", "step_id": 3},
-        {"kind": "trace", "label": "neatlogs trace", "url": "", "public": False},
+        {"kind": "trace", "label": "Langfuse trace", "url": "", "public": False},
         {"kind": "pr", "url": "javascript:alert(1)"},
         {"kind": "unknown", "url": "https://x.io"},
     ]), encoding="utf-8")
     ev = share.build_payload(run)["evidence"]
-    assert [e["kind"] for e in ev] == ["checkpoint", "trail", "pr", "trace"]
-    assert ev[1]["public"] is False and ev[2]["step_id"] == 3
+    assert [e["kind"] for e in ev] == ["comment", "pr", "trace"]  # the old checkpoint kind is gone
+    assert ev[0]["public"] is False and ev[1]["step_id"] == 3
 
 
 def test_evidence_absent_or_broken_is_empty(tmp_path):

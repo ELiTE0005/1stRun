@@ -9,9 +9,9 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent.parent
 sys.path.insert(0, str(ROOT / "src"))
 
-from firstrun import config, share  # noqa: E402
-from firstrun.models import RunStatus  # noqa: E402
-from firstrun import state as state_io  # noqa: E402
+from onestrun import config, share  # noqa: E402
+from onestrun.models import RunStatus  # noqa: E402
+from onestrun import state as state_io  # noqa: E402
 
 
 def main(run_ids: list[str]) -> int:

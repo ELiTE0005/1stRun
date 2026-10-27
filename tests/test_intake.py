@@ -4,7 +4,7 @@ from urllib.parse import parse_qs, urlparse
 
 import pytest
 
-from firstrun import intake
+from onestrun import intake
 
 
 def test_repo_name_accepts_names_and_links():

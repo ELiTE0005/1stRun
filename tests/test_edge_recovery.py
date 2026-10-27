@@ -9,10 +9,10 @@ import httpx
 import pytest
 
 from _edge_fakes import FakeContainer, factory_for, install_recorder, make_runbook
-from firstrun import classify, config, executor, llm, patch, precedents, recovery, sandbox
-from firstrun import budget as budget_mod
-from firstrun.models import GaveUp, Budget, FailureClass as FC, Patch, RunState, RunStatus, Step, StepResult, StepStatus
-from firstrun.redact import MARK, redact
+from onestrun import classify, config, executor, llm, patch, precedents, recovery, sandbox
+from onestrun import budget as budget_mod
+from onestrun.models import GaveUp, Budget, FailureClass as FC, Patch, RunState, RunStatus, Step, StepResult, StepStatus
+from onestrun.redact import MARK, redact
 
 SECRET = "sk-ant-api03-SECRETSECRETSECRET1234"
 
@@ -29,8 +29,10 @@ def _offline(monkeypatch, tmp_precedents, tmp_path):
     monkeypatch.setattr(config, "load_env", lambda path=None: None)
 
 
-def jev(monkeypatch, top, p=0.95):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: _probs(top, p))
+def judge(monkeypatch, top, p=0.95):
+    """The judge answers. Claude is down, so the judge is the one that decides."""
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(top, p))
 
 
 def _state():
@@ -88,26 +90,28 @@ def test_r2_limits_are_the_spec_values():
 
 # --- R4 ------------------------------------------------------------------------
 
-def test_r4_jev_gives_no_answer_so_claude_decides_and_the_fallback_is_logged(monkeypatch):
+def test_r4_claude_gives_no_answer_so_the_judge_decides_and_the_fallback_is_logged(monkeypatch):
     rec = install_recorder(monkeypatch)
-    monkeypatch.setattr(classify, "_jev", lambda e, c: None)
-    monkeypatch.setattr(classify, "_claude", lambda e, c: _probs(FC.DOCS_BUG, 0.8))
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)
+    monkeypatch.setattr(classify, "_judge", lambda e, c: _probs(FC.DOCS_BUG, 0.8))
     cls, src = recovery.resolve_class("some error", "cmd", asker=lambda q: pytest.fail("asked"))
-    assert (cls, src) == (FC.DOCS_BUG, "claude")
-    assert "falling back to claude" in rec.log_text()
+    assert (cls, src) == (FC.DOCS_BUG, "judge")
+    assert "falling back to the local judge model" in rec.log_text()
 
 
 def test_r4_the_07_rule_still_applies_to_the_claude_answer(monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: None)
+    monkeypatch.setattr(classify, "_judge", lambda e, c: None)
     monkeypatch.setattr(classify, "_claude", lambda e, c: _probs(FC.DOCS_BUG, 0.6))
     asked = []
     cls, src = recovery.resolve_class("odd error", "cmd", asker=lambda q: asked.append(q) or "p")
     assert (cls, src) == (FC.PRODUCT_BUG, "human") and len(asked) == 1
 
 
-@pytest.mark.parametrize("reply", [{"answers": {}}, {"oops": 1}, None])
-def test_r4_jev_http_garbage_or_error_returns_none(monkeypatch, reply):
-    monkeypatch.setenv("TYPESAFE_API_KEY", "test-key")
+@pytest.mark.parametrize("reply", [{"choices": [{"message": {"content": "not json"}}]}, {"oops": 1},
+                                   {"choices": [{"message": {"content": '{"results": []}'}}]}, None])
+def test_r4_judge_http_garbage_or_error_returns_none(monkeypatch, reply):
+    monkeypatch.delenv("ONESTRUN_JUDGE", raising=False)
+    monkeypatch.setenv("ONESTRUN_JUDGE_BASE_URL", "http://judge.test/v1")
 
     def post(*a, **k):
         if reply is None:
@@ -115,11 +119,11 @@ def test_r4_jev_http_garbage_or_error_returns_none(monkeypatch, reply):
         return httpx.Response(200, json=reply, request=httpx.Request("POST", "https://x"))
 
     monkeypatch.setattr(httpx, "post", post)
-    assert classify._jev("err", "cmd") is None
+    assert classify._judge("err", "cmd") is None
 
 
 def test_r4_every_model_failure_ends_in_the_heuristic(monkeypatch):
-    monkeypatch.setattr(classify, "_jev", lambda e, c: None)
+    monkeypatch.setattr(classify, "_judge", lambda e, c: None)
     monkeypatch.setattr(classify, "_claude", lambda e, c: None)
     assert classify.classify("ModuleNotFoundError: No module named x", "python x.py").source == "heuristic"
 
@@ -127,23 +131,26 @@ def test_r4_every_model_failure_ends_in_the_heuristic(monkeypatch):
 # --- R5, R6 --------------------------------------------------------------------
 
 def test_r5_top_probability_069_asks_the_user_once(monkeypatch):
-    jev(monkeypatch, FC.DOCS_BUG, 0.69)
+    judge(monkeypatch, FC.DOCS_BUG, 0.69)
     asked = []
     recovery.resolve_class("weird 1", "c", asker=lambda q: asked.append(q) or "d")
     assert len(asked) == 1
 
 
 def test_r6_top_probability_070_does_not_ask(monkeypatch):
-    jev(monkeypatch, FC.DOCS_BUG, 0.70)
+    judge(monkeypatch, FC.DOCS_BUG, 0.70)
     cls, src = recovery.resolve_class("weird 2", "c", asker=lambda q: pytest.fail("asked"))
-    assert (cls, src) == (FC.DOCS_BUG, "jev")
+    assert (cls, src) == (FC.DOCS_BUG, "judge")
 
 
 def test_r6_exactly_070_from_the_wire_does_not_ask(monkeypatch):
     """Normalizing 0.7, 0.1, 0.1, 0.1 must not tip the answer under 0.7 through float error."""
-    monkeypatch.setenv("TYPESAFE_API_KEY", "test-key")
-    body = {"answers": {"failure_class": {"probabilities": {"docs_bug": 0.7, "environment": 0.1,
-                                                            "product_bug": 0.1, "needs_secret": 0.1}}}}
+    monkeypatch.setattr(classify, "_claude", lambda e, c: None)
+    monkeypatch.delenv("ONESTRUN_JUDGE", raising=False)
+    monkeypatch.setenv("ONESTRUN_JUDGE_BASE_URL", "http://judge.test/v1")
+    answer = {"results": [{"id": 0, "failure_class": {"docs_bug": 0.7, "environment": 0.1,
+                                                      "product_bug": 0.1, "needs_secret": 0.1}}]}
+    body = {"choices": [{"message": {"content": json.dumps(answer)}}], "usage": {"prompt_tokens": 50}}
     monkeypatch.setattr(httpx, "post", lambda *a, **k: httpx.Response(200, json=body, request=httpx.Request("POST", "https://x")))
     cls, _ = recovery.resolve_class("weird 3", "c", asker=lambda q: pytest.fail("asked"))
     assert cls == FC.DOCS_BUG
@@ -152,7 +159,7 @@ def test_r6_exactly_070_from_the_wire_does_not_ask(monkeypatch):
 # --- R7 ------------------------------------------------------------------------
 
 def test_r7_same_signature_again_uses_the_precedent(monkeypatch):
-    jev(monkeypatch, FC.DOCS_BUG, 0.3)
+    judge(monkeypatch, FC.DOCS_BUG, 0.3)
     asked = []
     first = recovery.resolve_class("E: Unable to locate package foo at /tmp/a1 line 12", "c", asker=lambda q: asked.append(q) or "e")
     again = recovery.resolve_class("E: Unable to locate package foo at /var/b2 line 99", "c", asker=lambda q: asked.append(q) or "e")
@@ -165,7 +172,7 @@ def test_r7_same_signature_again_uses_the_precedent(monkeypatch):
 @pytest.mark.parametrize("content", ["{not json at all", "", "[1, 2]"])
 def test_r8_corrupt_or_empty_precedents_are_moved_aside_and_rebuilt(tmp_precedents, monkeypatch, content):
     tmp_precedents.write_text(content, encoding="utf-8")
-    jev(monkeypatch, FC.ENVIRONMENT, 0.95)
+    judge(monkeypatch, FC.ENVIRONMENT, 0.95)
     cls, _ = recovery.resolve_class("curl: not found", "curl x")     # the run continues
     assert cls == FC.ENVIRONMENT
     aside = list(tmp_precedents.parent.glob("precedents.json.corrupt-*"))
@@ -197,7 +204,7 @@ def test_r9_terminal_asker_raises_after_the_timeout(monkeypatch):
 
 
 def test_r9_no_answer_marks_the_step_needs_human_and_the_run_ends_with_a_report(tmp_runs_dir, monkeypatch):
-    jev(monkeypatch, FC.DOCS_BUG, 0.3)
+    judge(monkeypatch, FC.DOCS_BUG, 0.3)
 
     def silent(question):
         raise recovery.AskTimeout("no answer")
@@ -213,7 +220,7 @@ def test_r9_no_answer_marks_the_step_needs_human_and_the_run_ends_with_a_report(
 # --- R10 -----------------------------------------------------------------------
 
 def test_r10_product_bug_gets_no_patch_and_no_pr_text(tmp_runs_dir, monkeypatch):
-    jev(monkeypatch, FC.PRODUCT_BUG, 0.95)
+    judge(monkeypatch, FC.PRODUCT_BUG, 0.95)
     rb = make_runbook("tool run")
     fake = FakeContainer({"tool run": (1, "", "Segmentation fault (core dumped)")})
     state = executor.run(rb, run_id="r10", container_factory=factory_for(fake), recover=recovery.recover,
@@ -228,7 +235,7 @@ def test_r10_product_bug_gets_no_patch_and_no_pr_text(tmp_runs_dir, monkeypatch)
 # --- R11 -----------------------------------------------------------------------
 
 def test_r11_needs_secret_without_a_test_key_stops_and_invents_nothing(monkeypatch):
-    jev(monkeypatch, FC.NEEDS_SECRET, 0.95)
+    judge(monkeypatch, FC.NEEDS_SECRET, 0.95)
     step, res = _fail("python app.py", "openai.AuthenticationError: OPENAI_API_KEY is not set")
     out = recovery.recover(step, res, _state(), "Set OPENAI_API_KEY first.")
     assert not isinstance(out, Patch)
@@ -239,10 +246,10 @@ def test_r11_a_listed_key_is_used_by_name_and_never_shown(monkeypatch, tmp_path)
     allow = tmp_path / "allow"
     allow.write_text("OPENAI_API_KEY=sk-test-VALUE-1234567\n", encoding="utf-8")
     monkeypatch.setattr(config, "SECRETS_ALLOWLIST", allow)
-    jev(monkeypatch, FC.NEEDS_SECRET, 0.95)
+    judge(monkeypatch, FC.NEEDS_SECRET, 0.95)
     step, res = _fail("python app.py", "OPENAI_API_KEY is not set")
     out = recovery.recover(step, res, _state(), "")
-    # The key was already in the container, so FirstRun stops instead of retrying the same command.
+    # The key was already in the container, so 1stRun stops instead of retrying the same command.
     assert isinstance(out, GaveUp) and "OPENAI_API_KEY" in out.reason
     assert "sk-test-VALUE-1234567" not in out.model_dump_json()
 
@@ -251,7 +258,7 @@ def test_r11_a_listed_key_is_used_by_name_and_never_shown(monkeypatch, tmp_path)
 
 def test_r12_empty_fix_search_gives_up_with_the_search_terms_logged(monkeypatch):
     rec = install_recorder(monkeypatch)
-    jev(monkeypatch, FC.DOCS_BUG, 0.95)
+    judge(monkeypatch, FC.DOCS_BUG, 0.95)
     monkeypatch.setattr(llm, "ask_json", lambda *a, **k: ({"new_command": "", "reason": "nothing"}, {}))
     step, res = _fail()
     out = recovery.recover(step, res, _state(), "docs")
@@ -266,7 +273,7 @@ NET_ERR = "WARNING: Retrying after ConnectionError: Temporary failure in name re
 
 
 def test_k7_network_drop_is_environment_and_retried_once(monkeypatch):
-    jev(monkeypatch, FC.DOCS_BUG, 0.95)                       # even a wrong model answer does not matter
+    judge(monkeypatch, FC.DOCS_BUG, 0.95)                       # even a wrong model answer does not matter
     state = _state()
     step, res = _fail("pip install requests", NET_ERR)
     first = recovery.recover(step, res, state, "")
@@ -309,7 +316,7 @@ def test_k8_exact_allowlist_values_are_redacted(monkeypatch, tmp_path):
 
 def test_k8_secret_never_reaches_state_report_span_or_logs(tmp_runs_dir, monkeypatch):
     rec = install_recorder(monkeypatch)
-    jev(monkeypatch, FC.PRODUCT_BUG, 0.95)
+    judge(monkeypatch, FC.PRODUCT_BUG, 0.95)
     fake = FakeContainer({"run": (1, f"token={SECRET}", f"fatal: bad credential {SECRET}")})
     state = executor.run(make_runbook("run"), run_id="k8", recover=recovery.recover, container_factory=factory_for(fake))
     run_dir = tmp_runs_dir / "k8"
@@ -331,5 +338,5 @@ def test_k8_container_exec_redacts_at_the_source(monkeypatch):
             return SECRET.encode(), f"err {SECRET}".encode()
 
     monkeypatch.setattr(sandbox.subprocess, "Popen", Proc)
-    res = sandbox.Container("python:3.11-slim", name="firstrun-t7-fake").exec("x")
+    res = sandbox.Container("python:3.11-slim", name="1stRun-t7-fake").exec("x")
     assert SECRET not in res.stdout + res.stderr and MARK in res.stdout

@@ -1,4 +1,4 @@
-# FirstRun demo targets. The OpenAI line is a Wayback snapshot, a known-broken FIXTURE.
+# 1stRun demo targets. The OpenAI line is a Wayback snapshot, a known-broken FIXTURE.
 https://docs.neatlogs.com/sdk/python
 https://docs.entire.io/installation
 https://docs.trychroma.com/docs/overview/getting-started

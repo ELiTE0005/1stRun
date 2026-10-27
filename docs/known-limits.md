@@ -1,8 +1,8 @@
 # Known Limits
 
-What FirstRun does not do yet, found while testing the edge cases.
+What 1stRun does not do yet, found while testing the edge cases.
 
-- A step that hangs is killed at the time limit and the run stops. FirstRun does not retry a hung step.
+- A step that hangs is killed at the time limit and the run stops. 1stRun does not retry a hung step.
 - Version pinning in verification covers pip packages only. npm and apt versions can still drift between runs.
 - Secret redaction knows common key shapes, `NAME=value` pairs for names that end in KEY, TOKEN, SECRET or PASSWORD, and the exact values in the allowlist. An unusual secret outside the allowlist can pass through.
 - A login wall that answers HTTP 200 shows up as "no runnable steps", not as "docs unreachable".

@@ -3,18 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>FirstRun: Docs that work (literally)</title>
+<title>1stRun: Docs that work (literally)</title>
 <link rel="stylesheet" href="assets/site-nav.css">
 <link rel="stylesheet" href="/assets/site-footer.css">
 <link rel="stylesheet" href="/assets/type.css">
-<link rel="alternate" type="text/markdown" href="/agent.md" title="FirstRun agent quickstart">
+<link rel="alternate" type="text/markdown" href="/agent.md" title="1stRun agent quickstart">
 <link rel="alternate" type="text/plain" href="/llms.txt" title="llms.txt">
 <meta name="description" content="Docs break quietly, and a new user finds out first. Doc-test runs your quickstart in a clean container and proves the fix. Doc-audit reads a whole repo's git history, finds the pages your code left behind and shows who works on which part of the code.">
 <meta name="color-scheme" content="light">
 <meta name="theme-color" content="#0c0d17">
 <script>document.documentElement.className="js"</script>
 <meta property="og:type" content="website">
-<meta property="og:title" content="FirstRun: Docs that work (literally).">
+<meta property="og:title" content="1stRun: Docs that work (literally).">
 <meta property="og:description" content="Doc-test proves your quickstart works in a clean container. Doc-audit reads a whole repo's git history, finds stale docs pages and maps who works on what.">
 <meta property="og:image" content="assets/og-card-1200x630.jpg">
 <meta name="twitter:card" content="summary_large_image">
@@ -334,7 +334,7 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:13.5px;line-height:1.6;
 .io-c code{font-size:13.5px}
 .local{max-width:980px;margin:22px auto 0;padding:14px 18px;border-radius:14px;background:var(--panel);border:1px solid var(--edge);font-size:15px;line-height:1.5;display:flex;gap:12px;align-items:flex-start}
 .local .ic{color:var(--cd);margin-top:2px}
-/* the plan FirstRun made from the dbt page, one row per command */
+/* the plan 1stRun made from the dbt page, one row per command */
 .plan{max-width:760px;margin:clamp(40px,5vw,56px) auto 0;padding:0;overflow:hidden}
 .plan-h{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:4px 16px;padding:16px 20px;border-bottom:1px solid var(--line)}
 .plan-h h3{font-size:18px}
@@ -365,6 +365,8 @@ pre{white-space:pre-wrap;word-break:break-word;font-size:13.5px;line-height:1.6;
 .track>:first-child{margin-left:auto}.track>:last-child{margin-right:auto}
 .pr{flex:0 0 min(330px,82vw);scroll-snap-align:start;display:flex;flex-direction:column;overflow:hidden;min-width:0;text-align:left;transition:transform .6s var(--ease),box-shadow .6s var(--ease)}
 .pr:hover{transform:translateY(-4px);box-shadow:var(--lift-h)}
+.pr.soon:hover{transform:none;box-shadow:none}
+.pr.soon .cover.ty b{font-size:34px}
 .cover{display:block;aspect-ratio:16/9;overflow:hidden;background:var(--sunk);border-bottom:1px solid var(--line)}
 .cover img{width:100%;height:100%;object-fit:cover;object-position:top left;display:block}
 .cover.ty{display:flex;flex-direction:column;justify-content:flex-end;gap:2px;padding:16px 18px;background:var(--test-bg);text-decoration:none;color:var(--test-d)}
@@ -406,7 +408,7 @@ h2:has(>.fr){max-width:18.2em}
 .orgs img{width:30px;height:30px;border-radius:8px;box-shadow:0 0 0 1px var(--line),var(--sh);background:var(--panel)}
 @media(max-width:600px){.orgs{gap:8px 18px}.orgs a{font-size:14px}.orgs img{width:26px;height:26px}}
 
-/* FirstRun in an H2: the app icon, then a yellow highlighter stroke behind the word */
+/* 1stRun in an H2: the app icon, then a yellow highlighter stroke behind the word */
 .fr{white-space:nowrap;display:inline-flex;align-items:baseline;gap:.16em}
 .fr-i{width:.78em;height:.78em;flex:none;align-self:center;transform:translateY(.02em);border-radius:.18em;box-shadow:0 2px 6px -2px oklch(40% .12 256/.35)}
 .fr mark{color:inherit;padding:0 .1em;margin:0 -.02em;border-radius:.12em .3em .16em .28em;
@@ -645,6 +647,12 @@ html.js .shot[href]:hover:after{opacity:1}
 .cash .b{fill:none;stroke:var(--ok);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .cash .o{fill:none;stroke:var(--bad);stroke-width:3;stroke-linecap:round;stroke-linejoin:round}
 .cash .lb{fill:var(--ok-d);font-weight:600}.cash .lo{fill:var(--bad);font-weight:600}
+.uses{list-style:none;padding:0;margin:clamp(36px,4.5vw,52px) auto 0;max-width:960px;display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.uses li{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:20px 22px;text-align:left}
+.uses img{display:block;width:auto;height:44px;max-width:72px;object-fit:contain;object-position:left;margin-bottom:12px}
+.uses img[src*="logo-alan"]{border-radius:10px}
+.uses b{display:block;font-size:20px;letter-spacing:-.025em;line-height:1.2}
+.uses span{display:block;margin-top:8px;font-size:16px;line-height:1.45;color:var(--mut)}
 .allp{text-align:center;margin-top:clamp(36px,4.5vw,52px);font-size:17px;font-weight:600}
 /* no JS: every tool stacked, every screenshot shown with its caption */
 html:not(.js) .tt{display:none}
@@ -747,7 +755,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <div class="st-sky" id="stSky" aria-hidden="true"><i class="halo"></i><i class="warm"></i><i class="bleed"></i></div>
 <div class="st-c" id="stC">
 <h1 id="hero-h">Find the Broken Step Before Your Users Do</h1>
-<p class="sub"><span>For teams that own a docs quickstart.</span> <span>FirstRun runs every command, not only the links,</span> <span>and proves each fix in a fresh container.</span></p>
+<p class="sub"><span>For teams that own a docs quickstart.</span> <span>1stRun runs every command, not only the links,</span> <span>and proves each fix in a fresh container.</span></p>
 <form class="cap" id="f" action="doc-test/" autocomplete="off">
 <label class="sr" for="u">Docs URL, GitHub repo, or the name of a tool</label>
 <input id="u" type="text" inputmode="url" spellcheck="false" placeholder="Paste your docs URL or repo" aria-describedby="uHelp">
@@ -797,7 +805,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 </div>
 <!-- the three angles. Each one is a ray of the spectrum: blue for the clean run, gold for the cost,
      violet for who should fix it. Hover, focus or tap opens one, lights its ray and shows where it leads. -->
-<ul class="st-out" id="stOut" aria-label="What FirstRun gives you">
+<ul class="st-out" id="stOut" aria-label="What 1stRun gives you">
 <li class="grp g0" data-g="0" style="--c:oklch(74% .15 245)"><div class="gw">
 <span class="gi" aria-hidden="true"><svg class="ic"><use href="#i-box"/></svg></span>
 <div class="gb">
@@ -835,7 +843,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 </div></div></li>
 </ul>
 <div class="sr">
-<p>How Doc-test works. Broken steps go in. Real ones FirstRun found: jafgen --years 6 failed with No such option in the dbt guide. entire: command not found after the Entire install. A migration guide link that returns 404. A dbt guide that never states it needs Python 3.12. No module named typer. curl: command not found. AccuKnox docs that say 0.9.0 while the installer fetches 0.9.58. KeyError NEATLOGS_API_KEY.</p>
+<p>How Doc-test works. Broken steps go in. Real ones 1stRun found: jafgen --years 6 failed with No such option in the dbt guide. entire: command not found after the Entire install. A migration guide link that returns 404. A dbt guide that never states it needs Python 3.12. No module named typer. curl: command not found. AccuKnox docs that say 0.9.0 while the installer fetches 0.9.58. KeyError NEATLOGS_API_KEY.</p>
 <p>How Doc-audit works, on dbt-labs/dbt-core. The project flags page was last edited 453 days ago, with 29 code changes since. The infer-configs page is 709 days old. 15 of 1,405 pages are stale. 72 shipped features have no docs. AccuKnox/help has 87 stale pages, and its oldest page is 1,100 days old.</p>
 </div>
 <button type="button" class="st-pz" id="stPause" aria-pressed="false" aria-label="Pause the animation" hidden><svg class="pa" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg><svg class="pl" viewBox="0 0 24 24" aria-hidden="true"><path d="M7 4.5v15l12-7.5z"/></svg></button>
@@ -863,31 +871,31 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <pre id="pre" role="tabpanel" tabindex="0"></pre>
 </div>
 <ol class="strip">
-<li class="card"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg>Your agent installs FirstRun</li>
+<li class="card"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg>Your agent installs 1stRun</li>
 <li class="card"><svg class="ic" aria-hidden="true"><use href="#i-term"/></svg>Runs your quickstart clean</li>
 <li class="card"><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg>Proves the fix in a second run</li>
 <li class="card"><svg class="ic" aria-hidden="true"><use href="#i-pr"/></svg>Opens the PR after your yes</li>
 </ol>
-<div class="cli mono card"><span class="p">$ </span>pip install git+https://github.com/HighnessAtharva/firstrun
-<span class="p">$ </span>firstrun <span id="cliU">https://docs.getdbt.com/guides/duckdb</span>
-<span class="p">$ </span>firstrun audit owner/repo   <span class="c"># Doc-audit from the terminal</span></div>
+<div class="cli mono card"><span class="p">$ </span>pip install git+https://github.com/ELiTE0005/1stRun
+<span class="p">$ </span>1stRun <span id="cliU">https://docs.getdbt.com/guides/duckdb</span>
+<span class="p">$ </span>1stRun audit owner/repo   <span class="c"># Doc-audit from the terminal</span></div>
 </div>
 </section>
 
-<section id="film" class="film" aria-label="FirstRun demo film">
+<section id="film" class="film" aria-label="1stRun demo film">
 <div class="reel rv">
-<video id="reel" muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-label="FirstRun demo film, 2 minutes 54 seconds, with captions. It plays muted while on screen. Use Sound on for the voice."><source src="assets/firstrun-hero.mp4" type="video/mp4"></video>
+<video id="reel" muted loop playsinline preload="metadata" poster="assets/hero-poster.jpg" aria-label="1stRun demo film, 2 minutes 54 seconds, with captions. It plays muted while on screen. Use Sound on for the voice."><source src="assets/1stRun-hero.mp4" type="video/mp4"></video>
 <div class="ctl"><button type="button" id="pp">Pause</button><button type="button" id="mu">Sound on</button></div>
 </div>
-<p class="credit"><a class="credit-me" href="#about"><img src="assets/atharva.webp" alt="Portrait of Atharva Shah" width="30" height="30" loading="lazy" decoding="async">Atharva Shah</a><span class="credit-dot" aria-hidden="true">&middot;</span><span class="credit-for">Built for <a href="https://neatlogs.com/hackathon" target="_blank" rel="noopener">neatHack</a>, the neatlogs hackathon</span><span class="credit-dot" aria-hidden="true">&middot;</span><a href="https://www.youtube.com/watch?v=9xxgu_1bH-E" target="_blank" rel="noopener">Watch on YouTube</a></p>
+<p class="credit"><a class="credit-me" href="#about"><img src="assets/pfp.webp" alt="Profile picture" width="30" height="30" loading="lazy" decoding="async">Rajbir Biswas</a><span class="credit-dot" aria-hidden="true">&middot;</span><a href="https://www.youtube.com/watch?v=9xxgu_1bH-E" target="_blank" rel="noopener">Watch on YouTube</a></p>
 </section>
 
 <!-- DOC-TEST: blue world -->
 <section id="steps" class="band b-test" aria-labelledby="test-h">
 <div class="wrap">
 <p class="eyebrow"><span class="tile"><svg class="ic" aria-hidden="true"><use href="#i-term"/></svg></span>Doc-test</p>
-<h2 id="test-h"><span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>FirstRun</mark></span> Runs Your Quickstart Like a Brand-New User</h2>
-<div class="io" aria-label="What FirstRun takes, what it does, and what it cannot do yet">
+<h2 id="test-h"><span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>1stRun</mark></span> Runs Your Quickstart Like a Brand-New User</h2>
+<div class="io" aria-label="What 1stRun takes, what it does, and what it cannot do yet">
 <div class="io-c"><h3><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg>You give it</h3><ul>
 <li>A public docs URL, like <code>docs.getdbt.com/guides/duckdb</code></li>
 <li>A tool name. Your coding agent finds its quickstart page.</li>
@@ -901,7 +909,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <li>API specs and bug reports as input</li>
 <li>Long-running servers. It skips them and says why, like <code>dbt docs serve</code> below.</li></ul></div>
 </div>
-<p class="local"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg><span>Every step runs on your machine. Only the docs page and the output of a failed step go to the model. <a href="https://github.com/HighnessAtharva/firstrun/blob/main/docs/known-limits.md">Read the known limits</a></span></p>
+<p class="local"><svg class="ic" aria-hidden="true"><use href="#i-box"/></svg><span>Every step runs on your machine. Only the docs page and the output of a failed step go to the model. <a href="https://github.com/ELiTE0005/1stRun/blob/main/docs/known-limits.md">Read the known limits</a></span></p>
 <ol class="beats" aria-label="A real Doc-test run on the dbt and DuckDB quickstart">
 <li class="beat">
 <p class="bl"><span class="bn">1</span>A step breaks</p>
@@ -909,7 +917,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <div class="win-b"><span class="ln cmd">jafgen --years 6</span><span class="ln err">Error: No such option: --years</span><span class="ln note">The dbt guide never worked on a fresh machine.</span></div></div>
 </li>
 <li class="beat">
-<p class="bl"><span class="bn">2</span>FirstRun fixes the docs</p>
+<p class="bl"><span class="bn">2</span>1stRun fixes the docs</p>
 <div class="win card"><div class="win-h" aria-hidden="true"><i></i><i></i><i></i><span>docs.getdbt.com/guides/duckdb</span></div>
 <div class="win-b"><span class="ln del">jafgen --years 6</span><span class="ln add">jafgen 6</span><span class="ln note">The tool now takes the years as a plain number.</span></div></div>
 </li>
@@ -920,9 +928,9 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 </li>
 </ol>
 <div class="plan card">
-<div class="plan-h"><h3>The Plan FirstRun Made From the dbt Page</h3><p>10 steps, one command each</p></div>
+<div class="plan-h"><h3>The Plan 1stRun Made From the dbt Page</h3><p>10 steps, one command each</p></div>
 <ol aria-label="The 10 steps of the dbt run">
-<li><span class="n">1</span><span><code>git clone https://github.com/dbt-labs/jaffle_shop_duckdb.git</code><span class="why">The container had no git, so FirstRun installs it first.</span></span><span class="tg fx">Fixed</span></li>
+<li><span class="n">1</span><span><code>git clone https://github.com/dbt-labs/jaffle_shop_duckdb.git</code><span class="why">The container had no git, so 1stRun installs it first.</span></span><span class="tg fx">Fixed</span></li>
 <li><span class="n">2</span><span><code>cd jaffle_shop_duckdb</code></span><span class="tg">Passed</span></li>
 <li><span class="n">3</span><span><code>pip install -r requirements.txt</code><span class="why">A docs bug. The guide never says it needs Python 3.12, which networkx 3.7 needs. The fix pins 3.6.1.</span></span><span class="tg fx">Fixed</span></li>
 <li><span class="n">4</span><span><code>dbt seed</code></span><span class="tg">Passed</span></li>
@@ -938,11 +946,9 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <p class="src">A real run on the dbt + DuckDB quickstart. <a href="doc-test/?s=10#ex=dbt">Replay this run</a></p>
 
 <div class="impact" id="proof" role="region" aria-labelledby="impact-h">
-<h2 id="impact-h" class="rv"><span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>FirstRun</mark></span> Already Sent Fixes and Bug Reports to dbt, Entire, Polars, Chroma and HTTPX</h2>
+<h2 id="impact-h" class="rv"><span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>1stRun</mark></span> Already Sent Fixes and Bug Reports to dbt, Polars, Chroma and HTTPX</h2>
 <ul class="orgs rv" aria-label="Projects that got a fix or a report">
 <li><a href="https://github.com/dbt-labs"><img src="assets/org-dbt-labs.webp" alt="" width="48" height="48" loading="lazy" decoding="async">dbt Labs</a></li>
-<li><a href="https://github.com/entireio"><img src="assets/org-entireio.webp" alt="" width="48" height="48" loading="lazy" decoding="async">Entire</a></li>
-<li><a href="https://github.com/accuknox"><img src="assets/org-accuknox.webp" alt="" width="48" height="48" loading="lazy" decoding="async">AccuKnox</a></li>
 <li><a href="https://github.com/pola-rs"><img src="assets/org-pola-rs.webp" alt="" width="48" height="48" loading="lazy" decoding="async">Polars</a></li>
 <li><a href="https://github.com/chroma-core"><img src="assets/org-chroma-core.webp" alt="" width="48" height="48" loading="lazy" decoding="async">Chroma</a></li>
 <li><a href="https://github.com/encode"><img src="assets/org-encode.webp" alt="" width="48" height="48" loading="lazy" decoding="async">HTTPX</a></li>
@@ -995,7 +1001,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <div class="win-b"><div class="repo-in"><span>dbt-labs/dbt-core</span><em aria-hidden="true">Audit</em></div><span class="ln note">Any public GitHub repo with docs in it.</span></div></div>
 </li>
 <li class="beat">
-<p class="bl"><span class="bn">2</span>FirstRun reads the history</p>
+<p class="bl"><span class="bn">2</span>1stRun reads the history</p>
 <div class="win card"><div class="win-h" aria-hidden="true"><i></i><i></i><i></i><span>Project flags page</span></div>
 <div class="win-b">
 <div class="tline" aria-hidden="true"><span class="pg"></span><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
@@ -1028,7 +1034,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <h2 id="rcpt-h">Every Run Ends With a Receipt</h2>
 <div class="rc">
 <div class="rw rv"><div class="rcpt" role="group" aria-label="Sample receipt for the AccuKnox knoxctl run">
-<div class="r-h"><svg aria-hidden="true"><use href="#lg"/></svg><b>FirstRun</b><span>Oct 10, 2026</span></div>
+<div class="r-h"><svg aria-hidden="true"><use href="#lg"/></svg><b>1stRun</b><span>Oct 10, 2026</span></div>
 <p class="r-meta">Docs page <b>help.accuknox.com/knoxctl</b><br>Broke at step 2. Missing curl, gnupg and sudo.</p>
 <div class="r-row"><span class="mk" aria-label="1">1</span><span>Model cost</span><strong>$0.0453</strong></div>
 <div class="r-row"><span class="mk" aria-label="2">2</span><span>Team plan cap</span><strong>$0.04697</strong><span class="bar" aria-hidden="true"><i></i></span><span class="r-sub">96.4% of the cap used</span></div>
@@ -1041,21 +1047,21 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <li><span class="mk" aria-hidden="true">3</span><span><b>Proven</b>A clean rerun passed every step.</span></li>
 </ol>
 </div>
-<p class="rlinks"><a href="receipts/FR-20261010-091740-help-accuknox-com.html">Open the sample receipt</a><a href="plan/">See how cfo.ai sets each cap</a></p>
+<p class="rlinks"><a href="receipts/FR-20261010-091740-help-accuknox-com.html">Open the sample receipt</a><a href="plan/">See how each cap is set</a></p>
 </div>
 </section>
 
 <section id="watch" aria-labelledby="watch-h">
 <div class="wrap">
-<h2 id="watch-h">Watch <span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>FirstRun</mark></span> Test a Guide and Audit a Repo</h2>
+<h2 id="watch-h">Watch <span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>1stRun</mark></span> Test a Guide and Audit a Repo</h2>
 <div class="vids">
 <article class="vc big card">
-<div class="vm"><a class="vp" href="https://www.youtube.com/watch?v=9xxgu_1bH-E" data-yt="9xxgu_1bH-E" aria-label="Play the FirstRun submission film, 2 minutes 54 seconds"><img src="assets/vid-hero.webp" alt="FirstRun film thumbnail: the dbt guide broke, fixed and proven, 9 of 9 steps pass" width="1280" height="720" loading="lazy" decoding="async"><span class="pi" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></span><span class="dur" aria-hidden="true">2:54</span></a></div>
-<div class="vt"><p class="k">The film &middot; 2:54</p><h3>FirstRun Finds, Fixes and Proves Broken Docs</h3><p>A real run and its receipt, a real audit, the agent path, and how neatlogs, Entire and cfo.ai shaped the build.</p></div>
+<div class="vm"><a class="vp" href="https://www.youtube.com/watch?v=9xxgu_1bH-E" data-yt="9xxgu_1bH-E" aria-label="Play the 1stRun submission film, 2 minutes 54 seconds"><img src="assets/vid-hero.webp" alt="1stRun film thumbnail: the dbt guide broke, fixed and proven, 9 of 9 steps pass" width="1280" height="720" loading="lazy" decoding="async"><span class="pi" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></span><span class="dur" aria-hidden="true">2:54</span></a></div>
+<div class="vt"><p class="k">The film &middot; 2:54</p><h3>1stRun Finds, Fixes and Proves Broken Docs</h3><p>A real run and its receipt, a real audit, the agent path, and the receipt.</p></div>
 </article>
 <article class="vc sm card">
 <div class="vm"><a class="vp" href="https://www.youtube.com/watch?v=JJNWWhSV9pc" data-yt="JJNWWhSV9pc" aria-label="Play the Doc-test demo, 2 minutes 59 seconds"><img src="assets/vid-doctest.webp" alt="Doc-test thumbnail: step 10 of a quickstart fails with no such option --years, then the fix passes 9 of 9 steps" width="1280" height="720" loading="lazy" decoding="async"><span class="pi" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></span><span class="dur" aria-hidden="true">2:59</span></a></div>
-<div class="vt"><p class="k">Doc-test &middot; 2:59</p><h3>Your Docs Lie. FirstRun DocTest Proves It</h3></div>
+<div class="vt"><p class="k">Doc-test &middot; 2:59</p><h3>Your Docs Lie. 1stRun DocTest Proves It</h3></div>
 </article>
 <article class="vc big card au">
 <div class="vm"><a class="vp" href="https://www.youtube.com/watch?v=2vZb6pZAF8Q" data-yt="2vZb6pZAF8Q" aria-label="Play the Doc-audit journey, 1 minute 56 seconds"><img src="assets/vid-docaudit-journey.webp" alt="Doc-audit thumbnail: 15 stale pages found in dbt-core, each fix goes to the person who knows the code" width="1280" height="720" loading="lazy" decoding="async"><span class="pi" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></span><span class="dur" aria-hidden="true">1:56</span></a></div>
@@ -1067,88 +1073,41 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 </article>
 <article class="vc sm card au">
 <div class="vm"><a class="vp" href="https://www.youtube.com/watch?v=zo94agwRAXc" data-yt="zo94agwRAXc" aria-label="Play the Doc-audit tour, 57 seconds"><img src="assets/vid-docaudit.webp" alt="Doc-audit thumbnail: a dbt-core page is 453 days stale after 29 commits changed the code" width="800" height="450" loading="lazy" decoding="async"><span class="pi" aria-hidden="true"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5z"/></svg></span><span class="dur" aria-hidden="true">0:57</span></a></div>
-<div class="vt"><p class="k">Doc-audit &middot; 0:57</p><h3>Docs Rot Quietly. FirstRun DocAudit Finds It</h3></div>
+<div class="vt"><p class="k">Doc-audit &middot; 0:57</p><h3>Docs Rot Quietly. 1stRun DocAudit Finds It</h3></div>
 </article>
 </div>
 </div>
 </section>
 
-<!-- TOOLS: calm graphite world. One tab per tool, three proofs each. Without JS every tool and screenshot is stacked. -->
+<!-- BUILT WITH: the stack 1stRun really runs on. See CLAUDE.md, "What This Uses". -->
 <section id="tools" class="band b-tools" aria-labelledby="tools-h">
 <div class="wrap wide">
-<h2 id="tools-h">Powered by neatlogs, Entire CLI and cfo.ai</h2>
-<div class="tt rv" role="tablist" aria-label="The three tools">
-<button type="button" role="tab" id="tab-neatlogs" aria-controls="tools-neatlogs" aria-selected="true"><img src="assets/logo-neatlogs.webp" alt="" width="44" height="44"><span><b>neatlogs</b><small>Traces every run</small></span></button>
-<button type="button" role="tab" id="tab-entire" aria-controls="tools-entire" aria-selected="false" tabindex="-1"><img src="assets/logo-entire.webp" alt="" width="44" height="44"><span><b>Entire</b><small>Records the build</small></span></button>
-<button type="button" role="tab" id="tab-cfoai" aria-controls="tools-cfoai" aria-selected="false" tabindex="-1"><img src="assets/logo-cfoai.webp" alt="" width="44" height="44"><span><b>cfo.ai</b><small>Prices every plan</small></span></button>
-</div>
-
-<div class="tp rv" id="tools-neatlogs" role="tabpanel" aria-labelledby="tab-neatlogs">
-<p class="ph"><img src="assets/logo-neatlogs.webp" alt="" width="40" height="40">neatlogs</p>
-<p class="role"><a href="https://neatlogs.com">neatlogs</a> traces every run, so a failed step comes with its cause. On the same 4 quickstarts, agent v2 finished 3 where v1 finished 2, and the mean cost fell from $0.0262 to $0.0200. <a href="judges/#agent">See v1 against v2</a></p>
-<div class="show"><ol class="evs">
-<li class="ev"><figure><a class="shot" href="assets/t-neatlogs-investigate.webp" target="_blank" rel="noopener"><img src="assets/e-nl-investigate.webp" alt="neatlogs incident: 25 Execution Failed detections against a baseline of 0.5, a 52.8x spike, investigated with a root cause at 66% confidence" width="870" height="484" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">1</span><span>Investigate traced a 52.8x spike in failed steps to one root cause.</span></p><a class="src2" href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/neatlogs.md">Read the neatlogs evidence</a></figcaption></figure></li>
-<li class="ev"><figure><a class="shot" href="assets/t-neatlogs-recovery.webp" target="_blank" rel="noopener"><img src="assets/e-nl-recovery.webp" alt="neatlogs trace of a FirstRun run: step 3 fails, the recover.3 agent span classifies the failure and retries, and step 3 runs again" width="900" height="500" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">2</span><span>Every recovery is a span. In this Dagster run, step 3 failed twice and recover.3 retried it.</span></p><a class="src2" href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/trace-recovered-entire-v2.md">Read another recovered run in full</a></figcaption></figure></li>
-<li class="ev"><figure><a class="shot" href="assets/t-neatlogs-bisect.webp" target="_blank" rel="noopener"><img src="assets/e-nl-bisect.webp" alt="neatlogs trace of a Docs Bisect run: 5 probes across jafgen releases, last good 0.3.1, first bad 0.4.6" width="990" height="550" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">3</span><span>A Bisect trace tested 5 jafgen releases and found the first bad one, 0.4.6.</span></p><a class="src2" href="https://github.com/dbt-labs/docs.getdbt.com/pull/10149#issuecomment-6096827074">Read the finding on dbt PR #10149</a></figcaption></figure></li>
-</ol></div>
-</div>
-
-<div class="tp" id="tools-entire" role="tabpanel" aria-labelledby="tab-entire">
-<p class="ph"><img src="assets/logo-entire.webp" alt="" width="40" height="40">Entire</p>
-<p class="role"><a href="https://entire.io">Entire</a> records the session behind each commit and reviews code before it merges.</p>
-<div class="show"><ol class="evs">
-<li class="ev"><figure><a class="shot pad" href="assets/t-entire-checkpoint.webp" target="_blank" rel="noopener"><img src="assets/e-en-checkpoint.webp" alt="GitHub commit 3a0dcad whose message ends with an Entire-Checkpoint ID" width="650" height="214" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">1</span><span>91 of 132 commits link to the Entire session that wrote them.</span></p><a class="src2" href="https://entire.io/gh/HighnessAtharva/firstrun/commit/3ca6f118ecb0a8915315eea27b5588dd8a7c6299">Open a commit's session on Entire</a></figcaption></figure></li>
-<li class="ev"><figure><a class="shot dk" href="assets/t-entire-gate.webp" target="_blank" rel="noopener"><img src="assets/e-en-gate.webp" alt="Entire Trail 3 for Layer 1: merge blocked, no approvals and 1 unresolved high finding" width="660" height="366" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">2</span><span>Trail 3 blocked the merge while 1 high finding stayed open.</span></p><a class="src2" href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/entire.md">Read the Entire evidence</a></figcaption></figure></li>
-<li class="ev"><figure><a class="shot dk" href="assets/t-entire-findings.webp" target="_blank" rel="noopener"><img src="assets/e-en-findings.webp" alt="Entire Trail Review findings: a high finding in recovery.py, a retry loop on a missing secret, and a medium finding in config.py, a Docker default that only works on the author's machine" width="806" height="530" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">3</span><span>Trail reviews caught 3 real bugs before merge, and each one was fixed.</span></p><a class="src2" href="https://github.com/HighnessAtharva/firstrun/commit/e2aacb7">See the fix commit</a></figcaption></figure></li>
-</ol></div>
-</div>
-
-<div class="tp" id="tools-cfoai" role="tabpanel" aria-labelledby="tab-cfoai">
-<p class="ph"><img src="assets/logo-cfoai.webp" alt="" width="40" height="40">cfo.ai</p>
-<p class="role">Ari, the <a href="https://cfo.ai">cfo.ai</a> agent, built the 18-month model that sets each plan's cost cap.</p>
-<div class="show"><ol class="evs">
-<li class="ev"><figure><div class="shot">
-<svg class="cash" viewBox="0 0 600 300" role="img" aria-label="Cash on hand in the cfo.ai model, November 2026 to April 2028. The Base plan grows to $16,685. With the old $0.50 cap, cash turns negative in December 2027, month 14, and ends at minus $12,212.">
-<text class="t" x="64" y="24">Cash on hand in the cfo.ai model</text>
-<line class="g" x1="64" x2="496" y1="89.5" y2="89.5"/><line class="g" x1="64" x2="496" y1="223.2" y2="223.2"/><line class="z" x1="64" x2="496" y1="156.4" y2="156.4"/>
-<text x="56" y="94" text-anchor="end">$10k</text><text x="56" y="161" text-anchor="end">$0</text><text x="56" y="228" text-anchor="end">-$10k</text>
-<text x="64" y="282">Nov 2026</text><text x="496" y="282" text-anchor="end">Apr 2028</text>
-<path class="b" d="M64.0 123.1 L89.4 123.0 L114.8 122.7 L140.2 122.0 L165.6 121.2 L191.1 120.2 L216.5 118.6 L241.9 116.6 L267.3 112.6 L292.7 108.3 L318.1 103.5 L343.5 96.9 L368.9 90.1 L394.4 83.0 L419.8 74.1 L445.2 65.0 L470.6 55.7 L496.0 44.8"/>
-<path class="o" d="M64.0 123.1 L89.4 123.0 L114.8 122.7 L140.2 122.0 L165.6 121.2 L191.1 120.2 L216.5 118.6 L241.9 116.6 L267.3 122.3 L292.7 127.3 L318.1 131.7 L343.5 143.6 L368.9 154.7 L394.4 165.0 L419.8 182.7 L445.2 199.3 L470.6 215.1 L496.0 238.0"/>
-<circle cx="394.4" cy="165" r="6" fill="var(--panel)" stroke="var(--bad)" stroke-width="2.5"/>
-<text class="lo" x="384" y="194" text-anchor="end">Month 14: cash runs out</text>
-<text class="lb" x="506" y="42">$16,685</text><text class="lb" x="506" y="65">Base</text>
-<text class="lo" x="506" y="234">-$12,212</text><text class="lo" x="506" y="257">Old cap</text></svg></div>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">1</span><span>Under the old $0.50 cap, the model runs out of cash in month 14.</span></p><a class="src2" href="https://cfo.ai/s/_u5lbrHIl9KX_JQE">Open the public cfo.ai model</a></figcaption></figure></li>
-<li class="ev"><figure><a class="shot" href="assets/t-cfo-drivers.webp" target="_blank" rel="noopener"><img src="assets/e-cfo-drivers.webp" alt="cfo.ai drivers table: the mean, p50, p90, p95 and max cost per run are marked Measured yes, with drivers.csv as the source" width="1400" height="768" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">2</span><span>Its cost per run comes from 88 neatlogs traces, and each row names its source.</span></p><a class="src2" href="https://github.com/HighnessAtharva/firstrun/blob/main/business/drivers.csv">See drivers.csv</a></figcaption></figure></li>
-<li class="ev"><figure><a class="shot" href="assets/e-cfo-caps.webp" target="_blank" rel="noopener"><img src="assets/e-cfo-caps.webp" alt="cfo.ai model notes: caps written to the FirstRun CLI, Scale $0.0279, Team $0.0470 and Free $0.0135 per run" width="1330" height="520" loading="lazy" decoding="async"></a>
-<figcaption><p class="cap"><span class="n" aria-hidden="true">3</span><span>The plan caps a Scale run at $0.0279 and a Team run at $0.0470.</span></p><a class="src2" href="plan/">See how each cap is set</a></figcaption></figure></li>
-</ol></div>
-</div>
-<p class="allp"><a href="judges/">See all the proof for judges</a></p>
+<h2 id="tools-h">Built With Alan AI, Claude, Docker and Langfuse</h2>
+<ul class="uses rv" aria-label="What 1stRun uses">
+<li><img src="assets/logo-alan.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://tryalan.ai">Alan AI</a></b><span>The AI agent inside 1stRun. It works through the quickstart steps and helps repair the ones that break.</span></li>
+<li><img src="assets/logo-claude.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://claude.com/claude-code">Claude</a></b><span>Plans the runbook, repairs the first broken step and sorts each failure. It runs through the Claude Agent SDK.</span></li>
+<li><img src="assets/logo-docker.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://www.docker.com">Docker</a></b><span>Every run gets one clean container, and the proof run gets a second one.</span></li>
+<li><img src="assets/logo-langfuse.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://langfuse.com">Langfuse</a></b><span>Optional. Every run becomes one trace, so a failed step comes with its cause.</span></li>
+<li><img src="assets/logo-ollama.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://ollama.com">Ollama</a></b><span>Optional. A local model that backs up Claude when it sorts failures and judges audits.</span></li>
+<li><img src="assets/logo-firecrawl.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://www.firecrawl.dev">Firecrawl</a></b><span>Optional. Turns a docs page into clean markdown. Plain HTTP is the fallback.</span></li>
+<li><img src="assets/logo-github.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://github.com">git and GitHub</a></b><span>Doc-audit reads the repo history. The fix goes out as a pull request you approve.</span></li>
+</ul>
 </div>
 </section>
 
 <section id="compare" aria-labelledby="cmp-h">
 <div class="wrap">
-<h2 id="cmp-h">Compare <span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>FirstRun</mark></span> With Claude Code, GitHub Actions and GitHub Agents</h2>
-<p class="edge">FirstRun does one job: it runs the quickstart, fixes the docs, proves the fix and opens the PR. A link checker or a docs linter only reads the page.</p>
+<h2 id="cmp-h">Compare <span class="fr"><svg class="fr-i" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><mark>1stRun</mark></span> With Claude Code, GitHub Actions and GitHub Agents</h2>
+<p class="edge">1stRun does one job: it runs the quickstart, fixes the docs, proves the fix and opens the PR. A link checker or a docs linter only reads the page.</p>
 <div class="lgd3" aria-label="Legend"><span><svg class="mk2 y" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg> Yes</span><span><svg class="mk2 p" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg> Partly or with setup</span><span><svg class="mk2 n" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg> No</span></div>
 <div class="cmp"><div class="cmp-s"><table>
-<thead><tr><th scope="col">Feature</th><th scope="col" class="me"><svg class="ci" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><span>FirstRun</span></th><th scope="col">Claude Code</th><th scope="col">GitHub Actions</th><th scope="col">GitHub Agents</th><th scope="col">Custom workflow</th></tr></thead>
+<thead><tr><th scope="col">Feature</th><th scope="col" class="me"><svg class="ci" viewBox="0 0 64 64" aria-hidden="true"><use href="#lg"/></svg><span>1stRun</span></th><th scope="col">Claude Code</th><th scope="col">GitHub Actions</th><th scope="col">GitHub Agents</th><th scope="col">Custom workflow</th></tr></thead>
 <tbody>
 <tr><th scope="row">Runs the quickstart as a new developer</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Every step runs in a fresh Docker container</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Runs on your machine. An optional sandbox limits files and network</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>A fresh runner per job, but you script every step</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Works in its own VM on your repo, not a new-user setup</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Only as clean as the environment you build</span></span></td></tr>
 <tr><th scope="row">Plans steps from a docs URL</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Writes one step per command on the page</span></span></td><td><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>When you prompt it with the page</span></span></td><td><span class="cell"><svg class="mk2 n" viewBox="0 0 24 24" aria-label="No"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>You write each step</span></span></td><td><span class="cell"><svg class="mk2 n" viewBox="0 0 24 24" aria-label="No"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>Starts from an issue or task, not a docs page</span></span></td><td><span class="cell"><svg class="mk2 n" viewBox="0 0 24 24" aria-label="No"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>You write the parser</span></span></td></tr>
 <tr><th scope="row">Tries again when a step fails</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Finds the cause, patches, retries up to 3 times per step</span></span></td><td><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Iterates inside one session</span></span></td><td><span class="cell"><svg class="mk2 n" viewBox="0 0 24 24" aria-label="No"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>The job fails and stops</span></span></td><td><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Iterates and pushes commits to its draft PR</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Only what you code</span></span></td></tr>
 <tr><th scope="row">Proves the fix</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>A second clean container must pass the whole quickstart</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Only if you ask for it</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Only if you script a second run</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Your repo's own tests, not a clean-user rerun</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Only if you code it</span></span></td></tr>
-<tr><th scope="row">Shows the cost of each run</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>neatlogs traces every run. The mean run costs $0.018</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Cost and token metrics, after you set them up</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Logs and run history, no agent traces</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>A session log, with no cost trace you own</span></span></td><td><span class="cell"><svg class="mk2 n" viewBox="0 0 24 24" aria-label="No"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>You build it</span></span></td></tr>
+<tr><th scope="row">Shows the cost of each run</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Every run ends with a receipt. The mean run costs $0.018</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Cost and token metrics, after you set them up</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Logs and run history, no agent traces</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>A session log, with no cost trace you own</span></span></td><td><span class="cell"><svg class="mk2 n" viewBox="0 0 24 24" aria-label="No"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>You build it</span></span></td></tr>
 <tr><th scope="row">Opens the docs PR</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>After you approve once</span></span></td><td><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>When you ask</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Only if you script it</span></span></td><td><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Opens a draft PR and asks you for review</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Only if you code it</span></span></td></tr>
 <tr><th scope="row">Easy to start</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Paste a docs URL, then paste the prompt into your coding agent</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>One prompt, but you define the test and the clean setup</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>A YAML file per quickstart</span></span></td><td><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>Assign an issue to Copilot</span></span></td><td><span class="cell"><svg class="mk2 n" viewBox="0 0 24 24" aria-label="No"><circle cx="12" cy="12" r="10"/><path d="M8.5 8.5l7 7M15.5 8.5l-7 7"/></svg><span>Highest effort</span></span></td></tr>
 <tr><th scope="row">Proof in public repos</th><td class="me"><span class="cell"><svg class="mk2 y" viewBox="0 0 24 24" aria-label="Yes"><circle cx="12" cy="12" r="10"/><path d="M7.5 12.5l3 3 6-6.5"/></svg><span>4 upstream docs PRs, all open</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Not specific to docs</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Not specific to docs</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Not specific to docs</span></span></td><td><span class="cell"><svg class="mk2 p" viewBox="0 0 24 24" aria-label="Partly"><circle cx="12" cy="12" r="10"/><path d="M12 2a10 10 0 010 20z" class="f"/></svg><span>Depends on your build</span></span></td></tr>
@@ -1156,54 +1115,21 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 </div>
 </section>
 
-<section id="built" aria-labelledby="built-h">
-<div class="wrap">
-<h2 id="built-h">The Build Happened in Public</h2>
-<div class="tlw" id="tlw"><svg class="trk" id="trk" aria-hidden="true"></svg>
-<ol class="tl" id="tl">
-<li><div class="when"><b>Sat Oct 10, 10:45</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>my neatlogs hackathon project has already caught doc issues for a chroma (24K+ github stars). chromadb's deprecated-config error sends you to its own migration guide. that page returns 404.</p><a href="https://twitter.com/cultist_dev/status/2108788557670125946">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 11:00</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>built this weekend at #neatHack, the AI agent hackathon by @neatlogs. stack: @EntireHQ records every coding session, @arithecfo builds the business plan.</p><a href="https://twitter.com/cultist_dev/status/2108792303611429152">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 12:32</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>#neatHack kickoff, 12:30 IST. FirstRun code before kickoff: 0 lines. neatlogs doctor probe: 7/7 PASS. Solo build. Submission opens Monday, 7 PM IST.</p><a href="https://twitter.com/cultist_dev/status/2108815318541844954">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 13:14</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>#neatHack, day one. all three required tools are up. Entire: trail #1 created. neatlogs: first agent trace, 3 steps, 12s. cfo.ai: Ari read my public profile.</p><a href="https://twitter.com/cultist_dev/status/2108826005854937357">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 13:26</b></div>
-<div class="tw vid"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>your quickstart is the only part of your product tested by people who leave instead of filing a bug. so for #neatHack i'm building FirstRun. break. fix. prove.</p><a href="https://twitter.com/cultist_dev/status/2108828983194206308">Watch the video on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 15:15</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>a quickstart breaks the way an agent breaks. quietly. so the plan for this weekend: every FirstRun run becomes a trace in @neatlogs.</p><a href="https://twitter.com/cultist_dev/status/2108856505566921210">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 18:15</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>send me your quickstart and FirstRun runs it in a clean container before monday, 7 PM IST. reply with the name of a public quickstart page.</p><a href="https://twitter.com/cultist_dev/status/2108901819426431407">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 18:23</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>4 docs PRs opened on day one of #neatHack, from an agent that runs a quickstart the way a new developer would. dbt-labs: 2, entireio/cli: 1, accuknox/help: 1.</p><a href="https://twitter.com/cultist_dev/status/2108903653411021062">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sat Oct 10, 21:15</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>an agent that heals every failure on its own drifts toward its own guess of how your product works. FirstRun hits that call on every red step. #neatHack</p><a href="https://twitter.com/cultist_dev/status/2108947112809378291">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sun Oct 11, 07:32</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>a maintainer who gets a PR from an agent asks one question. why should i trust this change? the session behind the diff answers it.</p><a href="https://twitter.com/cultist_dev/status/2109102359779365016">Read the post on X</a></blockquote></div></li>
-<li><div class="when"><b>Sun Oct 11, 10:32</b></div>
-<div class="tw"><blockquote class="twitter-tweet post" data-dnt="true" data-conversation="none" data-theme="light"><p>FirstRun had no web UI at kickoff. that was the bet. by 3 PM on saturday it had one.</p><a href="https://twitter.com/cultist_dev/status/2109147626390097946">Read the post on X</a></blockquote></div></li>
-<li class="next"><div class="when"><b>Sun Oct 11 to Mon Oct 12</b><span>More posts land here as the weekend goes.</span></div>
-<div class="tw"><!-- FILL:tweets --><p class="followx"><a href="https://x.com/cultist_dev">Follow the rest on X, @cultist_dev</a></p></div></li>
-</ol></div>
-</div>
-</section>
-
 <section id="about">
 <div class="wrap">
 <div class="about card rv">
-<img src="assets/atharva.webp" alt="Portrait of Atharva Shah" width="480" height="600" loading="lazy">
-<h2>Atharva Shah</h2>
-<p>Atharva is a DevRel engineer. He owns developer docs at AccuKnox and works with Altimate AI. He built FirstRun alone, in public.</p>
-<p class="links"><a href="https://atharvashah.com">atharvashah.com</a><a href="https://github.com/HighnessAtharva">GitHub</a><a href="https://x.com/cultist_dev">@cultist_dev</a></p>
+<img src="assets/pfp.webp" alt="Profile picture" width="480" height="480" loading="lazy">
+<h2>Rajbir Biswas</h2>
+<p>Hi there, I'm Rajbir, a 21 y/o CS student at SRMIST who loves to research and build stuff. Currently a Backend Intern at Earthsense Labs Pvt. Ltd (IIT Delhi) & doing Research Internship at IIT Madras. I build secure, scalable web3 and AI-powered Applications from DeFi protocols and cross-chain systems to fraud detection pipelines and real-time APIs.</p>
+<p class="links"><a href="https://rajbir.tech">rajbir.tech</a><a href="https://github.com/ELiTE0005">GitHub</a><a href="https://x.com/rangoliagt">@rangoliagt</a></p>
 </div>
 </div>
 </section>
 </main>
 <footer class="sf"><div class="sf-in">
-<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">FirstRun</a>
-<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/HighnessAtharva/firstrun">GitHub</a><a href="https://github.com/HighnessAtharva/firstrun/blob/main/evidence/README.md">Evidence</a></nav></div>
-<p class="sf-cred"><a href="https://atharvashah.com">Atharva Shah</a> built FirstRun for <a href="https://neatlogs.com/hackathon">neatHack 2026</a>. <a href="https://neatlogs.com">neatlogs</a> traces each run, <a href="https://cfo.ai">cfo.ai</a> prices it, and <a href="https://entire.io">Entire</a> records the build. Follow <a href="https://x.com/cultist_dev">@cultist_dev</a> on X.</p>
+<div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">1stRun</a>
+<nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/ELiTE0005/1stRun">GitHub</a></nav></div>
+<p class="sf-cred"><a href="https://rajbir.tech">Rajbir B</a> built 1stRun with <a href="https://tryalan.ai">Alan AI</a>. Follow <a href="https://x.com/rangoliagt">@rangoliagt</a> on X.</p>
 </div></footer>
 <script>
 (function(){
@@ -1267,7 +1193,7 @@ function paintHit(h){
 /* The prompt is two lines. agent.md holds the install, the preflight, the recipes and the safety rules,
    so the prompt names the recipe and what to report. */
 function build(raw,kind){
- var s=clean(raw),n=norm(s),rp=repoOf(s),L=["Read https://firstrun.atharvashah.com/agent.md and follow it."];
+ var s=clean(raw),n=norm(s),rp=repoOf(s),L=["Read https://1strun.rajbir.tech/agent.md and follow it."];
  if(kind==="audit"){
   if(rp)L.push("Audit the GitHub repo "+rp.repo+" with Doc-audit (Recipe B). Tell me the top 3 tasks and the suggested owner of each. Ask me before you open any PR or issue.");
   else L.push("Audit the docs for "+(n.q?'"'+n.q+'"':n.url)+" with Doc-audit (Recipe B). Find the public GitHub repo that holds their source and tell me which repo you picked. Then audit that repo. Tell me the top 3 tasks and the suggested owner of each. Ask me before you open any PR or issue.");
@@ -1296,7 +1222,7 @@ function show(kind){
   var y=$("you");y.textContent="";
   y.appendChild(document.createTextNode("You pasted "));
   var b=document.createElement("b");b.textContent=clean(raw).slice(0,120);y.appendChild(b);
-  y.appendChild(document.createTextNode(hit?". A saved run matches it, so watch the replay below. To run it fresh, copy the prompt into your coding agent. FirstRun runs on your machine, not on this site.":(kind==="audit"?". Copy this prompt into your coding agent. It installs FirstRun, reads the repo's git history and ranks the docs work to do next. It opens no issue until you say yes. ":". Copy this prompt into your coding agent. It installs FirstRun, runs the quickstart in a clean container and proves each fix. It opens no PR until you say yes. ")));
+  y.appendChild(document.createTextNode(hit?". A saved run matches it, so watch the replay below. To run it fresh, copy the prompt into your coding agent. 1stRun runs on your machine, not on this site.":(kind==="audit"?". Copy this prompt into your coding agent. It installs 1stRun, reads the repo's git history and ranks the docs work to do next. It opens no issue until you say yes. ":". Copy this prompt into your coding agent. It installs 1stRun, runs the quickstart in a clean container and proves each fix. It opens no PR until you say yes. ")));
   /* the other route, one click away. Doc-audit also has a hosted board that needs no install. */
   if(kind==="audit"&&rp){var a=document.createElement("a");a.className="alt";a.href="doc-audit/?repo="+encodeURIComponent(rp.repo);a.textContent="Or audit it in your browser, with no install.";y.appendChild(a)}
   else if(kind==="test"){var t=document.createElement("button");t.type="button";t.className="alt";t.textContent=rp?"Audit this repo instead.":"Audit its repo instead.";t.addEventListener("click",function(){route("audit")});y.appendChild(t)}
@@ -1451,7 +1377,7 @@ function set(id,v){var e=$(id);if(e)e.textContent=v}
  });
 })();
 /* the cost angle: a projection, never a bill. Team runs a month x the measured mean model cost a run,
-   both from data/plan.json, which reads business/drivers.csv (88 neatlogs traces) */
+   both from data/plan.json, which reads business/drivers.csv (88 traces) */
 fetch("data/plan.json").then(function(r){return r.json()}).then(function(j){
  var d=j.drivers||{},t=(j.tiers||{}).Team||{},m=+d.cost_mean,n=+t.runs_per_month,cap=+t.cap_usd_per_run;
  if(!(m>0&&n>0))return;
@@ -1461,12 +1387,18 @@ fetch("data/plan.json").then(function(r){return r.json()}).then(function(j){
 
 /* PR carousel: reads data/prs.json. A screenshot shows when the entry names one. */
 (function(){
- var tr=$("track"),ctrl=$("ctrl"),pv=$("prP"),nx=$("prN"),ct=$("count"),N=0;
+ var tr=$("track"),ctrl=$("ctrl"),pv=$("prP"),nx=$("prN"),ct=$("count"),N=0,PH=false;
  var KIND={pr:"Pull request",issue:"Issue",discussion:"Discussion",comment:"Bisect finding"};
  function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
  function safe(u){u=String(u||"");return /^(https:\/\/|[a-z0-9][a-z0-9._\/-]*(\?[^"<>]*)?(#[^"<>]*)?$)/i.test(u)?u:""}
  function host(u){var m=/^https?:\/\/([^\/]+)(\/[^?#]*)?/i.exec(u||"");return m?(m[1]+(m[2]||"")).replace(/^www\./,"").replace(/\/$/,""):""}
+ function soon(p){
+  var kd=KIND[p.kind]?p.kind:"pr";
+  return '<article class="pr card soon" aria-roledescription="slide"><div class="cover ty"><b>Soon</b><span>IRL report</span></div>'+
+   '<div class="pr-b"><div class="pr-top"><span class="kd k-'+kd+'">'+KIND[kd]+'</span></div><h3>'+esc(p.title)+'</h3><p class="fix">'+esc(p.fix)+'</p></div></article>';
+ }
  function card(p){
+  if(p.placeholder)return soon(p);
   var url=safe(p.url),st=/^(open|merged|closed)$/.test(p.state)?p.state:"",shot=safe(p.shot),rp=safe(p.replay),h=host(p.page);
   var kd=KIND[p.kind]?p.kind:"pr";
   var cov=shot?'<a class="cover" href="'+esc(url)+'" target="_blank" rel="noopener" tabindex="-1" aria-hidden="true"><img src="'+esc(shot)+'" alt="" width="1200" height="668" loading="lazy" decoding="async"></a>'
@@ -1481,7 +1413,7 @@ fetch("data/plan.json").then(function(r){return r.json()}).then(function(j){
   var atEnd=tr.scrollLeft+tr.clientWidth>=tr.scrollWidth-8,i=atEnd?N:Math.min(N,Math.round(tr.scrollLeft/step())+1);
   var fits=tr.scrollWidth<=tr.clientWidth+8;
   pv.disabled=tr.scrollLeft<8;nx.disabled=atEnd;
-  ctrl.hidden=fits;
+  ctrl.hidden=fits||PH;
   ct.textContent=i+" of "+N;
  }
  var bh=RM?"auto":"smooth";
@@ -1490,72 +1422,14 @@ fetch("data/plan.json").then(function(r){return r.json()}).then(function(j){
  tr.addEventListener("keydown",function(e){if(e.target!==tr)return;if(e.key==="ArrowRight"){e.preventDefault();tr.scrollBy({left:step(),behavior:bh})}if(e.key==="ArrowLeft"){e.preventDefault();tr.scrollBy({left:-step(),behavior:bh})}});
  tr.addEventListener("scroll",upd,{passive:true});
  addEventListener("resize",upd);
- function empty(){tr.innerHTML='<p class="empty">The pull requests could not load. <a href="https://github.com/HighnessAtharva/firstrun">See them on GitHub</a></p>';ctrl.hidden=true}
- fetch("data/prs.json").then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
-  list=Array.isArray(list)?list.filter(function(p){return p&&p.url&&p.repo}):[];
+ function empty(){tr.innerHTML='<p class="empty">IRL reports updating here soon.</p>';ctrl.hidden=true}
+ fetch("data/prs.json",{cache:"no-cache"}).then(function(r){if(!r.ok)throw 0;return r.json()}).then(function(list){
+  list=Array.isArray(list)?list.filter(function(p){return p&&(p.placeholder||(p.url&&p.repo))}):[];
   N=list.length;if(!N)return empty();
+  PH=list.every(function(p){return p.placeholder});
   tr.innerHTML=list.map(card).join("");
   upd();
  }).catch(empty);
-})();
-
-/* tools: tabs per tool. Inside a tab, the numbered proofs pick which screenshot fills the stage.
-   Without JS the markup already shows every tool and every screenshot, stacked. */
-(function(){
- var root=$("tools");if(!root)return;
- var tabs=Array.prototype.slice.call(root.querySelectorAll("[role=tab]"));
- var panels=tabs.map(function(t){return $(t.getAttribute("aria-controls"))});
- function pick(p,i,focus){
-  var sh=p._shots,bt=p._btns;
-  for(var k=0;k<sh.length;k++){
-   var on=k===i;
-   sh[k].classList.toggle("on",on);
-   if(on)sh[k].removeAttribute("aria-hidden");else sh[k].setAttribute("aria-hidden","true");
-   bt[k].setAttribute("aria-pressed",on?"true":"false");
-  }
-  if(focus)bt[i].focus();
- }
- panels.forEach(function(p){
-  var show=p.querySelector(".show"),stg=document.createElement("div");
-  stg.className="stg";p._shots=[];p._btns=[];
-  Array.prototype.forEach.call(p.querySelectorAll(".ev"),function(li,i){
-   var s=li.querySelector(".shot"),cap=li.querySelector(".cap"),b=document.createElement("button");
-   s.id=p.id+"-shot"+(i+1);stg.appendChild(s);p._shots.push(s);
-   b.type="button";b.className="pk";b.setAttribute("aria-controls",s.id);
-   while(cap.firstChild)b.appendChild(cap.firstChild);
-   cap.parentNode.replaceChild(b,cap);p._btns.push(b);
-   b.addEventListener("click",function(){pick(p,i)});
-   b.addEventListener("keydown",function(e){
-    var n=p._btns.length,j=e.key==="ArrowDown"?(i+1)%n:e.key==="ArrowUp"?(i+n-1)%n:-1;
-    if(j>=0){e.preventDefault();pick(p,j,true)}});
-   /* a click anywhere on the row, except its source link, picks it */
-   li.addEventListener("click",function(e){if(!e.target.closest("a,button"))pick(p,i)});
-  });
-  show.insertBefore(stg,show.firstChild);
-  pick(p,0);
- });
- function sel(i,focus,push){
-  tabs.forEach(function(t,k){var on=k===i;t.setAttribute("aria-selected",on?"true":"false");t.tabIndex=on?0:-1;panels[k].hidden=!on});
-  if(focus)tabs[i].focus();
-  if(push&&history.replaceState)history.replaceState(null,"","#"+panels[i].id);
- }
- tabs.forEach(function(t,i){
-  t.addEventListener("click",function(){sel(i,false,true)});
-  /* warm the next tab's screenshots on intent, so the switch shows them at once */
-  t.addEventListener("pointerenter",function(){Array.prototype.forEach.call(panels[i].querySelectorAll("img[loading=lazy]"),function(m){m.loading="eager"})},{once:true});
- });
- root.querySelector("[role=tablist]").addEventListener("keydown",function(e){
-  var i=tabs.indexOf(document.activeElement),n=tabs.length,j=-1;if(i<0)return;
-  if(e.key==="ArrowRight")j=(i+1)%n;else if(e.key==="ArrowLeft")j=(i+n-1)%n;else if(e.key==="Home")j=0;else if(e.key==="End")j=n-1;
-  if(j>=0){e.preventDefault();sel(j,true,true)}});
- /* deep links: #tools-entire opens the Entire tab and brings the section into view */
- function fromHash(scroll){
-  var h=location.hash.slice(1);if(h==="tools-cfo")h="tools-cfoai";
-  for(var i=0;i<panels.length;i++)if(panels[i].id===h){sel(i);if(scroll)root.scrollIntoView({block:"start"});return}
- }
- sel(0);fromHash(false);
- if(/^#tools-/.test(location.hash))addEventListener("load",function(){fromHash(true)});
- addEventListener("hashchange",function(){fromHash(true)});
 })();
 
 /* Doc-audit team map. Nothing loads until the band nears the viewport: then assets/team-map.js and one
@@ -1779,84 +1653,6 @@ fetch("data/plan.json").then(function(r){return r.json()}).then(function(j){
   a.addEventListener("click",load);
   a.addEventListener("keydown",function(e){if(e.key===" "){load(e)}});
  });
-})();
-
-/* race track: a road through the build log, driven once when it enters */
-(function(){
- if(!$("tlw"))return;
-var tlw=$("tlw"),trk=$("trk"),played=false,raf=0,NS="http://www.w3.org/2000/svg";
-function el(n,a){var e=document.createElementNS(NS,n);for(var k in a)e.setAttribute(k,a[k]);return e}
-function track(){
- var lis=Array.prototype.slice.call(tlw.querySelectorAll(".tl>li")),wr=tlw.getBoundingClientRect(),W=wr.width,H=wr.height;
- if(!lis.length||!W)return;
- var cs=getComputedStyle(tlw.querySelector(".tl")),g=parseFloat(cs.paddingLeft)||0;
- var P=lis.map(function(li){var r=li.getBoundingClientRect();return{x:r.left-wr.left,y:r.top-wr.top+11,next:li.classList.contains("next")}});
- var single=P.every(function(p){return Math.abs(p.x-P[0].x)<2}),d="",len=0,at=[],ex,ey,fw,fh,X=[],Y=[];
- var done=-1;P.forEach(function(p,i){if(!p.next)done=i});
- if(single){
-  var x0=12;d="M"+x0+" "+P[0].y+" L"+x0+" "+(H-10);len=H-10-P[0].y;
-  P.forEach(function(p){at.push(p.y-P[0].y);X.push(x0);Y.push(p.y)});ex=x0;ey=H-10;fw=24;fh=10;
- }else{
-  var ys=[];P.forEach(function(p){var k=Math.round(p.y);if(ys.indexOf(k)<0)ys.push(k)});
-  ys.sort(function(a,b){return a-b});
-  var xL=g,xR=W-g,rad=Math.max(10,g-12),r,dir,sx,exx,i;
-  d="M"+xL+" "+ys[0];
-  for(r=0;r<ys.length;r++){
-   dir=r%2===0?1:-1;sx=dir>0?xL:xR;exx=dir>0?xR:xL;
-   for(i=0;i<P.length;i++)if(Math.round(P[i].y)===ys[r]){var mx=P[i].x+14;at[i]=len+Math.abs(mx-sx);X[i]=mx;Y[i]=ys[r]}
-   d+=" L"+exx+" "+ys[r];len+=Math.abs(exx-sx);
-   if(r<ys.length-1){
-    var rr=Math.min(rad,(ys[r+1]-ys[r])/2-2),sw=dir>0?1:0,cx=exx+dir*rr;
-    d+=" A"+rr+" "+rr+" 0 0 "+sw+" "+cx+" "+(ys[r]+rr)+" L"+cx+" "+(ys[r+1]-rr)+" A"+rr+" "+rr+" 0 0 "+sw+" "+exx+" "+ys[r+1];
-    len+=Math.PI*rr+(ys[r+1]-ys[r]-2*rr);
-   }else{ex=exx;ey=ys[r];fw=10;fh=24}
-  }
- }
- var dl=done>=0?at[done]:0;
- trk.setAttribute("viewBox","0 0 "+W+" "+H);
- trk.textContent="";
- var defs=el("defs",{}),pat=el("pattern",{id:"ck",width:8,height:8,patternUnits:"userSpaceOnUse"});
- pat.appendChild(el("rect",{width:8,height:8,fill:"#fff"}));
- pat.appendChild(el("rect",{width:4,height:4,fill:"#1D1D1F"}));pat.appendChild(el("rect",{x:4,y:4,width:4,height:4,fill:"#1D1D1F"}));
- defs.appendChild(pat);trk.appendChild(defs);
- trk.appendChild(el("path",{d:d,"class":"edge"}));
- trk.appendChild(el("path",{d:d,"class":"road"}));
- trk.appendChild(el("path",{d:d,"class":"mid"}));
- var dn=el("path",{d:d,"class":"done"});trk.appendChild(dn);
- trk.appendChild(el("rect",{x:ex-fw/2,y:ey-fh/2,width:fw,height:fh,rx:2,fill:"url(#ck)",stroke:"#1D1D1F","stroke-width":.75}));
- P.forEach(function(p,i){trk.appendChild(el("circle",{cx:X[i],cy:Y[i],r:7,"class":"pt"+(p.next?" next":"")}))});
- var car=el("g",{});
- [["rect",{x:-12,y:-5.5,width:24,height:11,rx:4.5,fill:"#0A66D6"}],["rect",{x:-12,y:-5.5,width:24,height:5,rx:2.5,fill:"#fff",opacity:.22}],["rect",{x:2,y:-4,width:5.5,height:8,rx:2,fill:"#fff",opacity:.9}],["rect",{x:-8.5,y:-4,width:3,height:8,rx:1.2,fill:"#fff",opacity:.5}],
-  ["rect",{x:-9,y:-7.2,width:5.5,height:2.2,rx:1,fill:"#1D1D1F"}],["rect",{x:-9,y:5,width:5.5,height:2.2,rx:1,fill:"#1D1D1F"}],["rect",{x:4,y:-7.2,width:5.5,height:2.2,rx:1,fill:"#1D1D1F"}],["rect",{x:4,y:5,width:5.5,height:2.2,rx:1,fill:"#1D1D1F"}],
-  ["circle",{cx:11.2,cy:-3.4,r:1.3,fill:"#FFD60A"}],["circle",{cx:11.2,cy:3.4,r:1.3,fill:"#FFD60A"}]].forEach(function(c){car.appendChild(el(c[0],c[1]))});
- trk.appendChild(car);
- function put(l){
-  dn.style.strokeDasharray=l+" "+(len+400);
-  var a=dn.getPointAtLength(Math.max(0,l-1)),b=dn.getPointAtLength(l+1),c=dn.getPointAtLength(l);
-  car.setAttribute("transform","translate("+c.x+" "+c.y+") rotate("+(Math.atan2(b.y-a.y,b.x-a.x)*180/Math.PI)+")");
- }
- if(raf)cancelAnimationFrame(raf);
- if(played||RM||!tlw.classList.contains("go")){put((played||RM)?dl:0)}
- else{
-  played=true;var t0=null,T=Math.min(3200,900+dl*2.2);
-  (function step(t){if(t0===null)t0=t;var k=Math.min(1,(t-t0)/T);put(dl*(1-Math.pow(1-k,4)));if(k<1)raf=requestAnimationFrame(step)})(performance.now());
- }
-}
-if("IntersectionObserver" in window){
- var to=new IntersectionObserver(function(en){if(en[0].isIntersecting){to.disconnect();tlw.classList.add("go");track()}},{rootMargin:"0px 0px -15% 0px"});to.observe(tlw);
-}else{tlw.classList.add("go")}
-if("ResizeObserver" in window)new ResizeObserver(function(){track()}).observe(tlw);
-addEventListener("load",track);addEventListener("resize",track);
-if(document.fonts&&document.fonts.ready)document.fonts.ready.then(track);
-track();
-})();
-
-/* X embeds: load the widget script only when the build log nears the viewport */
-(function(){
- var b=$("built"),done=false;
- function load(){if(done)return;done=true;var s=document.createElement("script");s.async=true;s.src="https://platform.twitter.com/widgets.js";s.charset="utf-8";document.body.appendChild(s)}
- if(!b)return;
- if("IntersectionObserver" in window){var io=new IntersectionObserver(function(en){if(en[0].isIntersecting){io.disconnect();load()}},{rootMargin:"600px 0px"});io.observe(b)}else{load()}
 })();
 })();
 </script>

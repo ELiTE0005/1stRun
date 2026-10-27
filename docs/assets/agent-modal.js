@@ -2,7 +2,7 @@
    The commands come from docs/agent.md. Change them there first, then here. */
 (function(){
 "use strict";
-var SITE="https://firstrun.atharvashah.com/",GH="https://github.com/HighnessAtharva/firstrun";
+var SITE="https://1strun.rajbir.tech/",GH="https://github.com/ELiTE0005/1stRun";
 var L1="Read "+SITE+"agent.md and follow it.";
 var RCPT="FR-20261010-091740-help-accuknox-com";
 var PRE={sh:"python3 --version\ngit --version",ps:"py -3.11 --version\ngit --version"};
@@ -13,30 +13,30 @@ var TASKS={
  test:{label:"Test a docs page",
   line:"Test the quickstart at https://docs.getdbt.com/guides/duckdb and tell me which step broke.",
   pre:"Python 3.11 or newer, git, and Docker for the clean container.",
-  doctor:"firstrun doctor --for test --json",
+  doctor:"1stRun doctor --for test --json",
   key:"Doc-test needs <code>CLAUDE_CODE_OAUTH_TOKEN</code> in <code>.env</code>. Your agent asks you to add it.",
-  run:"firstrun run https://docs.getdbt.com/guides/duckdb --json > result.json",
+  run:"1stRun run https://docs.getdbt.com/guides/duckdb --json > result.json",
   runNote:"Doc-test. Give the call 30 minutes, because one step may run for 5.",
   read:"Read <code>ok</code>, then <code>runs[0].status</code> and the report at <code>runs[0].files[\"report.md\"]</code>.",
-  ask:"firstrun pr <run_id> --json",
+  ask:"1stRun pr <run_id> --json",
   askNote:"For a verified fix it prints the diff, the PR body and the <code>gh</code> commands. It opens nothing."},
  audit:{label:"Audit a repo",
   line:"Audit github.com/fastapi/typer and tell me the top 3 docs tasks and who should own them.",
   pre:"Python 3.11 or newer and git. Doc-audit needs no Docker.",
-  doctor:"firstrun doctor --for audit --json",
+  doctor:"1stRun doctor --for audit --json",
   key:"Doc-audit needs no key. Without <code>TYPESAFE_API_KEY</code> the agent adds <code>--no-jev</code>.",
-  run:"firstrun audit fastapi/typer --no-publish --json > audit-result.json",
+  run:"1stRun audit fastapi/typer --no-publish --json > audit-result.json",
   runNote:"Doc-audit. fastapi/typer took 97 seconds. <code>--no-publish</code> keeps the audit on your disk.",
   read:"Read <code>ok</code>, then <code>top_tasks[]</code>: each task has <code>rank</code>, <code>title</code>, <code>effort</code> and a suggested <code>owner</code>.",
-  ask:"firstrun audit-issue <audit_id> --json",
+  ask:"1stRun audit-issue <audit_id> --json",
   askNote:"It drafts a GitHub issue for the docs team and prints the <code>gh</code> command. It opens nothing."},
  receipt:{label:"Check a receipt",
   line:"Check the cost and proof on receipt "+RCPT+" and tell me if it is verified.",
   pre:"Python 3.11 or newer and git. A receipt check needs no Docker.",
-  doctor:"firstrun doctor --for audit --json",
+  doctor:"1stRun doctor --for audit --json",
   key:"A receipt check needs no key.",
-  run:{sh:"mkdir -p site-receipt && curl -sSfo site-receipt/receipt.json "+SITE+"receipts/"+RCPT+".json\nfirstrun receipt --check site-receipt/receipt.json --hash-only --json",
-   ps:"New-Item -ItemType Directory -Force site-receipt | Out-Null\ncurl.exe -sSfo site-receipt/receipt.json "+SITE+"receipts/"+RCPT+".json\nfirstrun receipt --check site-receipt/receipt.json --hash-only --json"},
+  run:{sh:"mkdir -p site-receipt && curl -sSfo site-receipt/receipt.json "+SITE+"receipts/"+RCPT+".json\n1stRun receipt --check site-receipt/receipt.json --hash-only --json",
+   ps:"New-Item -ItemType Directory -Force site-receipt | Out-Null\ncurl.exe -sSfo site-receipt/receipt.json "+SITE+"receipts/"+RCPT+".json\n1stRun receipt --check site-receipt/receipt.json --hash-only --json"},
   runNote:"It saves the receipt from the site and checks its hash. The file holds <code>price</code> and <code>proof</code>.",
   read:"Read <code>ok</code>, <code>valid</code> and <code>hash_ok</code>. Then read <code>price</code> and <code>proof.status</code> in the receipt.",
   ask:"",askNote:"A receipt check writes nothing and opens nothing."}
@@ -70,11 +70,11 @@ function step(n,title,note,cmdHtml){return '<li class="ar-step"><span class="ar-
 function steps(){
  var t=TASKS[task],run=typeof t.run==="string"?t.run:t.run[os];
  var h=step(1,"Check the machine",t.pre,cmd("ar-c1",PRE[os]+(task==="test"?DOCKER[os]:""),"step 1, check the machine"))+
-  step(2,"Install FirstRun in a virtual environment","About 3 minutes, because it pulls the Claude Agent SDK and neatlogs.",cmd("ar-c2",INSTALL[os],"step 2, install"))+
+  step(2,"Install 1stRun in a virtual environment","About 3 minutes, because it pulls the Claude Agent SDK and Langfuse.",cmd("ar-c2",INSTALL[os],"step 2, install"))+
   step(3,"Run the preflight","It checks Python, git, Docker, each key and the network. It prints whether a key is set, never its value. "+t.key,cmd("ar-c3",t.doctor,"step 3, preflight"))+
   step(4,"Run the task with <code>--json</code>",t.runNote+" Stdout holds one JSON object.",cmd("ar-c4",run,"step 4, run the task"))+
   step(5,"Read the JSON",t.read,"")+
-  step(6,"Ask you before any PR or issue","FirstRun opens nothing, and your agent waits for your yes. "+t.askNote,t.ask?cmd("ar-c6",t.ask,"step 6, draft"):"");
+  step(6,"Ask you before any PR or issue","1stRun opens nothing, and your agent waits for your yes. "+t.askNote,t.ask?cmd("ar-c6",t.ask,"step 6, draft"):"");
  q(".ar-steps").innerHTML=h;
 }
 function paint(){
@@ -91,7 +91,7 @@ function build(){
  var seg=ORDER.map(function(k,i){return '<input type="radio" name="ar-task" id="ar-k-'+k+'" value="'+k+'"'+(k===task?" checked":"")+'><label for="ar-k-'+k+'"><span class="ar-dot d-'+k+'" aria-hidden="true"></span>'+TASKS[k].label+"</label>"}).join("");
  dlg.innerHTML=
  '<div class="ar-head"><div class="ar-top"><span class="ar-mark" aria-hidden="true">'+IC.mark+'</span><div class="ar-title"><h2 id="ar-t">Agent Ready</h2>'+
- '<p class="ar-sub" id="ar-d">Give your coding agent one URL. It installs FirstRun, runs it and reports back.</p></div>'+
+ '<p class="ar-sub" id="ar-d">Give your coding agent one URL. It installs 1stRun, runs it and reports back.</p></div>'+
  '<button type="button" class="ar-x" aria-label="Close">'+IC.x+"</button></div>"+
  '<div class="ar-tabs" role="tablist" aria-label="Agent Ready">'+
  '<button type="button" role="tab" class="ar-tab" id="ar-tq" aria-selected="true" aria-controls="ar-pq">Quickstart</button>'+
@@ -106,13 +106,13 @@ function build(){
   '<button type="button" data-os="sh">macOS, Linux</button><button type="button" data-os="ps">Windows</button></div></div>'+
   '<ol class="ar-steps"></ol>'+
   '<details class="ar-json"><summary>What the JSON looks like <small>2 real excerpts</small></summary><div class="ar-jin">'+
-  '<div><p><code>firstrun doctor --for audit --json</code> with an empty <code>.env</code>, trimmed. Exit 0, because Doc-audit can run.</p><pre tabindex="0">'+hl(J_DOC)+"</pre></div>"+
-  '<div><p><code>firstrun receipt --check site-receipt/receipt.json --hash-only --json</code> on receipt '+RCPT+".</p><pre tabindex=\"0\">"+hl(J_RC)+"</pre></div>"+
+  '<div><p><code>1stRun doctor --for audit --json</code> with an empty <code>.env</code>, trimmed. Exit 0, because Doc-audit can run.</p><pre tabindex="0">'+hl(J_DOC)+"</pre></div>"+
+  '<div><p><code>1stRun receipt --check site-receipt/receipt.json --hash-only --json</code> on receipt '+RCPT+".</p><pre tabindex=\"0\">"+hl(J_RC)+"</pre></div>"+
   "</div></details>"+
   '<ul class="ar-safe" aria-label="Safety">'+
   "<li>"+IC.pr+"Never opens a PR on its own</li><li>"+IC.shield+"Respects each repo's AI policy</li><li>"+IC.key+"Keys never printed</li></ul>"+
   '<p class="ar-links"><a href="'+BASE+'agent.md" target="_blank" rel="noopener">Open agent.md</a><a href="'+BASE+'llms.txt" target="_blank" rel="noopener">llms.txt</a>'+
-  '<a href="'+GH+'/blob/main/AGENTS.md" target="_blank" rel="noopener">AGENTS.md</a><a href="'+GH+'/blob/main/skills/firstrun/SKILL.md" target="_blank" rel="noopener">The Claude skill</a></p>'+
+  '<a href="'+GH+'/blob/main/AGENTS.md" target="_blank" rel="noopener">AGENTS.md</a><a href="'+GH+'/blob/main/skills/1strun/SKILL.md" target="_blank" rel="noopener">The Claude skill</a></p>'+
  "</div>"+
  '<div class="ar-panel" id="ar-pr" role="tabpanel" aria-labelledby="ar-tr" hidden>'+
   '<div class="ar-raw-bar"><span class="ar-meta"><b class="ar-mono">agent.md</b> <span id="ar-lines"></span></span>'+
