@@ -14,11 +14,25 @@ Docs that work. Literally.
 
 Every run is one trace in Langfuse when keys are set.
 
+## Alan AI Runs the Agents
+
+[Alan AI](https://tryalan.ai) runs the agents that do the work in 1stRun. Claude is the model behind them.
+
+| Agent | What it does |
+|---|---|
+| **Plan** | Reads a docs page and turns it into a list of shell steps. |
+| **Run** | Works through the steps one by one in a clean Docker container. |
+| **Repair** | When a step fails, sorts the failure and repairs the docs step. |
+| **Judge** | In Doc-audit, reads each stale page next to the code that changed and keeps only the real gaps. |
+
+The proof is not an agent. A second clean container replays the repaired steps with model calls blocked, so the agent cannot talk its way to a pass.
+
 ## What It Uses
 
 | Piece | Used for | Needed? |
 |---|---|---|
-| Claude, through the Claude Agent SDK and a `CLAUDE_CODE_OAUTH_TOKEN` | Planning, repair, failure classification, and the Doc-audit judge | Yes, for Doc-test |
+| [Alan AI](https://tryalan.ai) | Runs the agents: plan, run, repair and judge. See above. | Nothing extra to set up. See the Quick Start below. |
+| Claude, through the Claude Agent SDK and a `CLAUDE_CODE_OAUTH_TOKEN` | The model behind the agents: planning, repair, failure classification, and the Doc-audit judge | Yes, for Doc-test |
 | Docker | One clean container per Doc-test run | Yes, for Doc-test |
 | git | Cloning history for Doc-audit | Yes |
 | [Langfuse](https://langfuse.com) | One trace per run | No. With no keys, tracing is off. |

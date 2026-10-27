@@ -651,6 +651,7 @@ html.js .shot[href]:hover:after{opacity:1}
 .uses li{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:20px 22px;text-align:left}
 .uses img{display:block;width:auto;height:44px;max-width:72px;object-fit:contain;object-position:left;margin-bottom:12px}
 .uses img[src*="logo-alan"]{border-radius:10px}
+.uses.alan-flow{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:clamp(24px,3vw,36px);margin-bottom:clamp(20px,2.5vw,28px)}
 .uses b{display:block;font-size:20px;letter-spacing:-.025em;line-height:1.2}
 .uses span{display:block;margin-top:8px;font-size:16px;line-height:1.45;color:var(--mut)}
 .allp{text-align:center;margin-top:clamp(36px,4.5vw,52px);font-size:17px;font-weight:600}
@@ -1083,9 +1084,17 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <section id="tools" class="band b-tools" aria-labelledby="tools-h">
 <div class="wrap wide">
 <h2 id="tools-h">Built With Alan AI, Claude, Docker and Langfuse</h2>
+<p class="edge"><a href="https://tryalan.ai">Alan AI</a> runs the agents that plan, run, repair and judge. Claude is the model behind them.</p>
+<ul class="uses alan-flow rv" aria-label="How Alan AI runs the agents">
+<li><b>1. Plan</b><span>An Alan AI agent reads the docs page and turns it into a list of shell steps.</span></li>
+<li><b>2. Run</b><span>It works through the steps one by one in a clean Docker container.</span></li>
+<li><b>3. Repair</b><span>When a step fails, it sorts the failure and repairs the docs step.</span></li>
+<li><b>4. Judge</b><span>In Doc-audit, it reads each stale page next to the code that changed and keeps only the real gaps.</span></li>
+</ul>
+<p class="edge">The proof is not an agent. A second clean container replays the repaired steps with model calls blocked, so the agent cannot talk its way to a pass.</p>
 <ul class="uses rv" aria-label="What 1stRun uses">
-<li><img src="assets/logo-alan.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://tryalan.ai">Alan AI</a></b><span>The AI agent inside 1stRun. It works through the quickstart steps and helps repair the ones that break.</span></li>
-<li><img src="assets/logo-claude.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://claude.com/claude-code">Claude</a></b><span>Plans the runbook, repairs the first broken step and sorts each failure. It runs through the Claude Agent SDK.</span></li>
+<li><img src="assets/logo-alan.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://tryalan.ai">Alan AI</a></b><span>Runs the agents. It plans the quickstart, works through each step, repairs the ones that break and judges stale pages in Doc-audit.</span></li>
+<li><img src="assets/logo-claude.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://claude.com/claude-code">Claude</a></b><span>The model behind the agents. It plans the runbook, repairs the first broken step and sorts each failure. It runs through the Claude Agent SDK.</span></li>
 <li><img src="assets/logo-docker.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://www.docker.com">Docker</a></b><span>Every run gets one clean container, and the proof run gets a second one.</span></li>
 <li><img src="assets/logo-langfuse.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://langfuse.com">Langfuse</a></b><span>Optional. Every run becomes one trace, so a failed step comes with its cause.</span></li>
 <li><img src="assets/logo-ollama.webp" alt="" width="40" height="40" loading="lazy" decoding="async"><b><a href="https://ollama.com">Ollama</a></b><span>Optional. A local model that backs up Claude when it sorts failures and judges audits.</span></li>
@@ -1129,7 +1138,7 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <footer class="sf"><div class="sf-in">
 <div class="sf-top"><a class="sf-wm" href="/"><img src="/assets/logo.svg" alt="" width="22" height="22">1stRun</a>
 <nav class="sf-nav" aria-label="Footer"><a href="/doc-test/">Doc-test</a><a href="/doc-audit/">Doc-audit</a><a href="/plan/">Cost caps</a><a href="/judges/">For judges</a><a href="/agent.md">For agents</a><a href="/known-limits.md">Known limits</a><a href="https://github.com/ELiTE0005/1stRun">GitHub</a></nav></div>
-<p class="sf-cred"><a href="https://rajbir.tech">Rajbir Biswas</a> built 1stRun with <a href="https://tryalan.ai">Alan AI</a>. Follow <a href="https://x.com/rangoliagt">@rangoliagt</a> on X.</p>
+<p class="sf-cred"><a href="https://rajbir.tech">Rajbir Biswas</a> built 1stRun with <a href="https://tryalan.ai">Alan AI</a>, which runs its agents. Follow <a href="https://x.com/rangoliagt">@rangoliagt</a> on X.</p>
 </div></footer>
 <script>
 (function(){
