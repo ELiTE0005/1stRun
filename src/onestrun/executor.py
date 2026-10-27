@@ -250,7 +250,8 @@ def _execute(runbook, state, recover, budget, container_factory, capture_pins: b
         if capture_pins and state.patches:  # only a patched run is verified, and verification pins these versions
             _save_pins(container, state)
 
-    state.time_to_first_success_s = round(_elapsed(state), 1)
+    if state.time_to_first_success_s is None:  # a resume keeps the time of the first success, not the wait before it
+        state.time_to_first_success_s = round(_elapsed(state), 1)
     _stop(state, RunStatus.PASSED)
 
 

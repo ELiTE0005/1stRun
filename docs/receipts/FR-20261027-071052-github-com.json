@@ -1,0 +1,84 @@
+{
+ "receipt_id": "FR-20261027-071052-github-com",
+ "issued_at": "2026-10-27T10:50:20Z",
+ "work": {
+  "source_url": "https://github.com/Manishsarkar1/Port_Scanner",
+  "run_id": "20261027-071052-github-com",
+  "started_at": "2026-10-27T07:11:08+00:00",
+  "finished_at": "2026-10-27T10:50:20+00:00",
+  "seconds": 284.3,
+  "first_failed_step": 2,
+  "failure_class": "environment",
+  "classified_by": "claude",
+  "patches": [
+   {
+    "step": 2,
+    "was": "python main.py -t 127.0.0.1 -p 1-1024",
+    "now": "git clone https://github.com/Manishsarkar1/Port_Scanner.git && cd Port_Scanner && python main.py -t 127.0.0.1 -p 1-1024",
+    "reason": "The error shows /work has no main.py, so the repository was never cloned. The README puts main.py at the repo root, and the quick start must run from there. I added the clone and cd as prerequisites and left the original command and arguments unchanged. python:3.11-slim may not include git, so run 'apt-get update && apt-get install -y git' first if the clone fails."
+   },
+   {
+    "step": 2,
+    "was": "git clone https://github.com/Manishsarkar1/Port_Scanner.git && cd Port_Scanner && python main.py -t 127.0.0.1 -p 1-1024",
+    "now": "apt-get update -qq && apt-get install -y -qq git && git clone https://github.com/Manishsarkar1/Port_Scanner.git && cd Port_Scanner && python main.py -t 127.0.0.1 -p 1-1024",
+    "reason": "the base image lacks git; install it first"
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.048,
+  "input_tokens": 18867,
+  "output_tokens": 2104,
+  "tool_calls": 2,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 354.2,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 102.2,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 69.4
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 172.2,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 49.8
+  }
+ ],
+ "proof": {
+  "status": "verified",
+  "verified": true,
+  "steps_passed": 6,
+  "steps_total": 6,
+  "claim": "A second clean container ran the patched steps with no model calls, and every step passed."
+ },
+ "audit": {
+  "run_id": "20261027-071052-github-com",
+  "tags": [],
+  "evidence_sha256": {
+   "state.json": "sha256:4d61f07e9de4beddeda7f30dfc9e1fc0ad8b44704608c373c483a6bbf568b45f",
+   "runbook.json": "sha256:40cc73edd5f2d2711ee69774e1d5f5e43c196115f7f2bd617a7dac8edb2c306b",
+   "report.md": "sha256:47cd2472afde43ee5635707fedaf79e1131b98a4e822efb32a6382fb0cefe8a8"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7
+ },
+ "hash": "sha256:51e98933815b21b96abf916638522d6ee5f380320f0c7f4d7d7f1e518d037873"
+}

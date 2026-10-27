@@ -171,6 +171,18 @@ def test_resume_after_crash_replays_passed_steps(runs):
     assert [r.step_id for r in st.results] == [1, 2, 3, 4]  # replays are not re-recorded
 
 
+def test_resume_keeps_the_first_success_time(runs):
+    rb = make_runbook("one", "two")
+    executor.run(rb, run_id="r6b", container_factory=factory_for(FakeContainer()))
+    st = state_io.load_state("r6b")
+    st.started_at = "2020-01-01T00:00:00+00:00"  # a run resumed years later must not report years
+    st.time_to_first_success_s = 284.3
+    state_io.save_state(st)
+
+    st = executor.run(rb, run_id="r6b", resume=True, container_factory=factory_for(FakeContainer()))
+    assert st.time_to_first_success_s == 284.3
+
+
 def test_resume_replays_patched_command(runs):
     fake = FakeContainer({"bad": (1, "", "x")})
     rb = make_runbook("bad", "boom")
