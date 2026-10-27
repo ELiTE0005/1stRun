@@ -1,0 +1,102 @@
+{
+ "receipt_id": "FR-20261027-131404-github-com",
+ "issued_at": "2026-10-27T13:17:52Z",
+ "work": {
+  "source_url": "https://github.com/Aki-max-min/distributed-job-scheduler",
+  "run_id": "20261027-131404-github-com",
+  "started_at": "2026-10-27T13:14:05+00:00",
+  "finished_at": "2026-10-27T13:17:51+00:00",
+  "seconds": 151.8,
+  "first_failed_step": 1,
+  "failure_class": "docs_bug",
+  "classified_by": "claude",
+  "patches": [
+   {
+    "step": 1,
+    "was": "cd backend",
+    "now": "apt-get update && apt-get install -y git && git clone https://github.com/Aki-max-min/distributed-job-scheduler.git && cd distributed-job-scheduler && cd backend",
+    "reason": "The container starts empty, so there is no backend directory. The repo has to be cloned first, and the python:3.11-slim image doesn't include git, so the command installs it before cloning. The original 'cd backend' then runs from inside the cloned repo, which the docs excerpt shows has a top-level backend folder. I did not run this or search for other sources."
+   },
+   {
+    "step": 6,
+    "was": "psql -h localhost -U postgres -c \"CREATE DATABASE job_scheduler;\"",
+    "now": "apt-get update && apt-get install -y --no-install-recommends postgresql-client && psql -h localhost -U postgres -c \"CREATE DATABASE job_scheduler;\"",
+    "reason": "psql is not installed in the python:3.11-slim image; installing the postgresql-client package provides it, then the original command runs unchanged. Note that a PostgreSQL server must also be reachable at localhost for the command to succeed."
+   },
+   {
+    "step": 6,
+    "was": "apt-get update && apt-get install -y --no-install-recommends postgresql-client && psql -h localhost -U postgres -c \"CREATE DATABASE job_scheduler;\"",
+    "now": "apt-get update && apt-get install -y --no-install-recommends postgresql postgresql-client && sed -i -E 's/(scram-sha-256|md5|peer)$/trust/' /etc/postgresql/*/main/pg_hba.conf && service postgresql start && until pg_isready -h localhost; do sleep 1; done && psql -h localhost -U postgres -c \"CREATE DATABASE job_scheduler;\"",
+    "reason": "The psql client installed fine, but the container has no PostgreSQL server listening on localhost:5432, hence 'Connection refused'. The fix installs the server, sets local auth to trust because the postgres user has no password, starts the service, waits until it is ready, then runs the original psql command unchanged."
+   },
+   {
+    "step": 8,
+    "was": "python run_worker.py --concurrency 3",
+    "now": "pip install \"psycopg[binary]\" && python run_worker.py --concurrency 3",
+    "reason": "The traceback shows SQLAlchemy using its psycopg (v3) dialect, which does `import psycopg`. That package isn't installed in the venv, so the install is a missing prerequisite. `psycopg[binary]` ships a prebuilt libpq, so it needs no system libraries on python:3.11-slim. The worker command and its arguments are unchanged."
+   },
+   {
+    "step": 8,
+    "was": "pip install \"psycopg[binary]\" && python run_worker.py --concurrency 3",
+    "now": "apt-get update && apt-get install -y postgresql && service postgresql start && sleep 3 && pip install \"psycopg[binary]\" && python run_worker.py --concurrency 3",
+    "reason": "The worker fails with 'Connection refused' on localhost:5432 because the clean python:3.11-slim container has no PostgreSQL server running. The fix installs PostgreSQL via apt, starts it and waits briefly, then runs the original command unchanged. The role, password and database in the app's DATABASE_URL must still exist in this server."
+   }
+  ]
+ },
+ "price": {
+  "model_cost_usd": 0.0693,
+  "input_tokens": 21967,
+  "output_tokens": 2900,
+  "tool_calls": 0,
+  "compute_per_run_usd": 0.00203,
+  "basis": "list price, not billed"
+ },
+ "caps": [
+  {
+   "tier": "Free",
+   "bills_this_run": false,
+   "cap_usd": 0.01355,
+   "used_pct": 511.4,
+   "within_cap": false,
+   "price_per_run_usd": null,
+   "margin_pct": null
+  },
+  {
+   "tier": "Team",
+   "bills_this_run": false,
+   "cap_usd": 0.04697,
+   "used_pct": 147.5,
+   "within_cap": false,
+   "price_per_run_usd": 0.16333,
+   "margin_pct": 56.3
+  },
+  {
+   "tier": "Scale",
+   "bills_this_run": false,
+   "cap_usd": 0.02787,
+   "used_pct": 248.7,
+   "within_cap": false,
+   "price_per_run_usd": 0.09967,
+   "margin_pct": 28.4
+  }
+ ],
+ "proof": {
+  "status": "failed",
+  "verified": false,
+  "steps_passed": 7,
+  "steps_total": 9,
+  "claim": "The run ended failed. Nothing here is verified."
+ },
+ "audit": {
+  "run_id": "20261027-131404-github-com",
+  "tags": [],
+  "evidence_sha256": {
+   "state.json": "sha256:abfa2663ab47434006952e67401dae3732cb2aac46f58cc725d1cbb93bd2b768",
+   "runbook.json": "sha256:04e48b61b0b278398b4a8a5e40cebf0d2c5f66879ad244baaaef15d70bd7fa88",
+   "report.md": "sha256:4e9621fe09da27bc008422f967fd39a2ae98970707cace8a668316277ff942da"
+  },
+  "caps_from": "business/unit_economics.json, generated 2026-10-11T05:12:57Z",
+  "margin_floor": 0.7
+ },
+ "hash": "sha256:fb04d463d4a83e8ed72c6cb01aa6694787ef58962b28f7d47bc8fd0a915e7d4f"
+}

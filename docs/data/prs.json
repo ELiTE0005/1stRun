@@ -12,10 +12,15 @@
   "shot": "assets/pr-2-port-scanner-merged.webp"
  },
  {
-  "placeholder": true,
   "kind": "pr",
-  "title": "IRL reports updating here soon",
-  "fix": "Each one is proven in a second clean container before it is listed."
+  "repo": "Aki-max-min/distributed-job-scheduler",
+  "number": 1,
+  "title": "Make a fresh setup work: clone step, Postgres, deps, tests",
+  "url": "https://github.com/Aki-max-min/distributed-job-scheduler/pull/1",
+  "state": "open",
+  "page": "https://github.com/Aki-max-min/distributed-job-scheduler",
+  "fix": "A fresh setup broke in seven places: no clone step, Postgres not mentioned, the wrong database driver, a missing email-validator, bcrypt 5, a bad test and no way to run the tests. The PR fixes them all. In a clean container with a real Postgres, the API, the worker and 15 tests pass.",
+  "shot": "assets/pr-djs-1.webp"
  },
  {
   "placeholder": true,
