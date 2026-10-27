@@ -247,7 +247,10 @@ def _intent_tokens(command: str) -> set[str]:
     for part in parts:
         for tok in part.split():
             if tok != "sudo" and not tok.startswith("-"):
-                out.add(tok.strip("\"'"))
+                tok = tok.strip("\"'")
+                out.add(tok)
+                if "/" in tok and "://" not in tok:  # `cd repo/backend` still holds `backend`
+                    out.update(seg for seg in tok.split("/") if seg and seg not in (".", ".."))
     return out
 
 

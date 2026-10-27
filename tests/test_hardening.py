@@ -45,6 +45,13 @@ def test_drift_detection():
     assert not recovery.drifted("sudo apt-get install -y git", "apt-get update && apt-get install -y git")
 
 
+def test_a_clone_then_cd_into_the_same_folder_is_not_drift():
+    clone = "apt-get update && apt-get install -y git && git clone https://github.com/o/r.git && "
+    assert not recovery.drifted("cd backend", clone + "cd r/backend")
+    assert not recovery.drifted("cd backend", clone + "cd r && cd backend")
+    assert recovery.drifted("cd backend", clone + "cd r/frontend")
+
+
 def test_ask_fix_rejects_drift(monkeypatch):
     from onestrun.models import Budget, FailureClass, Step
 
