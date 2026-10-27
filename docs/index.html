@@ -652,6 +652,23 @@ html.js .shot[href]:hover:after{opacity:1}
 .uses img{display:block;width:auto;height:44px;max-width:72px;object-fit:contain;object-position:left;margin-bottom:12px}
 .uses img[src*="logo-alan"]{border-radius:10px}
 .uses.alan-flow{grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin-top:clamp(24px,3vw,36px);margin-bottom:clamp(20px,2.5vw,28px)}
+/* Alan AI flow: cards rise in one by one, then a beam and a badge ripple travel 1 > 2 > 3 > 4 on a slow loop */
+.alan-flow li{position:relative;overflow:hidden;transition:transform .45s var(--ease),box-shadow .45s var(--ease),border-color .45s var(--ease)}
+.alan-flow li:nth-child(1){--i:0}.alan-flow li:nth-child(2){--i:1}.alan-flow li:nth-child(3){--i:2}.alan-flow li:nth-child(4){--i:3}
+.alan-flow li::before{content:"";position:absolute;left:0;right:0;top:0;height:3px;background:linear-gradient(90deg,var(--test),var(--audit));transform:scaleX(0);transform-origin:left;opacity:0}
+.alan-flow b{display:flex;align-items:center;gap:10px}
+.alan-flow b i{position:relative;flex:none;width:28px;height:28px;border-radius:50%;display:grid;place-items:center;font:600 14px/1 Geist,sans-serif;font-style:normal;letter-spacing:0;color:#fff;background:linear-gradient(135deg,var(--test),var(--audit))}
+.alan-flow b i::after{content:"";position:absolute;inset:0;border-radius:50%;border:2px solid var(--test);opacity:0}
+.alan-flow li:hover{transform:translateY(-5px);border-color:oklch(80% .08 265);box-shadow:0 14px 34px -14px oklch(55% .19 262/.38)}
+.alan-flow li:hover::before{animation:none;transform:scaleX(1);opacity:1}
+html.js .alan-flow:not(.in) li{opacity:0;transform:translateY(20px) scale(.96)}
+html.js .alan-flow.in li{animation:af-in .8s var(--ease) calc(.14s*var(--i)) backwards}
+html.js .alan-flow.in li::before{animation:af-beam 7s var(--ease) calc(1.4s + 1.5s*var(--i)) infinite}
+html.js .alan-flow.in b i::after{animation:af-ping 7s ease-out calc(1.4s + 1.5s*var(--i)) infinite}
+@keyframes af-in{from{opacity:0;transform:translateY(20px) scale(.96)}}
+@keyframes af-beam{0%{transform:scaleX(0);opacity:1}14%,30%{transform:scaleX(1);opacity:1}42%{transform:scaleX(1);opacity:0}100%{transform:scaleX(0);opacity:0}}
+@keyframes af-ping{0%{transform:scale(1);opacity:.75}28%,100%{transform:scale(2);opacity:0}}
+@media(prefers-reduced-motion:reduce){html.js .alan-flow li{animation:none!important;opacity:1!important;transform:none!important}.alan-flow li::before,.alan-flow b i::after{animation:none!important}.alan-flow li:hover{transform:none}}
 .uses b{display:block;font-size:20px;letter-spacing:-.025em;line-height:1.2}
 .uses span{display:block;margin-top:8px;font-size:16px;line-height:1.45;color:var(--mut)}
 .allp{text-align:center;margin-top:clamp(36px,4.5vw,52px);font-size:17px;font-weight:600}
@@ -1086,10 +1103,10 @@ html:not(.js) .ev .src2{margin:6px 16px 16px 58px}
 <h2 id="tools-h">Built With Alan AI, Claude, Docker and Langfuse</h2>
 <p class="edge"><a href="https://tryalan.ai">Alan AI</a> runs the agents that plan, run, repair and judge. Claude is the model behind them.</p>
 <ul class="uses alan-flow rv" aria-label="How Alan AI runs the agents">
-<li><b>1. Plan</b><span>An Alan AI agent reads the docs page and turns it into a list of shell steps.</span></li>
-<li><b>2. Run</b><span>It works through the steps one by one in a clean Docker container.</span></li>
-<li><b>3. Repair</b><span>When a step fails, it sorts the failure and repairs the docs step.</span></li>
-<li><b>4. Judge</b><span>In Doc-audit, it reads each stale page next to the code that changed and keeps only the real gaps.</span></li>
+<li><b><i aria-hidden="true">1</i>Plan</b><span>An Alan AI agent reads the docs page and turns it into a list of shell steps.</span></li>
+<li><b><i aria-hidden="true">2</i>Run</b><span>It works through the steps one by one in a clean Docker container.</span></li>
+<li><b><i aria-hidden="true">3</i>Repair</b><span>When a step fails, it sorts the failure and repairs the docs step.</span></li>
+<li><b><i aria-hidden="true">4</i>Judge</b><span>In Doc-audit, it reads each stale page next to the code that changed and keeps only the real gaps.</span></li>
 </ul>
 <p class="edge">The proof is not an agent. A second clean container replays the repaired steps with model calls blocked, so the agent cannot talk its way to a pass.</p>
 <ul class="uses rv" aria-label="What 1stRun uses">
