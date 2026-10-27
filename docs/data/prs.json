@@ -23,9 +23,14 @@
   "shot": "assets/pr-djs-1.webp"
  },
  {
-  "placeholder": true,
-  "kind": "issue",
-  "title": "IRL reports updating here soon",
-  "fix": "Bug reports found by 1stRun will show up here too."
+  "kind": "pr",
+  "repo": "randomCOSMOS/GoD",
+  "number": 63,
+  "title": "Fix the README commands that fail on a fresh install",
+  "url": "https://github.com/randomCOSMOS/GoD/pull/63",
+  "state": "open",
+  "page": "https://github.com/randomCOSMOS/GoD",
+  "fix": "Three README commands failed in a clean container: there was no clone step, electron . was command not found after npm i, and electron build -w builds nothing. The PR fixes them, in the README only.",
+  "shot": "assets/pr-god-63.webp"
  }
 ]
